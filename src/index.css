@@ -36,8 +36,6 @@
 .custom-checkbox input[type="checkbox"]:checked+span::after {
     content: '';
     position: absolute;
-    left: 4px;
-    top: 8px;
     width: 4px;
     height: 8px;
     border: solid #fff;

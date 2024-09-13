@@ -83,7 +83,7 @@ const FilterSection = () => {
               className="rounded-[43px] py-[6px] px-[10px] border-[1px] border-[#DBDBDB] text-center text-[#354451]"
               onClick={() => resetFilter(filterKey as keyof FilterInterface)}
             >
-              {filters[filterKey as keyof FilterInterface]}{" "}
+              {filters[filterKey as keyof FilterInterface]}
               <span className="ml-2">x</span>
             </button>
           ))}

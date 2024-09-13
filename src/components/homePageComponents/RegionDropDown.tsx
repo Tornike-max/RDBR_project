@@ -34,14 +34,14 @@ const RegionDropDown = ({
           showRegionDropdown && "bg-[#F3F3F3]"
         }`}
       >
-        <span>რეგიონების მიხედვით</span>
+        <span>რეგიონი</span>
         <span>
           {showRegionDropdown ? <IoIosArrowUp /> : <IoIosArrowDown />}
         </span>
       </button>
 
       {showRegionDropdown && (
-        <div className="absolute top-[50px] left-0 bg-white shadow-[#02152614] rounded-[10px] border-[1px] border-[#DBDBDB] p-[24px]  z-10 w-[731px] h-auto space-y-[24px]">
+        <div className="absolute top-[50px] left-0 bg-[#FFFFFF] shadow-[#02152614] rounded-[10px] border-[1px] border-[#DBDBDB] p-[24px]  z-10 w-[731px] h-auto space-y-[24px]">
           <h3 className="text-[18px] font-semibold mb-[12px]">
             რეგიონების მიხედვით
           </h3>
@@ -52,7 +52,10 @@ const RegionDropDown = ({
                 city: string;
                 value: string;
               }) => (
-                <label key={region.id} className="custom-checkbox">
+                <label
+                  key={region.id}
+                  className="custom-checkbox max-w-[191px] w-full"
+                >
                   <input
                     type="checkbox"
                     value={region.value}
