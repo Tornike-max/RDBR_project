@@ -1,6 +1,11 @@
 import axios from "axios";
 
-export const getRealEstates = async () => {
+export const getRealEstates = async (
+  getPrice: string,
+  getRegion: string,
+  getArea: string,
+  getBedroom: string
+) => {
   try {
     const token = "9cfe8615-1d3a-4d54-9f34-2b6834ccd68e";
 
@@ -13,6 +18,12 @@ export const getRealEstates = async () => {
       {
         headers: {
           Authorization: `Bearer ${token}`,
+        },
+        params: {
+          getArea,
+          getPrice,
+          getRegion,
+          getBedroom,
         },
       }
     );

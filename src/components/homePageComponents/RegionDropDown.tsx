@@ -1,16 +1,41 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FilterInterface } from "../../types/types";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useGerRegions } from "../../hooks/useGetRegions";
 
 const RegionDropDown = ({
   handleFilterChange,
+  showRegionDropdown,
+  setShowRegionDropdown,
 }: {
   handleFilterChange: (value: string, key: keyof FilterInterface) => void;
+  showRegionDropdown: boolean;
+  setShowRegionDropdown: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const [showRegionDropdown, setShowRegionDropdown] = useState(false);
   const [selectedRegions, setSelectedRegions] = useState<string[]>([]);
   const { data, isPending } = useGerRegions();
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowRegionDropdown(false);
+      }
+    };
+
+    if (showRegionDropdown) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showRegionDropdown, setShowRegionDropdown]);
 
   const toggleRegion = (regionValue: string) => {
     if (selectedRegions.includes(regionValue)) {
@@ -27,10 +52,10 @@ const RegionDropDown = ({
     setShowRegionDropdown(false);
   };
 
-  if (isPending) return <p>LOADING...</p>;
+  if (isPending) return <p>loading...</p>;
 
   return (
-    <div className="relative">
+    <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setShowRegionDropdown(!showRegionDropdown)}
         className={`px-[16px] py-[8px] text-[16px] hover:bg-[#F3F3F3]  rounded-[6px] flex items-center gap-2 ${

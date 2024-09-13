@@ -27,5 +27,38 @@ export interface FilterInterface {
   region: string;
   price: string;
   area: string;
-  badrooms: string;
+  bedrooms: string;
+}
+interface City {
+  id: number;
+  name: string;
+}
+
+export interface Region {
+  id: number;
+  name: string;
+}
+
+export interface Property {
+  id: number;
+  address: string;
+  area: number;
+  bedrooms: number;
+  city: City;
+  city_id: number;
+  region: Region;
+  region_id: number;
+  image: string;
+  is_rental: number;
+  price: number;
+  zip_code: string;
+}
+
+export interface AgentInterface {
+  id: number;
+  name: string;
+  surname: string;
+  avatar: string;
+  email: string;
+  phone: string;
 }

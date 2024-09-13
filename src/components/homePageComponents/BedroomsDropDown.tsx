@@ -1,23 +1,48 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FilterInterface } from "../../types/types";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import { bedrooms } from "../../constants/constant";
 
 const BedroomsDropDown = ({
   handleFilterChange,
+  showBedroomsDropdown,
+  setShowBedroomsDropdown,
 }: {
   handleFilterChange: (value: string, key: keyof FilterInterface) => void;
+  showBedroomsDropdown: boolean;
+  setShowBedroomsDropdown: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const [showBedroomsDropdown, setShowBedroomsDropdown] = useState(false);
   const [selectedBedroom, setSelectedBedroom] = useState<string>("");
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowBedroomsDropdown(false);
+      }
+    };
+
+    if (showBedroomsDropdown) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showBedroomsDropdown, setShowBedroomsDropdown]);
 
   const applyBedroomsFilter = () => {
-    handleFilterChange(selectedBedroom, "badrooms");
+    handleFilterChange(selectedBedroom, "bedrooms");
     setShowBedroomsDropdown(false);
   };
 
   return (
-    <div className="relative">
+    <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setShowBedroomsDropdown(!showBedroomsDropdown)}
         className={`px-[16px] py-[8px] text-[16px] hover:bg-[#F3F3F3] rounded-[6px] flex items-center gap-2 ${

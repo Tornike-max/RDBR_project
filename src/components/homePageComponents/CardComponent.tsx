@@ -1,26 +1,13 @@
 import { useNavigate } from "react-router-dom";
+import { Property } from "../../types/types";
 
-const CardComponent = ({
-  realEstate,
-}: {
-  realEstate: {
-    id: string;
-    image: string;
-    is_rental: number;
-    address: string;
-    price: number;
-    bedrooms: number;
-    area: number;
-    zip_code: string;
-  };
-}) => {
+const CardComponent = ({ realEstate }: { realEstate: Property }) => {
   const navigate = useNavigate();
 
-  const handleNavigate = (id: string) => {
+  const handleNavigate = (id: number) => {
     if (!id) return;
     navigate(`/realEstate/${id}`);
   };
-
   return (
     <div
       className="cursor-pointer"
