@@ -34,7 +34,7 @@ const CardComponent = ({ realEstate }: { realEstate: Property }) => {
           <div className="w-full flex items-center justify-start gap-2">
             <img
               className="w-[14px] h-[16.9px]"
-              src="icons/Icon.png"
+              src="/icons/Icon.png"
               alt="location-icon"
             />
             <span className="text-[16px] font-[400] leading-[19.2px] text-[#021526B2]/70">
@@ -46,7 +46,7 @@ const CardComponent = ({ realEstate }: { realEstate: Property }) => {
           <div className="flex items-center justify-start gap-1">
             <img
               className="w-[24px] h-[24px]"
-              src="icons/bed.png"
+              src="/icons/bed.png"
               alt="bed-icon"
             />
             <span className="text-[16px] font-[400] leading-[19.2px] text-[#021526B2]/70 text-start">
@@ -57,7 +57,7 @@ const CardComponent = ({ realEstate }: { realEstate: Property }) => {
           <div className="flex items-center justify-start gap-1">
             <img
               className="w-[24px] h-[24px]"
-              src="icons/Vector.png"
+              src="/icons/Vector.png"
               alt="vector-icon"
             />
             <span className="text-[16px] font-[400] leading-[19.2px] text-[#021526B2]/70 text-start">
@@ -68,7 +68,7 @@ const CardComponent = ({ realEstate }: { realEstate: Property }) => {
           <div className="flex items-center justify-start gap-1">
             <img
               className="w-[24px] h-[24px]"
-              src="icons/Vector1.png"
+              src="/icons/Vector1.png"
               alt="vector-icon"
             />
             <span className="text-[16px] font-[400] leading-[19.2px] text-[#021526B2]/70 text-start">

@@ -5,6 +5,7 @@ import DetailsSection from "../components/showRealsEstateComponents/DetailsSecti
 import DescriptionSection from "../components/showRealsEstateComponents/DescriptionSection";
 import AgentInfoSection from "../components/showRealsEstateComponents/AgentInfoSection";
 import DeleteButton from "../components/showRealsEstateComponents/DeleteButton";
+import CarouselComponent from "../components/showRealsEstateComponents/CarouselComponent";
 
 const ShowRealEstate = () => {
   const { data, isPending } = useGetRealEstate();
@@ -16,7 +17,7 @@ const ShowRealEstate = () => {
     <div className="w-full flex justify-center items-center flex-col mt-[96px]">
       <div className="w-full flex justify-start items-center">
         <img
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/")}
           src="/icons/arrowLeft.png"
           alt="arrow-left"
           className="w-[32px] h-[32px] cursor-pointer"
@@ -30,6 +31,13 @@ const ShowRealEstate = () => {
           <AgentInfoSection agent={data.agent} />
           <DeleteButton />
         </div>
+      </div>
+
+      <div className="w-full flex justify-center items-start flex-col gap-[40px] mt-[40px]">
+        <h1 className="text-[32px] text-[#021526] leading-[38.4px] font-[500]">
+          ბინები მსგავს ლოკაციებზე
+        </h1>
+        <CarouselComponent />
       </div>
     </div>
   );
