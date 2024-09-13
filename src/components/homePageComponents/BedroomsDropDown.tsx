@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FilterInterface } from "../../types/types";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
+import { bedrooms } from "../../constants/constant";
 
 const BedroomsDropDown = ({
   handleFilterChange,
@@ -8,10 +9,10 @@ const BedroomsDropDown = ({
   handleFilterChange: (value: string, key: keyof FilterInterface) => void;
 }) => {
   const [showBedroomsDropdown, setShowBedroomsDropdown] = useState(false);
-  const [selectedBedrooms, setSelectedBedrooms] = useState("");
+  const [selectedBedroom, setSelectedBedroom] = useState<string>("");
 
   const applyBedroomsFilter = () => {
-    handleFilterChange(selectedBedrooms, "badrooms");
+    handleFilterChange(selectedBedroom, "badrooms");
     setShowBedroomsDropdown(false);
   };
 
@@ -30,51 +31,24 @@ const BedroomsDropDown = ({
       </button>
 
       {showBedroomsDropdown && (
-        <div className="absolute top-[50px] left-0 bg-white shadow-lg p-[16px] rounded-md z-10 w-[300px]">
-          <h3 className="text-[18px] font-semibold mb-[12px]">
+        <div className="absolute top-[50px] left-0 bg-[#FFFFFF] shadow-[#02152614] rounded-[10px] border-[1px] border-[#DBDBDB] shadow-lg p-[24px]  z-10 w-[282px]">
+          <h3 className="text-[16px] leading-[19.2px] font-[500] mb-[12px]">
             საძინებლების რაოდენობა
           </h3>
-          <div className="flex flex-col gap-4">
-            <button
-              onClick={() => setSelectedBedrooms("1")}
-              className={`px-[10px] py-[8px] rounded-md border ${
-                selectedBedrooms === "1"
-                  ? "border-[#F93B1D] text-[#F93B1D]"
-                  : "border-gray-300 text-gray-600"
-              }`}
-            >
-              1
-            </button>
-            <button
-              onClick={() => setSelectedBedrooms("2")}
-              className={`px-[10px] py-[8px] rounded-md border ${
-                selectedBedrooms === "2"
-                  ? "border-[#F93B1D] text-[#F93B1D]"
-                  : "border-gray-300 text-gray-600"
-              }`}
-            >
-              2
-            </button>
-            <button
-              onClick={() => setSelectedBedrooms("3")}
-              className={`px-[10px] py-[8px] rounded-md border ${
-                selectedBedrooms === "3"
-                  ? "border-[#F93B1D] text-[#F93B1D]"
-                  : "border-gray-300 text-gray-600"
-              }`}
-            >
-              3
-            </button>
-            <button
-              onClick={() => setSelectedBedrooms("4")}
-              className={`px-[10px] py-[8px] rounded-md border ${
-                selectedBedrooms === "4"
-                  ? "border-[#F93B1D] text-[#F93B1D]"
-                  : "border-gray-300 text-gray-600"
-              }`}
-            >
-              4
-            </button>
+          <div className="w-[216px] flex justify-start items-center flex-wrap gap-4">
+            {bedrooms.map((bedroom) => (
+              <button
+                key={bedroom.value}
+                onClick={() => setSelectedBedroom(String(bedroom.value))}
+                className={`w-[41px] h-[42px] rounded-[6px] border  ${
+                  selectedBedroom === String(bedroom.value)
+                    ? "border-[#F93B1D] text-[#F93B1D]"
+                    : "border-[#808A93] text-[#02152666]/40"
+                } flex items-center justify-center p-[10]`}
+              >
+                {bedroom.value}
+              </button>
+            ))}
           </div>
 
           <div className="flex justify-end mt-[12px]">

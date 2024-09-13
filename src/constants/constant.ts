@@ -25,3 +25,24 @@ export const regions = [
     value: "ბათუმი",
   },
 ];
+
+export const bedrooms = [
+  {
+    value: 1,
+  },
+  {
+    value: 2,
+  },
+  {
+    value: 3,
+  },
+  {
+    value: 4,
+  },
+  {
+    value: 5,
+  },
+  {
+    value: 6,
+  },
+];

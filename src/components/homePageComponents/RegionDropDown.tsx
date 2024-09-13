@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { regions } from "../../constants/constant";
 import { FilterInterface } from "../../types/types";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { useGerRegions } from "../../hooks/useGetRegions";
 
 const RegionDropDown = ({
   handleFilterChange,
@@ -10,6 +10,7 @@ const RegionDropDown = ({
 }) => {
   const [showRegionDropdown, setShowRegionDropdown] = useState(false);
   const [selectedRegions, setSelectedRegions] = useState<string[]>([]);
+  const { data, isPending } = useGerRegions();
 
   const toggleRegion = (regionValue: string) => {
     if (selectedRegions.includes(regionValue)) {
@@ -26,6 +27,8 @@ const RegionDropDown = ({
     setShowRegionDropdown(false);
   };
 
+  if (isPending) return <p>LOADING...</p>;
+
   return (
     <div className="relative">
       <button
@@ -39,49 +42,48 @@ const RegionDropDown = ({
           {showRegionDropdown ? <IoIosArrowUp /> : <IoIosArrowDown />}
         </span>
       </button>
-
-      {showRegionDropdown && (
-        <div className="absolute top-[50px] left-0 bg-[#FFFFFF] shadow-[#02152614] rounded-[10px] border-[1px] border-[#DBDBDB] p-[24px]  z-10 w-[731px] h-auto space-y-[24px]">
-          <h3 className="text-[18px] font-semibold mb-[12px]">
-            რეგიონების მიხედვით
-          </h3>
-          <div className="grid grid-cols-3 gap-[30px]">
-            {regions?.map(
-              (region: {
-                id: string | number;
-                city: string;
-                value: string;
-              }) => (
-                <label
-                  key={region.id}
-                  className="custom-checkbox max-w-[191px] w-full"
-                >
-                  <input
-                    type="checkbox"
-                    value={region.value}
-                    checked={selectedRegions.includes(region.value)}
-                    onChange={() => toggleRegion(region.value)}
-                  />
-                  <span></span>
-                  <span
-                    className={`text-[16px] leading-[16.8px] text-[#021526] font-[400]`}
+      {isPending ? (
+        ""
+      ) : (
+        <>
+          {showRegionDropdown && (
+            <div className="absolute top-[50px] left-0 bg-[#FFFFFF] shadow-[#02152614] rounded-[10px] border-[1px] border-[#DBDBDB] p-[24px]  z-10 w-[731px] h-auto space-y-[24px]">
+              <h3 className="text-[18px] font-semibold mb-[12px]">
+                რეგიონების მიხედვით
+              </h3>
+              <div className="grid grid-cols-3 gap-[30px]">
+                {data?.map((region: { id: string | number; name: string }) => (
+                  <label
+                    key={region.id}
+                    className="custom-checkbox max-w-[191px] w-full"
                   >
-                    {region.city}
-                  </span>
-                </label>
-              )
-            )}
-          </div>
+                    <input
+                      type="checkbox"
+                      value={region.name}
+                      checked={selectedRegions.includes(region.name)}
+                      onChange={() => toggleRegion(region.name)}
+                    />
+                    <span></span>
+                    <span
+                      className={`text-[16px] leading-[16.8px] text-[#021526] font-[400]`}
+                    >
+                      {region.name}
+                    </span>
+                  </label>
+                ))}
+              </div>
 
-          <div className="flex justify-end mt-[12px]">
-            <button
-              onClick={applyRegionFilter}
-              className="px-[16px] py-[8px] bg-[#F93B1D] text-white rounded-md"
-            >
-              არჩევა
-            </button>
-          </div>
-        </div>
+              <div className="flex justify-end mt-[12px]">
+                <button
+                  onClick={applyRegionFilter}
+                  className="px-[16px] py-[8px] bg-[#F93B1D] text-white rounded-md"
+                >
+                  არჩევა
+                </button>
+              </div>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
