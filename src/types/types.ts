@@ -22,3 +22,10 @@ export interface ListingInterface {
   NumberOfBedrooms: number;
   saleOrLoan: string;
 }
+
+export interface FilterInterface {
+  region: string;
+  price: string;
+  area: string;
+  badrooms: string;
+}
