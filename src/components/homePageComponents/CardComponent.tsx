@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { Property } from "../../types/types";
+import { RealEstate } from "../../types/types";
 
-const CardComponent = ({ realEstate }: { realEstate: Property }) => {
+const CardComponent = ({ realEstate }: { realEstate: RealEstate }) => {
   const navigate = useNavigate();
 
   const handleNavigate = (id: number) => {

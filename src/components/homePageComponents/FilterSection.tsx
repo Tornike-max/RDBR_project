@@ -102,7 +102,7 @@ const FilterSection = () => {
 
         <div className="flex items-center gap-[16px]">
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/realEstate/create")}
             className="w-[230px] h-[47px] rounded-[10px] bg-[#F93B1D] hover:bg-[#ff5339] duration-200 transition-all text-white px-[16px] py-[10px] gap-[2px] flex items-center justify-center"
           >
             + ლისტინგის დამატება

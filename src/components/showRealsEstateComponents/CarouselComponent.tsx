@@ -3,7 +3,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import CardComponent from "../homePageComponents/CardComponent";
-import { Property } from "../../types/types";
+import { RealEstate } from "../../types/types";
 import { NextArrow } from "./NextArrow";
 import { PrevArrow } from "./PrevArrow";
 
@@ -27,9 +27,9 @@ const CarouselComponent = () => {
   };
 
   return (
-    <div className="w-full px-[-162px]">
+    <div className="w-full">
       <Slider {...settings}>
-        {data.map((realEstate: Property) => (
+        {data.map((realEstate: RealEstate) => (
           <CardComponent realEstate={realEstate} />
         ))}
       </Slider>

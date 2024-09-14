@@ -1,6 +1,7 @@
 import FilterSection from "../components/homePageComponents/FilterSection";
 import { useGetRealEstates } from "../hooks/useGetRealEstates";
 import CardComponent from "../components/homePageComponents/CardComponent";
+import { RealEstate } from "../types/types";
 
 const HomePage = () => {
   const { data, isPending } = useGetRealEstates();
@@ -13,7 +14,7 @@ const HomePage = () => {
         {data.length === 0 ? (
           <p>No real estate listings found.</p>
         ) : (
-          data.map((realEstate: { id: string }) => (
+          data.map((realEstate: RealEstate) => (
             <CardComponent key={realEstate.id} realEstate={realEstate} />
           ))
         )}

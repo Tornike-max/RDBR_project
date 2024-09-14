@@ -1,15 +1,15 @@
 export type CreateListingInterface = {
   address: string;
   image: File;
-  region: string;
-  city: string;
-  ZIP: string;
+  region_id: string;
+  city_id: string;
+  zip_code: string;
   price: number | string;
   area: number;
-  NumberOfBedrooms: number;
+  bedrooms: number;
   description: string;
-  saleOrLoan: string;
-  agent: number | string;
+  is_rental: string;
+  agent_id: number | string;
 };
 
 export interface ListingInterface {
@@ -39,7 +39,7 @@ export interface Region {
   name: string;
 }
 
-export interface Property {
+export interface RealEstate {
   id: number;
   address: string;
   area: number;
