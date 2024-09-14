@@ -1,14 +1,18 @@
 import { useNavigate } from "react-router-dom";
-import { useGetRealEstate } from "../hooks/ugeGetRealEstate";
 import ImageSection from "../components/showRealsEstateComponents/ImageSection";
 import DetailsSection from "../components/showRealsEstateComponents/DetailsSection";
 import DescriptionSection from "../components/showRealsEstateComponents/DescriptionSection";
 import AgentInfoSection from "../components/showRealsEstateComponents/AgentInfoSection";
 import DeleteButton from "../components/showRealsEstateComponents/DeleteButton";
 import CarouselComponent from "../components/showRealsEstateComponents/CarouselComponent";
+import { useState } from "react";
+import DeleteConfirmation from "../components/showRealsEstateComponents/DeleteConfirmation";
+import { useGetRealEstate } from "../hooks/ugeGetRealEstate";
 
 const ShowRealEstate = () => {
   const { data, isPending } = useGetRealEstate();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   const navigate = useNavigate();
 
   if (isPending) return <p>Loading...</p>;
@@ -29,7 +33,7 @@ const ShowRealEstate = () => {
           <DetailsSection data={data} />
           <DescriptionSection description={data.description} />
           <AgentInfoSection agent={data.agent} />
-          <DeleteButton />
+          <DeleteButton setIsOpen={setIsOpen} />
         </div>
       </div>
 
@@ -39,6 +43,9 @@ const ShowRealEstate = () => {
         </h1>
         <CarouselComponent />
       </div>
+      {isOpen && (
+        <DeleteConfirmation id={data.id} onClose={() => setIsOpen(false)} />
+      )}
     </div>
   );
 };
