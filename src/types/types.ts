@@ -66,7 +66,7 @@ export interface AgentInterface {
 export interface CreateAgentInterface {
   name: string;
   surname: string;
-  avatar: string;
+  avatar: File;
   email: string;
   phone: string;
 }

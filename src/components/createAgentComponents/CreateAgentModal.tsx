@@ -1,4 +1,14 @@
 import { useRef, useState } from "react";
+import { SubmitHandler, useForm, FieldValues } from "react-hook-form";
+import { useStoreAgent } from "../../hooks/useStoreAgent";
+
+type FormData = {
+  name: string;
+  surname: string;
+  phone: string;
+  email: string;
+  avatar: File;
+};
 
 const CreateAgentModal = ({
   setIsAgentModalOpen,
@@ -8,6 +18,14 @@ const CreateAgentModal = ({
   const backdropRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const { storeAgent, isPending } = useStoreAgent();
+
+  const {
+    register,
+    handleSubmit,
+    trigger,
+    formState: { errors },
+  } = useForm<FormData>({ mode: "onChange" });
 
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === backdropRef.current) {
@@ -25,6 +43,13 @@ const CreateAgentModal = ({
     }
   };
 
+  const { ref } = register("avatar");
+
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    const validData = { ...data, avatar: selectedImage };
+    storeAgent(validData);
+  };
+
   return (
     <div
       className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 backdrop-blur-sm flex justify-center items-center z-50"
@@ -33,45 +58,58 @@ const CreateAgentModal = ({
     >
       <div
         className="relative w-[1009px] h-[784px] bg-[#FFFFFF] p-6 rounded-[10px] flex flex-col justify-start items-center"
-        style={{ boxShadow: "5px 5px 4px 0px #00000014" }} // Custom shadow
+        style={{ boxShadow: "5px 5px 4px 0px #00000014" }}
         onClick={(e) => e.stopPropagation()}
       >
         <h3 className="font-[500] text-[32px] leading-[38.4px] text-[#021526] text-center mt-[80px]">
           აგენტის დამატება
         </h3>
-        <form className="w-[799px] m-auto flex justify-center items-center flex-col gap-[20px]">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="w-[799px] m-auto flex justify-center items-center flex-col gap-[20px]"
+        >
           <div className="w-full flex justify-between items-center gap-[20px]">
-            {/* Name Input */}
             <div className="w-full flex flex-col justify-center items-start gap-2">
               <label className="font-[500] text-[14px] leading-[16.8px]">
                 სახელი *
               </label>
               <input
-                type="text" // Corrected to text type
+                type="text"
+                {...register("name", {
+                  required: "სახელი სავალდებულოა",
+                  validate: (val) =>
+                    val.length >= 2 ||
+                    "სახელი უნდა შეიცავდეს მინიმუმ 2 სიმბოლოს",
+                })}
                 className="w-full rounded-[6px] border-[1px] border-[#808a93] p-[10px]"
+                onBlur={() => trigger("name")} // Trigger validation on blur
               />
-              <div className="flex items-center gap-2 text-[14px] leading-[16.8px] font-[400] text-[#021526]">
-                <img src="/icons/check.png" alt="check" />
-                <span>მინიმუმ 2 სიმბოლო</span>
+              <div className="text-red-500">
+                {errors.name && <span>{errors.name.message}</span>}
               </div>
             </div>
 
-            {/* Surname Input */}
             <div className="w-full flex flex-col justify-center items-start gap-2">
               <label className="font-[500] text-[14px] leading-[16.8px]">
                 გვარი
               </label>
               <input
-                type="text" // Corrected to text type
+                type="text"
+                {...register("surname", {
+                  required: "გვარი სავალდებულოა",
+                  validate: (val) =>
+                    val.length >= 2 ||
+                    "გვარი უნდა შეიცავდეს მინიმუმ 2 სიმბოლოს",
+                })}
                 className="w-full rounded-[6px] border-[1px] border-[#808a93] p-[10px]"
+                onBlur={() => trigger("surname")} // Trigger validation on blur
               />
-              <div className="flex items-center gap-2 text-[14px] leading-[16.8px] font-[400] text-[#021526]">
-                <img src="/icons/check.png" alt="check" />
-                <span>მინიმუმ 2 სიმბოლო</span>
+              <div className="text-red-500">
+                {errors.surname && <span>{errors.surname.message}</span>}
               </div>
             </div>
           </div>
-          {/* Email and Phone */}
+
           <div className="w-full flex justify-between items-center gap-[20px]">
             <div className="w-full flex flex-col justify-center items-start gap-2">
               <label className="font-[500] text-[14px] leading-[16.8px]">
@@ -79,54 +117,90 @@ const CreateAgentModal = ({
               </label>
               <input
                 type="email"
+                {...register("email", {
+                  required: "ელ-ფოსტა სავალდებულოა",
+                  validate: {
+                    endsWithExample: (value) =>
+                      value.endsWith("@redberry.ge") ||
+                      'ელ-ფოსტა უნდა მთავრდებოდეს @redberry.ge-თ"',
+                  },
+                })}
                 className="w-full rounded-[6px] border-[1px] border-[#808a93] p-[10px]"
+                onBlur={() => trigger("email")} // Trigger validation on blur
               />
-              <div className="flex items-center gap-2 text-[14px] leading-[16.8px] font-[400] text-[#021526]">
-                <img src="/icons/check.png" alt="check" />
-                <span>მინიმუმ 2 სიმბოლო</span>
+              <div className="text-red-500">
+                {errors.email && <span>{errors.email.message}</span>}
               </div>
             </div>
 
-            {/* Phone Number Input */}
             <div className="w-full flex flex-col justify-center items-start gap-2">
               <label className="font-[500] text-[14px] leading-[16.8px]">
                 ტელეფონის ნომერი
               </label>
               <input
+                {...register("phone", {
+                  required: "ტელეფონის ნომერი სავალდებულოა",
+                  pattern: {
+                    value: /^5\d{8}$/,
+                    message: "ტელეფონის ნომერი უნდა იყოს ამ ფორმატის 5XXXXXXXX",
+                  },
+                })}
                 type="number"
                 className="w-full rounded-[6px] border-[1px] border-[#808a93] p-[10px]"
+                onBlur={() => trigger("phone")} // Trigger validation on blur
               />
-              <div className="flex items-center gap-2 text-[14px] leading-[16.8px] font-[400] text-[#021526]">
-                <img src="/icons/check.png" alt="check" />
-                <span>მხოლოდ რიცხვები</span>
+              <div className="text-red-500">
+                {errors.phone && <span>{errors.phone.message}</span>}
               </div>
             </div>
           </div>
 
           <div className="w-full relative m-auto rounded-[8px] border-[1px] border-[#2D3648] border-dashed h-[120px] flex justify-center items-center">
             <input
-              ref={fileInputRef}
               type="file"
+              accept="image/*"
+              {...register("avatar", {
+                required: "სავალდებულოა",
+              })}
+              ref={(e) => {
+                ref(e);
+                fileInputRef.current = e;
+              }}
               className="hidden"
               onChange={handleFileChange}
             />
             <button
               type="button"
               onClick={handleButtonClick}
+              aria-label="Upload image"
               className="file-input-icon w-[20px] h-[20px] rounded-full border-[1px] border-[#2D3648] flex justify-center items-center cursor-pointer"
             >
               +
             </button>
           </div>
+          {errors?.avatar && (
+            <div className="text-red-500">
+              {errors.avatar && <span>{errors.avatar.message}</span>}
+            </div>
+          )}
 
           {selectedImage && (
-            <div className="w-full relative m-auto rounded-[8px] border-[1px] border-[#2D3648] border-dashed h-[120px] p-4 flex justify-start items-center gap-4">
-              <img
-                src={URL.createObjectURL(selectedImage)}
-                alt="Selected"
-                className="w-[92px] relative h-[82px] object-cover rounded-[4px] m-auto"
-              />
-              <img src="/icons/trash.png" className="" />
+            <div className="relative w-full">
+              <div className="w-full relative m-auto rounded-[8px] border-[1px] border-[#2D3648] border-dashed h-[120px] p-4 flex justify-start items-center gap-4">
+                <div className="relative w-[92px] h-[82px] m-auto">
+                  <img
+                    src={URL.createObjectURL(selectedImage)}
+                    alt="Selected"
+                    className="w-full h-full object-cover rounded-[4px]"
+                  />
+                  <img
+                    src="/icons/trash.png"
+                    alt="Trash Icon"
+                    onClick={() => setSelectedImage(null)}
+                    className="absolute bottom-[-7px] right-[-7px] cursor-pointer p-1 bg-[#FFFFFF] border-[1px] border-[#021526] rounded-full"
+                  />
+                </div>
+              </div>
             </div>
           )}
 
@@ -139,10 +213,11 @@ const CreateAgentModal = ({
               გაუქმება
             </button>
             <button
-              className="rounded-[10px] border-[1px] bg-[#F93B1D] text-[#FFFFFF] border-[#F93B1D] hover:bg-[#DF3014] text-[16px] leading-[19.2px] font-[500] text-center py-[10px] px-[16px] duration-200 transition-all ease-in-out"
               type="submit"
+              className="h-[47px] rounded-[10px]  border-[1px] text-[#FFFFFF] bg-[#F93B1D] hover:bg-[#DF3014] border-[#F93B1D] px-[16px] py-[10px] gap-[2px] flex items-center justify-center w-[203px]"
+              disabled={isPending}
             >
-              დაამატე აგენტი
+              {isPending ? "დაელოდეთ..." : "დამატება"}
             </button>
           </div>
         </form>

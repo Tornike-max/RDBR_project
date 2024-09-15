@@ -1,15 +1,23 @@
 import { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { realEstateSchema } from "../schema/zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-import { z } from "zod";
 import { useStoreRealEstate } from "../hooks/useStoreRealEstate";
+
+import { useGetAgents } from "../hooks/useGetAgents";
 import { useGerRegions } from "../hooks/useGetRegions";
 import { useGerCities } from "../hooks/useGetCities";
-import { useGetAgents } from "../hooks/useGetAgents";
 
-type FormData = z.infer<typeof realEstateSchema>;
+type FormData = {
+  address: string;
+  zip_code: number;
+  region_id: number;
+  city_id: number;
+  price: number;
+  area: number;
+  bedrooms: number;
+  description: string;
+  image: FileList;
+  agent_id: number;
+};
 
 const CreateRealEstate = () => {
   const {
@@ -17,14 +25,14 @@ const CreateRealEstate = () => {
     handleSubmit,
     formState: { errors },
     getValues,
-  } = useForm<FormData>({
-    resolver: zodResolver(realEstateSchema),
-  });
-  const [region, setRegion] = useState("");
+    setValue,
+  } = useForm<FormData>();
+
+  const [region, setRegion] = useState<number | "">(0);
   const [isRental, setIsRental] = useState(false);
   const [isSale, setIsSale] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { data, isPending } = useGerRegions();
+  const { data: regions, isPending: isRegionsPending } = useGerRegions();
   const { cities, isCitiesPending } = useGerCities();
   const { agents, isAgentsPending } = useGetAgents();
 
@@ -33,11 +41,12 @@ const CreateRealEstate = () => {
   };
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    const newData = { ...data, is_rental: isRental ? true : false };
+    const newData = { ...data, image: data.image[0] };
     console.log(newData);
   };
 
-  if (isPending || isCitiesPending || isAgentsPending) return <p>Loading...</p>;
+  if (isRegionsPending || isCitiesPending || isAgentsPending)
+    return <p>Loading...</p>;
 
   return (
     <div className="w-full flex justify-center items-center flex-col">
@@ -59,13 +68,11 @@ const CreateRealEstate = () => {
                 id="is_sale"
                 className="rounded-checkbox"
                 checked={isSale}
-                onChange={() =>
-                  setIsSale((sale) => {
-                    const result = !sale;
-                    setIsRental(result === true ? false : true);
-                    return result;
-                  })
-                }
+                onChange={() => {
+                  const result = !isSale;
+                  setIsSale(result);
+                  setIsRental(!result);
+                }}
               />
               <label htmlFor="is_sale" className="text-sm">
                 იყიდება
@@ -78,13 +85,11 @@ const CreateRealEstate = () => {
                 id="is_rental"
                 className="rounded-checkbox"
                 checked={isRental}
-                onChange={() =>
-                  setIsRental((rent) => {
-                    const result = !rent;
-                    setIsSale(result === true ? false : true);
-                    return result;
-                  })
-                }
+                onChange={() => {
+                  const result = !isRental;
+                  setIsRental(result);
+                  setIsSale(!result);
+                }}
               />
               <label htmlFor="is_rental" className="text-sm">
                 ქირავდება
@@ -104,26 +109,15 @@ const CreateRealEstate = () => {
               </label>
               <input
                 type="text"
-                {...register("address")}
+                {...register("address", { required: "მინიმუმ 2 სიმბოლო" })}
                 className={`w-full rounded-[6px] border-[1px] ${
                   errors.address ? "border-[#F93B1D]" : "border-[#808a93]"
                 } p-[10px]`}
               />
-
-              {(getValues("address") || "").length === 0 ? (
-                <div className="flex items-center gap-2 text-[14px] leading-[16.8px] font-[400] text-[#021526]">
-                  <img src="/icons/check.png" alt="check" />
-                  <span>მინიმუმ 2 სიმბოლო</span>
-                </div>
-              ) : errors.address ? (
+              {errors.address && (
                 <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
                   {errors.address.message}
                 </span>
-              ) : (
-                <div className="flex items-center gap-2 text-[14px] leading-[16.8px] font-[400] text-[#45A849]">
-                  <img src="/icons/check.png" alt="check" />
-                  <span>მინიმუმ 2 სიმბოლო</span>
-                </div>
               )}
             </div>
 
@@ -133,18 +127,15 @@ const CreateRealEstate = () => {
               </label>
               <input
                 type="number"
-                {...register("zip_code")}
+                {...register("zip_code", {
+                  valueAsNumber: true,
+                  required: "მხოლოდ რიცხვები",
+                })}
                 className={`w-full rounded-[6px] border-[1px] ${
-                  errors.zip_code?.message
-                    ? "border-[#F93B1D]"
-                    : "border-[#808a93]"
+                  errors.zip_code ? "border-[#F93B1D]" : "border-[#808a93]"
                 } p-[10px]`}
               />
-              <div className="flex items-center gap-2 text-[14px] leading-[16.8px] font-[400] text-[#021526]">
-                <img src="/icons/check.png" alt="check" />
-                <span>მხოლოდ რიცხვები</span>
-              </div>
-              {errors.zip_code?.message && (
+              {errors.zip_code && (
                 <span className=" text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
                   {errors.zip_code.message}
                 </span>
@@ -158,43 +149,45 @@ const CreateRealEstate = () => {
                 რეგიონი
               </label>
               <select
-                {...register("region_id")}
-                onChange={(e) => setRegion(e.target.value)}
+                {...register("region_id", { required: "აირჩიეთ რეგიონი" })}
+                onChange={(e) => setRegion(parseInt(e.target.value))}
                 className={`w-full rounded-[6px] border-[1px] ${
-                  errors.region_id?.message
-                    ? "border-[#F93B1D]"
-                    : "border-[#808a93]"
+                  errors.region_id ? "border-[#F93B1D]" : "border-[#808a93]"
                 } p-[10px]`}
               >
-                {data.map((region: { id: number; name: string }) => (
-                  <option key={region.id}>{region.name}</option>
+                <option value="">აირჩიეთ რეგიონი</option>
+                {regions.map((region: { id: number; name: string }) => (
+                  <option key={region.id} value={region.id}>
+                    {region.name}
+                  </option>
                 ))}
               </select>
-              {errors.region_id?.message && (
+              {errors.region_id && (
                 <span className=" text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
                   {errors.region_id.message}
                 </span>
               )}
             </div>
 
-            {region !== "" && (
+            {region && (
               <div className="max-w-[384px] w-full flex justify-center items-start flex-col gap-2">
                 <label className="font-[500] text-[14px] leading-[16.8px]">
                   ქალაქი
                 </label>
                 <select
-                  {...register("city_id")}
+                  {...register("city_id", { required: "აირჩიეთ ქალაქი" })}
                   className={`w-full rounded-[6px] border-[1px] ${
-                    errors.city_id?.message
-                      ? "border-[#F93B1D]"
-                      : "border-[#808a93]"
+                    errors.city_id ? "border-[#F93B1D]" : "border-[#808a93]"
                   } p-[10px]`}
                 >
+                  <option value="">აირჩიეთ ქალაქი</option>
                   {cities.map((city: { id: number; name: string }) => (
-                    <option key={city.id}>{city.name}</option>
+                    <option key={city.id} value={city.id}>
+                      {city.name}
+                    </option>
                   ))}
                 </select>
-                {errors.city_id?.message && (
+                {errors.city_id && (
                   <span className=" text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
                     {errors.city_id.message}
                   </span>
@@ -206,28 +199,25 @@ const CreateRealEstate = () => {
 
         <div className="w-full flex justify-center items-start flex-col gap-5">
           <h3 className="font-[500] text-[16px] leading-[19.54px] text-[#1A1A1F]">
-            ბინის დეტალები
+            დეტალები
           </h3>
           <div className="w-full flex justify-between items-center gap-[20px]">
             <div className="max-w-[384px] w-full flex justify-center items-start flex-col gap-2">
               <label className="font-[500] text-[14px] leading-[16.8px]">
-                ფასი
+                ფასი *
               </label>
               <input
                 type="number"
-                {...register("price")}
+                {...register("price", {
+                  valueAsNumber: true,
+                  required: "ფასი არის სავალდებულო",
+                })}
                 className={`w-full rounded-[6px] border-[1px] ${
-                  errors.price?.message
-                    ? "border-[#F93B1D]"
-                    : "border-[#808a93]"
+                  errors.price ? "border-[#F93B1D]" : "border-[#808a93]"
                 } p-[10px]`}
               />
-              <div className="flex items-center gap-2 text-[14px] leading-[16.8px] font-[400] text-[#021526]">
-                <img src="/icons/check.png" alt="check" />
-                <span>მხოლოდ რიცხვები</span>
-              </div>
-              {errors.price?.message && (
-                <span className=" text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
+              {errors.price && (
+                <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
                   {errors.price.message}
                 </span>
               )}
@@ -235,20 +225,19 @@ const CreateRealEstate = () => {
 
             <div className="max-w-[384px] w-full flex justify-center items-start flex-col gap-2">
               <label className="font-[500] text-[14px] leading-[16.8px]">
-                ფართობი
+                ფართი *
               </label>
               <input
                 type="number"
-                {...register("area")}
+                {...register("area", {
+                  valueAsNumber: true,
+                  required: "მხოლოდ რიცხვები",
+                })}
                 className={`w-full rounded-[6px] border-[1px] ${
-                  errors.area?.message ? "border-[#F93B1D]" : "border-[#808a93]"
+                  errors.area ? "border-[#F93B1D]" : "border-[#808a93]"
                 } p-[10px]`}
               />
-              <div className="flex items-center gap-2 text-[14px] leading-[16.8px] font-[400] text-[#021526]">
-                <img src="/icons/check.png" alt="check" />
-                <span>მხოლოდ რიცხვები</span>
-              </div>
-              {errors.area?.message && (
+              {errors.area && (
                 <span className=" text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
                   {errors.area.message}
                 </span>
@@ -256,77 +245,48 @@ const CreateRealEstate = () => {
             </div>
           </div>
 
-          <div className="w-full flex justify-between items-center ">
+          <div className="w-full flex justify-between items-center gap-[20px]">
             <div className="max-w-[384px] w-full flex justify-center items-start flex-col gap-2">
               <label className="font-[500] text-[14px] leading-[16.8px]">
-                საძინებლების რაოდენობა
+                საძინებლების რაოდენობა *
               </label>
               <input
-                {...register("bedrooms")}
                 type="number"
+                {...register("bedrooms", {
+                  valueAsNumber: true,
+                  required: "მხოლოდ რიცხვები",
+                })}
                 className={`w-full rounded-[6px] border-[1px] ${
-                  errors.bedrooms?.message
-                    ? "border-[#F93B1D]"
-                    : "border-[#808a93]"
+                  errors.bedrooms ? "border-[#F93B1D]" : "border-[#808a93]"
                 } p-[10px]`}
               />
-              <div className="flex items-center gap-2 text-[14px] leading-[16.8px] font-[400] text-[#021526]">
-                <img src="/icons/check.png" alt="check" />
-                <span>მხოლოდ რიცხვები</span>
-              </div>
-              {errors.bedrooms?.message && (
+              {errors.bedrooms && (
                 <span className=" text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
                   {errors.bedrooms.message}
                 </span>
               )}
             </div>
-          </div>
 
-          <div className="w-full flex justify-center items-center">
-            <div className="w-full flex justify-center items-start flex-col gap-2">
+            <div className="max-w-[384px] w-full flex justify-center items-start flex-col gap-2">
               <label className="font-[500] text-[14px] leading-[16.8px]">
-                აღწერა
+                აგენტი
               </label>
-              <textarea
-                {...register("description")}
-                className="w-full h-[135px] rounded-[6px] border-[1px] border-[#808A93] p-[10px]"
-              ></textarea>
-              <div className="flex items-center gap-2 text-[14px] leading-[16.8px] font-[400] text-[#021526]">
-                <img src="/icons/check.png" alt="check" />
-                <span>მინიმუმ 5 სიტყვა</span>
-              </div>
-              {errors.description?.message && (
+              <select
+                {...register("agent_id", { required: "აირჩიეთ აგენტი" })}
+                className={`w-full rounded-[6px] border-[1px] ${
+                  errors.agent_id ? "border-[#F93B1D]" : "border-[#808a93]"
+                } p-[10px]`}
+              >
+                <option value="">აირჩიეთ აგენტი</option>
+                {agents.map((agent: { id: number; name: string }) => (
+                  <option key={agent.id} value={agent.id}>
+                    {agent.name}
+                  </option>
+                ))}
+              </select>
+              {errors.agent_id && (
                 <span className=" text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
-                  {errors.description.message}
-                </span>
-              )}
-            </div>
-          </div>
-
-          <div className="w-full flex justify-center items-center">
-            <div className="w-full flex justify-center items-start flex-col gap-2">
-              <label className="font-[500] text-[14px] leading-[16.8px]">
-                ატვირთე ფოტო *
-              </label>
-              <div className="relative w-full h-[135px] rounded-[6px] border-[1px] border-[#808A93] border-dashed p-[10px] flex items-center justify-center">
-                <input
-                  type="file"
-                  {...register("image", {
-                    required: "სავალდებულოა",
-                  })}
-                  className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
-                />
-                <button
-                  type="button"
-                  onClick={handleButtonClick}
-                  className="file-input-icon w-[20px] h-[20px] rounded-full border-[1px] border-[#2D3648] flex justify-center items-center cursor-pointer"
-                >
-                  +
-                </button>
-              </div>
-              {errors.image && (
-                <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
-                  {errors.image.message}
+                  {errors.agent_id.message}
                 </span>
               )}
             </div>
@@ -335,45 +295,48 @@ const CreateRealEstate = () => {
 
         <div className="w-full flex justify-center items-start flex-col gap-5">
           <h3 className="font-[500] text-[16px] leading-[19.54px] text-[#1A1A1F]">
-            აგენტი
+            სურათი
           </h3>
-          <div className="w-full flex justify-between items-center gap-[20px]">
-            <div className="max-w-[384px] w-full flex justify-center items-start flex-col gap-2">
-              <label className="font-[500] text-[14px] leading-[16.8px]">
-                აირჩიე
-              </label>
-              <select
-                {...register("agent_id")}
-                className={`w-full rounded-[6px] border-[1px] ${
-                  errors.address?.message
-                    ? "border-[#F93B1D]"
-                    : "border-[#808a93]"
-                } p-[10px]`}
-              >
-                {agents.map((agent: { id: number; name: string }) => (
-                  <option key={agent.id}>{agent.name}</option>
-                ))}
-              </select>
-              {errors.agent_id?.message && (
-                <span className=" text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
-                  {errors.agent_id.message}
+          <div className="flex justify-center items-center gap-5">
+            <button
+              type="button"
+              onClick={handleButtonClick}
+              className="flex justify-center items-center w-[160px] h-[160px] border-[1px] border-[#808a93] rounded-[6px] bg-[#F5F6F8]"
+            >
+              {getValues("image")[0] ? (
+                <img
+                  src={URL.createObjectURL(getValues("image")[0])}
+                  alt="Preview"
+                  className="w-full h-full object-cover rounded-[6px]"
+                />
+              ) : (
+                <span className="text-[14px] leading-[16.8px] text-[#8E9DAB]">
+                  მოაწყეთ სურათი
                 </span>
               )}
-            </div>
+            </button>
+            <input
+              type="file"
+              accept="image/*"
+              {...register("image", { required: "სურათი სავალდებულოა" })}
+              ref={fileInputRef}
+              className="hidden"
+              onChange={(e) => setValue("image", e.target.files)}
+            />
+            {errors.image && (
+              <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
+                {errors.image.message}
+              </span>
+            )}
           </div>
         </div>
-        <div className="w-full flex justify-end items-center gap-[15px] ">
+
+        <div className="w-full flex justify-center items-center mt-[20px]">
           <button
-            type="button"
-            className="rounded-[10px] border-[1px] border-[#F93B1D] text-[#F93B1D] hover:bg-[#F93B1D] hover:text-[#FFFFFF] text-[16px] leading-[19.2px] font-[500] text-center py-[10px] px-[16px] duration-200 transition-all ease-in-out"
-          >
-            გაუქმება
-          </button>
-          <button
-            className="rounded-[10px] border-[1px] bg-[#F93B1D] text-[#FFFFFF] border-[#F93B1D] hover:bg-[#DF3014] text-[16px] leading-[19.2px] font-[500] text-center py-[10px] px-[16px] duration-200 transition-all ease-in-out"
             type="submit"
+            className="bg-[#1A1A1F] text-white py-[12px] px-[20px] rounded-[6px] text-[16px] leading-[19.54px]"
           >
-            დაამატე ლისტინგი
+            გაგზავნა
           </button>
         </div>
       </form>

@@ -1,6 +1,5 @@
 import * as z from "zod";
 
-// Define the schema
 const realEstateSchema = z.object({
   address: z.string().min(2, "Address must be at least 2 characters long"),
   image: z.instanceof(File).refine((file) => file.size <= 1_000_000, {
@@ -16,4 +15,32 @@ const realEstateSchema = z.object({
   agent_id: z.string().min(1, "Agent is required"),
 });
 
-export { realEstateSchema };
+const agentSchema = z.object({
+  name: z
+    .string()
+    .min(2, { message: "სახელი უნდა შეიცავდეს მინიმუმ 2 სიმბოლოს" })
+    .min(0, { message: "სახელი სავალდებულოა" }),
+
+  surname: z
+    .string()
+    .min(2, { message: "გვარი უნდა შეიცავდეს მინიმუმ 2 სიმბოლოს" })
+    .min(0, { message: "გვარი სავალდებულოა" }),
+
+  email: z
+    .string()
+    .email({ message: "ელ-ფოსტა არასწორი ფორმატისაა" })
+    .endsWith("@redberry.ge", {
+      message: "ელ-ფოსტა უნდა მთავრდებოდეს @redberry.ge-თ",
+    })
+    .min(0, { message: "ელ-ფოსტა სავალდებულოა" }),
+
+  avatar: z.instanceof(File),
+  phone: z
+    .string()
+    .regex(/^5\d{8}$/, {
+      message: "ტელეფონის ნომერი უნდა იყოს ამ ფორმატის 5XXXXXXXX",
+    })
+    .min(0, { message: "ტელეფონის ნომერი სავალდებულოა" }),
+});
+
+export { realEstateSchema, agentSchema };
