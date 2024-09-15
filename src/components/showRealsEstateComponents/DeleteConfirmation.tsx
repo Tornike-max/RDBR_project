@@ -29,7 +29,7 @@ const DeleteConfirmation = ({
   };
   return (
     <div
-      className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 backdrop-blur-lg flex justify-center items-center z-50"
+      className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 backdrop-blur-sm flex justify-center items-center z-50"
       ref={backdropRef}
       onClick={handleBackdropClick}
     >

@@ -32,8 +32,6 @@ const CreateRealEstate = () => {
     fileInputRef.current?.click();
   };
 
-  const { ref, ...rest } = register("image");
-
   const onSubmit: SubmitHandler<FormData> = (data) => {
     const newData = { ...data, is_rental: isRental ? true : false };
     console.log(newData);
@@ -313,13 +311,10 @@ const CreateRealEstate = () => {
               <div className="relative w-full h-[135px] rounded-[6px] border-[1px] border-[#808A93] border-dashed p-[10px] flex items-center justify-center">
                 <input
                   type="file"
-                  {...register("image")}
-                  ref={(e) => {
-                    ref(e);
-                    fileInputRef.current = e;
-                  }}
+                  {...register("image", {
+                    required: "სავალდებულოა",
+                  })}
                   className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
-                  {...rest}
                 />
                 <button
                   type="button"
@@ -329,8 +324,8 @@ const CreateRealEstate = () => {
                   +
                 </button>
               </div>
-              {errors.image?.message && (
-                <span className=" text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
+              {errors.image && (
+                <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
                   {errors.image.message}
                 </span>
               )}

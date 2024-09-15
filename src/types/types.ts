@@ -62,3 +62,11 @@ export interface AgentInterface {
   email: string;
   phone: string;
 }
+
+export interface CreateAgentInterface {
+  name: string;
+  surname: string;
+  avatar: string;
+  email: string;
+  phone: string;
+}

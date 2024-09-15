@@ -6,6 +6,7 @@ import PriceDropDown from "./PriceDropDown";
 import AreaDropDown from "./AreaDropdown";
 import BedroomsDropDown from "./BedroomsDropDown";
 import { formatAreaFilter, formatPriceFilter } from "../../functions/functions";
+import CreateAgentModal from "../createAgentComponents/CreateAgentModal";
 
 const FilterSection = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -21,6 +22,7 @@ const FilterSection = () => {
   const [showPriceDropdown, setShowPriceDropdown] = useState(false);
   const [showAreaDropdown, setShowAreaDropdown] = useState(false);
   const [showBedroomsDropdown, setShowBedroomsDropdown] = useState(false);
+  const [isAgentModalOpen, setIsAgentModalOpen] = useState(false);
 
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
 
@@ -74,6 +76,10 @@ const FilterSection = () => {
     }));
   };
 
+  const handleOpenAgentModal = () => {
+    setIsAgentModalOpen(true);
+  };
+
   return (
     <div className="max-w-[1596px] w-full flex justify-center items-start flex-col gap-[16px]">
       <div className="w-full h-[47px]  flex justify-between items-center">
@@ -108,13 +114,17 @@ const FilterSection = () => {
             + ლისტინგის დამატება
           </button>
           <button
-            onClick={() => navigate("/")}
+            onClick={() => handleOpenAgentModal()}
             className="h-[47px] rounded-[10px] text-[#F93B1D] border-[1px] border-[#F93B1D] px-[16px] py-[10px] gap-[2px] flex items-center justify-center w-[203px]"
           >
             + აგენტის დამატება
           </button>
         </div>
       </div>
+
+      {isAgentModalOpen && (
+        <CreateAgentModal setIsAgentModalOpen={setIsAgentModalOpen} />
+      )}
 
       {activeFilters.length >= 1 && (
         <div className="max-w-[553px] w-full h-[29px] flex items-center justify-start gap-[8px]">
