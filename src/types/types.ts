@@ -1,17 +1,3 @@
-export type CreateListingInterface = {
-  address: string;
-  image: File;
-  region_id: string;
-  city_id: string;
-  zip_code: string;
-  price: number | string;
-  area: number;
-  bedrooms: number;
-  description: string;
-  is_rental: string;
-  agent_id: number | string;
-};
-
 export interface ListingInterface {
   address: string;
   image: File;
@@ -54,6 +40,19 @@ export interface RealEstate {
   zip_code: string;
 }
 
+export interface CreateRealEstateInterface {
+  address: string;
+  zip_code: string;
+  region_id: number;
+  city_id: number;
+  price: number;
+  area: number;
+  bedrooms: number;
+  description: string;
+  image: File;
+  agent_id: number;
+}
+
 export interface AgentInterface {
   id: number;
   name: string;
@@ -68,5 +67,5 @@ export interface CreateAgentInterface {
   surname: string;
   avatar: File;
   email: string;
-  phone: string;
+  phone: number;
 }

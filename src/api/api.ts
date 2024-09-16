@@ -1,5 +1,8 @@
 import axios from "axios";
-import { CreateAgentInterface, CreateListingInterface } from "../types/types";
+import {
+  CreateAgentInterface,
+  CreateRealEstateInterface,
+} from "../types/types";
 
 export const getRealEstates = async (
   getPrice: string,
@@ -142,7 +145,7 @@ export const getCities = async () => {
   }
 };
 
-export const createRealEstate = async (data: CreateListingInterface) => {
+export const createRealEstate = async (data: CreateRealEstateInterface) => {
   try {
     const token = "9cfe8615-1d3a-4d54-9f34-2b6834ccd68e";
 
@@ -155,27 +158,25 @@ export const createRealEstate = async (data: CreateListingInterface) => {
       data,
       {
         headers: {
+          "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
         },
       }
     );
 
-    if (response.status !== 200) {
+    if (response.status < 200 || response.status >= 300) {
       throw new Error(
-        `Failed to store listing. Unexpected response status: ${response.status}`
+        `Failed to store real estate. Unexpected response status: ${response.status}`
       );
     }
 
     if (!response.data) {
-      throw new Error("Failed to store listing");
+      throw new Error("Failed to store real estate");
     }
 
     return response.data;
   } catch (error) {
-    if (error) {
-      console.error(`Server responded with status `);
-    }
-
+    console.error(`Error: ${error || "Failed to store real estate"}`);
     throw new Error("Failed to store real estate");
   }
 };
@@ -274,7 +275,7 @@ export const createAgent = async (data: CreateAgentInterface) => {
       }
     );
 
-    if (response.status !== 200) {
+    if (response.status < 200 || response.status >= 300) {
       throw new Error(
         `Failed to store agent. Unexpected response status: ${response.status}`
       );
@@ -286,10 +287,7 @@ export const createAgent = async (data: CreateAgentInterface) => {
 
     return response.data;
   } catch (error) {
-    if (error) {
-      console.error(`Server responded with status `);
-    }
-
+    console.error(`Error: ${error || "Failed to store agent"}`);
     throw new Error("Failed to store agent");
   }
 };

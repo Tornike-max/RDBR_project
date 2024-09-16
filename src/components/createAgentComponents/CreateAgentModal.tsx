@@ -82,7 +82,7 @@ const CreateAgentModal = ({
                     "სახელი უნდა შეიცავდეს მინიმუმ 2 სიმბოლოს",
                 })}
                 className="w-full rounded-[6px] border-[1px] border-[#808a93] p-[10px]"
-                onBlur={() => trigger("name")} // Trigger validation on blur
+                onBlur={() => trigger("name")}
               />
               <div className="text-red-500">
                 {errors.name && <span>{errors.name.message}</span>}
@@ -102,7 +102,7 @@ const CreateAgentModal = ({
                     "გვარი უნდა შეიცავდეს მინიმუმ 2 სიმბოლოს",
                 })}
                 className="w-full rounded-[6px] border-[1px] border-[#808a93] p-[10px]"
-                onBlur={() => trigger("surname")} // Trigger validation on blur
+                onBlur={() => trigger("surname")}
               />
               <div className="text-red-500">
                 {errors.surname && <span>{errors.surname.message}</span>}
@@ -126,7 +126,7 @@ const CreateAgentModal = ({
                   },
                 })}
                 className="w-full rounded-[6px] border-[1px] border-[#808a93] p-[10px]"
-                onBlur={() => trigger("email")} // Trigger validation on blur
+                onBlur={() => trigger("email")}
               />
               <div className="text-red-500">
                 {errors.email && <span>{errors.email.message}</span>}
@@ -147,7 +147,7 @@ const CreateAgentModal = ({
                 })}
                 type="number"
                 className="w-full rounded-[6px] border-[1px] border-[#808a93] p-[10px]"
-                onBlur={() => trigger("phone")} // Trigger validation on blur
+                onBlur={() => trigger("phone")}
               />
               <div className="text-red-500">
                 {errors.phone && <span>{errors.phone.message}</span>}
@@ -204,7 +204,7 @@ const CreateAgentModal = ({
             </div>
           )}
 
-          <div className="w-full flex justify-end items-center gap-[15px]">
+          <div className="w-full flex justify-end items-center gap-[15px] mt-[60px]">
             <button
               type="button"
               className="rounded-[10px] border-[1px] border-[#F93B1D] text-[#F93B1D] hover:bg-[#F93B1D] hover:text-[#FFFFFF] text-[16px] leading-[19.2px] font-[500] text-center py-[10px] px-[16px] duration-200 transition-all ease-in-out"
