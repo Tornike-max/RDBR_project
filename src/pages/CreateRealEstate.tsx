@@ -19,17 +19,20 @@ const CreateRealEstate = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CreateRealEstateInterface>();
+    reset,
+    getValues,
+    trigger,
+  } = useForm<CreateRealEstateInterface>({ mode: "onChange" });
 
   const [region, setRegion] = useState<number | "">(0);
   const [isRental, setIsRental] = useState(false);
   const [isSale, setIsSale] = useState(false);
-
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const { data: regions, isPending: isRegionsPending } = useGerRegions();
   const { cities, isCitiesPending } = useGerCities();
   const { agents, isAgentsPending } = useGetAgents();
   const { storeRealEstate, isCreating } = useStoreRealEstate();
+
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<CreateRealEstateInterface> = (data) => {
@@ -47,6 +50,14 @@ const CreateRealEstate = () => {
         navigate("/");
       },
     });
+  };
+
+  const handleResetForm = () => {
+    setSelectedImage(null);
+    setIsRental(false);
+    setIsSale(false);
+    setRegion("");
+    reset();
   };
 
   if (isRegionsPending || isCitiesPending || isAgentsPending)
@@ -75,11 +86,13 @@ const CreateRealEstate = () => {
           setRegion={setRegion}
           regions={regions}
           cities={cities}
+          getValues={getValues}
+          trigger={trigger}
         />
 
-        <Details register={register} errors={errors} />
+        <Details register={register} errors={errors} trigger={trigger} />
 
-        <Description register={register} errors={errors} />
+        <Description register={register} errors={errors} trigger={trigger} />
 
         <FileUpload
           selectedImage={selectedImage}
@@ -90,10 +103,17 @@ const CreateRealEstate = () => {
 
         <SelectAgent register={register} errors={errors} agents={agents} />
 
-        <div className="w-full flex justify-center items-center mt-[20px]">
+        <div className="w-full flex justify-end items-center mt-[20px] gap-[15px]">
+          <button
+            type="button"
+            onClick={() => handleResetForm()}
+            className="rounded-[10px] border-[1px] border-[#F93B1D] text-[#F93B1D] hover:bg-[#F93B1D] hover:text-[#FFFFFF] text-[16px] leading-[19.2px] font-[500] text-center py-[10px] px-[16px] duration-200 transition-all ease-in-out"
+          >
+            გაუქმება
+          </button>
           <button
             type="submit"
-            className="bg-[#1A1A1F] text-white py-[12px] px-[20px] rounded-[6px] text-[16px] leading-[19.54px]"
+            className="h-[47px] rounded-[10px]  border-[1px] text-[#FFFFFF] bg-[#F93B1D] hover:bg-[#DF3014] border-[#F93B1D] px-[16px] py-[10px] gap-[2px] flex items-center justify-center w-[203px]"
           >
             {isCreating ? "დაელოდეთ..." : "გაგზავნა"}
           </button>

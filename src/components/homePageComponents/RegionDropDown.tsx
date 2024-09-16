@@ -79,7 +79,7 @@ const RegionDropDown = ({
               <div className="grid grid-cols-3 gap-[30px]">
                 {data?.map((region: { id: string | number; name: string }) => (
                   <label
-                    key={region.id}
+                    key={region.name}
                     className="custom-checkbox max-w-[191px] w-full"
                   >
                     <input

@@ -1,11 +1,12 @@
-import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { FieldErrors, UseFormRegister, UseFormTrigger } from "react-hook-form";
 import { CreateRealEstateInterface } from "../../types/types";
 
 type DescriptionTypes = {
   register: UseFormRegister<CreateRealEstateInterface>;
   errors: FieldErrors<CreateRealEstateInterface>;
+  trigger: UseFormTrigger<CreateRealEstateInterface>;
 };
-const Description = ({ register, errors }: DescriptionTypes) => {
+const Description = ({ register, errors, trigger }: DescriptionTypes) => {
   return (
     <div className="w-full flex justify-between items-center gap-[20px]">
       <div className="w-full flex justify-center items-start flex-col gap-2">
@@ -15,7 +16,14 @@ const Description = ({ register, errors }: DescriptionTypes) => {
         <textarea
           {...register("description", {
             required: "სავალდებულოა",
+            validate: {
+              minWords: (value) => {
+                const wordCount = value.trim().split(/\s+/).length;
+                return wordCount >= 5 || "მინიმუმ 5 სიტყვა";
+              },
+            },
           })}
+          onBlur={() => trigger("description")}
           className="w-full relative m-auto rounded-[8px] border-[1px] border-[#808A93] h-[120px] flex justify-center items-center p-[10px]"
         ></textarea>
         <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-[#021526] leading-[16.8px]">

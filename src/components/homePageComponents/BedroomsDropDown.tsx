@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { FilterInterface } from "../../types/types";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
-import { bedrooms } from "../../constants/constant";
 
 const BedroomsDropDown = ({
   handleFilterChange,
@@ -12,7 +11,7 @@ const BedroomsDropDown = ({
   showBedroomsDropdown: boolean;
   setShowBedroomsDropdown: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const [selectedBedroom, setSelectedBedroom] = useState<string>("");
+  const [selectedBedroom, setSelectedBedroom] = useState<number | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -36,8 +35,13 @@ const BedroomsDropDown = ({
     };
   }, [showBedroomsDropdown, setShowBedroomsDropdown]);
 
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setSelectedBedroom(value ? parseInt(value, 10) : null);
+  };
+
   const applyBedroomsFilter = () => {
-    handleFilterChange(selectedBedroom, "bedrooms");
+    handleFilterChange(selectedBedroom?.toString() || "", "bedrooms");
     setShowBedroomsDropdown(false);
   };
 
@@ -46,7 +50,7 @@ const BedroomsDropDown = ({
       <button
         onClick={() => setShowBedroomsDropdown(!showBedroomsDropdown)}
         className={`px-[16px] py-[8px] text-[16px] hover:bg-[#F3F3F3] rounded-[6px] flex items-center gap-2 ${
-          showBedroomsDropdown && "bg-[#F3F3F3]"
+          showBedroomsDropdown ? "bg-[#F3F3F3]" : ""
         }`}
       >
         <span>საძინებლების რაოდენობა</span>
@@ -56,24 +60,17 @@ const BedroomsDropDown = ({
       </button>
 
       {showBedroomsDropdown && (
-        <div className="absolute top-[50px] left-0 bg-[#FFFFFF] shadow-[#02152614] rounded-[10px] border-[1px] border-[#DBDBDB] shadow-lg p-[24px]  z-10 w-[282px]">
+        <div className="absolute top-[50px] left-0 bg-[#FFFFFF] shadow-[#02152614] rounded-[10px] border-[1px] border-[#DBDBDB] shadow-lg p-[24px] z-10 w-[282px]">
           <h3 className="text-[16px] leading-[19.2px] font-[500] mb-[12px]">
             საძინებლების რაოდენობა
           </h3>
-          <div className="w-[216px] flex justify-start items-center flex-wrap gap-4">
-            {bedrooms.map((bedroom) => (
-              <button
-                key={bedroom.value}
-                onClick={() => setSelectedBedroom(String(bedroom.value))}
-                className={`w-[41px] h-[42px] rounded-[6px] border  ${
-                  selectedBedroom === String(bedroom.value)
-                    ? "border-[#F93B1D] text-[#F93B1D]"
-                    : "border-[#808A93] text-[#02152666]/40"
-                } flex items-center justify-center p-[10]`}
-              >
-                {bedroom.value}
-              </button>
-            ))}
+          <div className="w-[216px] flex flex-col gap-4">
+            <input
+              type="text"
+              value={selectedBedroom ?? ""}
+              onChange={handleInputChange}
+              className="w-[41px] h-[42px] rounded-[6px] border border-[#808A93] text-[#021526] text-center p-[10px] leading-[16.8px] font-[400] text-[14px]"
+            />
           </div>
 
           <div className="flex justify-end mt-[12px]">

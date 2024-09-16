@@ -18,6 +18,7 @@ export interface FilterInterface {
 interface City {
   id: number;
   name: string;
+  region: Region;
 }
 
 export interface Region {

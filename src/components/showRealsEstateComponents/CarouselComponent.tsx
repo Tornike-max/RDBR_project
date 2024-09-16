@@ -1,4 +1,3 @@
-import { useGetRealEstates } from "../../hooks/useGetRealEstates";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -7,11 +6,7 @@ import { RealEstate } from "../../types/types";
 import { NextArrow } from "./NextArrow";
 import { PrevArrow } from "./PrevArrow";
 
-const CarouselComponent = () => {
-  const { data, isPending } = useGetRealEstates();
-
-  if (isPending) return <p>Loading...</p>;
-
+const CarouselComponent = ({ realEstates }: { realEstates: RealEstate[] }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -29,7 +24,7 @@ const CarouselComponent = () => {
   return (
     <div className="w-full">
       <Slider {...settings}>
-        {data.map((realEstate: RealEstate) => (
+        {realEstates.map((realEstate: RealEstate) => (
           <CardComponent realEstate={realEstate} />
         ))}
       </Slider>

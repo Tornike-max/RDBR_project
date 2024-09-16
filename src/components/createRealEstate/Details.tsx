@@ -1,12 +1,13 @@
-import { UseFormRegister, FieldErrors } from "react-hook-form";
+import { UseFormRegister, FieldErrors, UseFormTrigger } from "react-hook-form";
 import { CreateRealEstateInterface } from "../../types/types";
 
 type DetailTypes = {
   register: UseFormRegister<CreateRealEstateInterface>;
   errors: FieldErrors<CreateRealEstateInterface>;
+  trigger: UseFormTrigger<CreateRealEstateInterface>;
 };
 
-const Details = ({ register, errors }: DetailTypes) => {
+const Details = ({ register, errors, trigger }: DetailTypes) => {
   return (
     <div className="w-full flex justify-center items-start flex-col gap-5">
       <h3 className="font-[500] text-[16px] leading-[19.54px] text-[#1A1A1F]">
@@ -21,8 +22,12 @@ const Details = ({ register, errors }: DetailTypes) => {
             type="number"
             {...register("price", {
               valueAsNumber: true,
-              required: "ფასი არის სავალდებულო",
+              required: "ფასი სავალდებულოა",
+              validate: {
+                isNumber: (value) => !isNaN(value) || "მხოლოდ რიცხვები",
+              },
             })}
+            onBlur={() => trigger("price")}
             className={`w-full rounded-[6px] border-[1px] ${
               errors.price ? "border-[#F93B1D]" : "border-[#808a93]"
             } p-[10px]`}
@@ -46,8 +51,12 @@ const Details = ({ register, errors }: DetailTypes) => {
             type="number"
             {...register("area", {
               valueAsNumber: true,
-              required: "მხოლოდ რიცხვები",
+              required: "ფართობი სავალდებულოა",
+              validate: {
+                isNumber: (value) => !isNaN(value) || "მხოლოდ რიცხვები",
+              },
             })}
+            onBlur={() => trigger("area")}
             className={`w-full rounded-[6px] border-[1px] ${
               errors.area ? "border-[#F93B1D]" : "border-[#808a93]"
             } p-[10px]`}
@@ -73,8 +82,14 @@ const Details = ({ register, errors }: DetailTypes) => {
             type="number"
             {...register("bedrooms", {
               valueAsNumber: true,
-              required: "მხოლოდ რიცხვები",
+              required: "საძინებლების რაოდენობა სავალდებულოა",
+              validate: {
+                isNumber: (value) => !isNaN(value) || "მხოლოდ რიცხვები",
+                isInteger: (value) =>
+                  Number.isInteger(value) || "მხოლოდ მთელი რიცხვები",
+              },
             })}
+            onBlur={() => trigger("bedrooms")}
             className={`w-full rounded-[6px] border-[1px] ${
               errors.bedrooms ? "border-[#F93B1D]" : "border-[#808a93]"
             } p-[10px]`}

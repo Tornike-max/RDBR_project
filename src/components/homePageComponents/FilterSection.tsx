@@ -28,19 +28,22 @@ const FilterSection = () => {
 
   useEffect(() => {
     const updatedSearchParams = new URLSearchParams(searchParams);
+    const newActiveFilters: string[] = [];
+
     Object.keys(filters).forEach((key) => {
       const value = filters[key as keyof FilterInterface];
       if (value) {
         updatedSearchParams.set(key, value);
-        if (!activeFilters.includes(key)) {
-          setActiveFilters((prev) => [...prev, key]);
+        if (!newActiveFilters.includes(key)) {
+          newActiveFilters.push(key);
         }
       } else {
         updatedSearchParams.delete(key);
-        setActiveFilters((prev) => prev.filter((filter) => filter !== key));
       }
     });
+
     setSearchParams(updatedSearchParams);
+    setActiveFilters(newActiveFilters);
   }, [filters]);
 
   useEffect(() => {
@@ -128,9 +131,9 @@ const FilterSection = () => {
 
       {activeFilters.length >= 1 && (
         <div className="max-w-[553px] w-full h-[29px] flex items-center justify-start gap-[8px]">
-          {activeFilters.map((filterKey) => (
+          {activeFilters.map((filterKey, index) => (
             <button
-              key={filterKey}
+              key={`${filterKey}-${index}`} // Ensure the key is unique
               className="rounded-[43px] py-[6px] px-[10px] border-[1px] border-[#DBDBDB] text-center text-[#354451]"
               onClick={() => resetFilter(filterKey as keyof FilterInterface)}
             >

@@ -51,6 +51,11 @@ const RealEstateType = ({
           </label>
         </div>
       </div>
+      {isRental === false && isSale === false && (
+        <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
+          სავალდებულოა
+        </span>
+      )}
     </div>
   );
 };

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { FilterInterface } from "../../types/types";
+import { useSearchParams } from "react-router-dom";
 
 interface PriceForm {
   minPrice: number;
@@ -20,6 +21,8 @@ const PriceDropDown = ({
   const [selectedMinPrice, setSelectedMinPrice] = useState<number | null>(null);
   const [selectedMaxPrice, setSelectedMaxPrice] = useState<number | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [searchParams] = useSearchParams();
+  const getPrice = searchParams.get("price")?.split("-") || [];
 
   const { register, handleSubmit, setValue } = useForm<PriceForm>({
     defaultValues: {
@@ -92,6 +95,7 @@ const PriceDropDown = ({
                   type="number"
                   placeholder="დან"
                   {...register("minPrice")}
+                  defaultValue={getPrice[0]}
                   className="w-[155px] h-[42px] rounded-[6px] border border-[#808A93] p-[10px] text-[16px] placeholder-[#02152666] pr-[30px]"
                 />
                 <span className="absolute right-[10px] top-[50%] transform -translate-y-[50%] text-[#02152666]">
@@ -103,6 +107,7 @@ const PriceDropDown = ({
                   type="number"
                   placeholder="მდე"
                   {...register("maxPrice")}
+                  defaultValue={getPrice[1]}
                   className="w-[155px] h-[42px] rounded-[6px] border border-[#808A93] p-[10px] text-[16px] placeholder-[#02152666] pr-[30px]"
                 />
                 <span className="absolute right-[10px] top-[50%] transform -translate-y-[50%] text-[#02152666]">

@@ -1,4 +1,9 @@
-import { UseFormRegister, FieldErrors } from "react-hook-form";
+import {
+  UseFormRegister,
+  FieldErrors,
+  UseFormGetValues,
+  UseFormTrigger,
+} from "react-hook-form";
 import { CreateRealEstateInterface } from "../../types/types";
 
 type LocationTypes = {
@@ -8,6 +13,8 @@ type LocationTypes = {
   setRegion: (region: number) => void;
   regions: { id: number; name: string }[];
   cities: { id: number; name: string }[];
+  getValues: UseFormGetValues<CreateRealEstateInterface>;
+  trigger: UseFormTrigger<CreateRealEstateInterface>;
 };
 
 const LocationDetails = ({
@@ -17,6 +24,8 @@ const LocationDetails = ({
   setRegion,
   regions,
   cities,
+  getValues,
+  trigger,
 }: LocationTypes) => {
   return (
     <div className="w-full flex justify-center items-start flex-col gap-5">
@@ -30,18 +39,37 @@ const LocationDetails = ({
           </label>
           <input
             type="text"
-            {...register("address", { required: "მინიმუმ 2 სიმბოლო" })}
+            {...register("address", {
+              required: "სავალდებულოა",
+              min: {
+                value: 2,
+                message: "მინიმუმ 2 სიმბოლო",
+              },
+            })}
+            onChange={() => trigger("address")}
+            onBlur={() => trigger("address")}
             className={`w-full rounded-[6px] border-[1px] ${
               errors.address ? "border-[#F93B1D]" : "border-[#808a93]"
             } p-[10px]`}
           />
-          <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-[#021526] leading-[16.8px]">
-            <img src="/icons/check.png" />
-            <p>მხოლოდ რიცხვები</p>
-          </div>
-          {errors.address && (
+          {!getValues("address") && !errors.address && (
+            <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-[#021526] leading-[16.8px]">
+              <img src="/icons/check.png" />
+              <p>მინიმუმ 2 სიმბოლო</p>
+            </div>
+          )}
+          {getValues("address") && !errors.address && (
+            <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-green-500 leading-[16.8px]">
+              <img src="/icons/check.png" />
+              <p>მინიმუმ 2 სიმბოლო</p>
+            </div>
+          )}
+          {getValues("address") && errors.address && (
             <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
-              {errors.address.message}
+              <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] leading-[16.8px]">
+                <img src="/icons/check.png" />
+                <p>{errors.address.message}</p>
+              </div>
             </span>
           )}
         </div>
@@ -53,9 +81,13 @@ const LocationDetails = ({
           <input
             type="number"
             {...register("zip_code", {
-              valueAsNumber: true,
-              required: "მხოლოდ რიცხვები",
+              required: "სვალდებულოა",
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "მხოლოდ რიცხვები",
+              },
             })}
+            onBlur={() => trigger("zip_code")}
             className={`w-full rounded-[6px] border-[1px] ${
               errors.zip_code ? "border-[#F93B1D]" : "border-[#808a93]"
             } p-[10px]`}
@@ -98,7 +130,7 @@ const LocationDetails = ({
           )}
         </div>
 
-        {region && (
+        {region ? (
           <div className="max-w-[384px] w-full flex justify-center items-start flex-col gap-2">
             <label className="font-[500] text-[14px] leading-[16.8px] text-[#021526]">
               ქალაქი
@@ -122,6 +154,8 @@ const LocationDetails = ({
               </span>
             )}
           </div>
+        ) : (
+          ""
         )}
       </div>
     </div>

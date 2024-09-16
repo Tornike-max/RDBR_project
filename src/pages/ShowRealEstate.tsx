@@ -8,14 +8,24 @@ import CarouselComponent from "../components/showRealsEstateComponents/CarouselC
 import { useState } from "react";
 import DeleteConfirmation from "../components/showRealsEstateComponents/DeleteConfirmation";
 import { useGetRealEstate } from "../hooks/ugeGetRealEstate";
+import { useGetRealEstates } from "../hooks/useGetRealEstates";
 
 const ShowRealEstate = () => {
   const { data, isPending } = useGetRealEstate();
+  const { data: realEstates, isPending: isRealEstatesPending } =
+    useGetRealEstates();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
-  if (isPending) return <p>Loading...</p>;
+  if (isPending || isRealEstatesPending) return <p>Loading...</p>;
+  console.log(data);
+
+  const carouselData = realEstates?.filter(
+    (item) => item.city.region.id === data.city.region.id
+  );
+
+  console.log(carouselData);
 
   return (
     <div className="w-full flex justify-center items-center flex-col mt-[96px]">
@@ -41,7 +51,7 @@ const ShowRealEstate = () => {
         <h1 className="text-[32px] text-[#021526] leading-[38.4px] font-[500]">
           ბინები მსგავს ლოკაციებზე
         </h1>
-        <CarouselComponent />
+        <CarouselComponent realEstates={carouselData || []} />
       </div>
       {isOpen && (
         <DeleteConfirmation id={data.id} onClose={() => setIsOpen(false)} />

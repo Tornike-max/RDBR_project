@@ -24,8 +24,11 @@ const DeleteConfirmation = ({
   };
 
   const handleDelete = () => {
-    deleteRealEstate(String(id));
-    navigate("/");
+    deleteRealEstate(String(id), {
+      onSuccess: () => {
+        navigate("/");
+      },
+    });
   };
   return (
     <div
@@ -48,7 +51,10 @@ const DeleteConfirmation = ({
           გსურთ წაშალოთ ლისტინგი?
         </h1>
         <div className="w-full flex justify-center items-center mt-[30px] gap-[20px]">
-          <button className="rounded-[10px] px-[16px] py-[10px] border-[1px] font-[500] leading-[19.2px] text-[16px] flex items-center justify-center border-[#F93B1D] text-[#F93B1D] hover:bg-[#F93B1D] hover:text-[#FFFFFF] duration-200 transition-all ease-in-out max-w-[103px] w-full">
+          <button
+            onClick={handleClose}
+            className="rounded-[10px] px-[16px] py-[10px] border-[1px] font-[500] leading-[19.2px] text-[16px] flex items-center justify-center border-[#F93B1D] text-[#F93B1D] hover:bg-[#F93B1D] hover:text-[#FFFFFF] duration-200 transition-all ease-in-out max-w-[103px] w-full"
+          >
             გაუქმება
           </button>
           <button
