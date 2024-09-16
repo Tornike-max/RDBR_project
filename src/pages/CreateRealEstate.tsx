@@ -52,6 +52,11 @@ const CreateRealEstate = () => {
     });
   };
 
+  const filteredCities = cities.filter(
+    (item: { region_id: string | number; id: string | number }) =>
+      item.region_id === region
+  );
+
   const handleResetForm = () => {
     setSelectedImage(null);
     setIsRental(false);
@@ -85,7 +90,7 @@ const CreateRealEstate = () => {
           region={region}
           setRegion={setRegion}
           regions={regions}
-          cities={cities}
+          cities={filteredCities}
           getValues={getValues}
           trigger={trigger}
         />
