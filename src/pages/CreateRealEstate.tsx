@@ -13,6 +13,7 @@ import Details from "../components/createRealEstate/Details";
 import Description from "../components/createRealEstate/Description";
 import FileUpload from "../components/createRealEstate/FileUpload";
 import SelectAgent from "../components/createRealEstate/SelectAgent";
+import Loader from "../ui/Loader";
 
 const CreateRealEstate = () => {
   const {
@@ -65,8 +66,7 @@ const CreateRealEstate = () => {
     reset();
   };
 
-  if (isRegionsPending || isCitiesPending || isAgentsPending)
-    return <p>Loading...</p>;
+  if (isRegionsPending || isCitiesPending || isAgentsPending) return <Loader />;
 
   return (
     <div className="w-full flex justify-center items-center flex-col">

@@ -3,6 +3,7 @@ import { useGetRealEstates } from "../hooks/useGetRealEstates";
 import CardComponent from "../components/homePageComponents/CardComponent";
 import { RealEstate } from "../types/types";
 import { useSearchParams } from "react-router-dom";
+import Loader from "../ui/Loader";
 
 const HomePage = () => {
   const { data, isPending } = useGetRealEstates();
@@ -12,7 +13,7 @@ const HomePage = () => {
   const getArea = searchParams.get("area") || "";
   const getBedrooms = searchParams.get("bedrooms") || "";
 
-  if (isPending) return <p>Loading...</p>;
+  if (isPending) return <Loader />;
 
   let filteredData = data;
 
