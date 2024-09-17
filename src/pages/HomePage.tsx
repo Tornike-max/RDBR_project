@@ -4,6 +4,7 @@ import CardComponent from "../components/homePageComponents/CardComponent";
 import { RealEstate } from "../types/types";
 import { useSearchParams } from "react-router-dom";
 import Loader from "../ui/Loader";
+import NotFound from "../ui/NotFound";
 
 const HomePage = () => {
   const { data, isPending } = useGetRealEstates();
@@ -67,15 +68,15 @@ const HomePage = () => {
   return (
     <div className="w-full flex justify-center items-center flex-col mt-[96px]">
       <FilterSection />
-      <div className="w-full mt-[29px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[20px]">
-        {filteredData?.length === 0 ? (
-          <p>No real estate listings found.</p>
-        ) : (
-          filteredData?.map((realEstate: RealEstate) => (
+      {filteredData?.length === 0 ? (
+        <NotFound />
+      ) : (
+        <div className="w-full mt-[29px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[20px]">
+          {filteredData?.map((realEstate: RealEstate) => (
             <CardComponent key={realEstate.id} realEstate={realEstate} />
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

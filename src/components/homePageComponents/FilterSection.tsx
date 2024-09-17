@@ -86,7 +86,7 @@ const FilterSection = () => {
   return (
     <div className="max-w-[1596px] w-full flex justify-center items-start flex-col gap-[16px]">
       <div className="w-full h-[47px]  flex justify-between items-center">
-        <div className="w-auto h-[47px] border-[1px] border-[#DBDBDB] rounded-[10px] p-[6px] flex items-center gap-4 justify-start">
+        <div className="w-auto h-[47px] border-[1px] border-[#DBDBDB] rounded-[10px] p-[6px] flex items-center gap-4 justify-start z-30">
           <RegionDropDown
             handleFilterChange={handleFilterChange}
             showRegionDropdown={showRegionDropdown}
