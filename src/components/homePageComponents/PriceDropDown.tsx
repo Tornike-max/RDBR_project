@@ -86,7 +86,7 @@ const PriceDropDown = ({
         >
           <div className="w-[334px] h-auto flex flex-col justify-center items-center">
             <h3 className="text-[18px] font-semibold mb-[12px] w-full text-start">
-              საფასო კატეგორია
+              ფასის მიხედვით
             </h3>
 
             <div className="relative w-full flex items-center gap-[15px]">

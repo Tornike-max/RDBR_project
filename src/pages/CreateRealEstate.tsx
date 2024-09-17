@@ -52,7 +52,7 @@ const CreateRealEstate = () => {
     });
   };
 
-  const filteredCities = cities.filter(
+  const filteredCities = cities?.filter(
     (item: { region_id: string | number; id: string | number }) =>
       item.region_id === region
   );
@@ -95,7 +95,12 @@ const CreateRealEstate = () => {
           trigger={trigger}
         />
 
-        <Details register={register} errors={errors} trigger={trigger} />
+        <Details
+          register={register}
+          errors={errors}
+          trigger={trigger}
+          getValues={getValues}
+        />
 
         <Description register={register} errors={errors} trigger={trigger} />
 

@@ -1,13 +1,19 @@
-import { UseFormRegister, FieldErrors, UseFormTrigger } from "react-hook-form";
+import {
+  UseFormRegister,
+  FieldErrors,
+  UseFormTrigger,
+  UseFormGetValues,
+} from "react-hook-form";
 import { CreateRealEstateInterface } from "../../types/types";
 
 type DetailTypes = {
   register: UseFormRegister<CreateRealEstateInterface>;
   errors: FieldErrors<CreateRealEstateInterface>;
   trigger: UseFormTrigger<CreateRealEstateInterface>;
+  getValues: UseFormGetValues<CreateRealEstateInterface>;
 };
 
-const Details = ({ register, errors, trigger }: DetailTypes) => {
+const Details = ({ register, errors, trigger, getValues }: DetailTypes) => {
   return (
     <div className="w-full flex justify-center items-start flex-col gap-5">
       <h3 className="font-[500] text-[16px] leading-[19.54px] text-[#1A1A1F]">
@@ -27,18 +33,32 @@ const Details = ({ register, errors, trigger }: DetailTypes) => {
                 isNumber: (value) => !isNaN(value) || "მხოლოდ რიცხვები",
               },
             })}
-            onBlur={() => trigger("price")}
+            onChange={() => trigger("price")}
             className={`w-full rounded-[6px] border-[1px] ${
               errors.price ? "border-[#F93B1D]" : "border-[#808a93]"
             } p-[10px]`}
           />
-          <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-[#021526] leading-[16.8px]">
-            <img src="/icons/check.png" />
-            <p>მხოლოდ რიცხვები</p>
-          </div>
+
+          {!errors.price && !getValues("price") && (
+            <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-[#021526] leading-[16.8px]">
+              <img src="/icons/check.png" alt="check icon" />
+              <p>მხოლოდ რიცხვები</p>
+            </div>
+          )}
+
+          {!errors.price && getValues("price") && (
+            <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-green-500 leading-[16.8px]">
+              <img src="/icons/check.png" alt="check icon" />
+              <p>მხოლოდ რიცხვები</p>
+            </div>
+          )}
+
           {errors.price && (
             <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
-              {errors.price.message}
+              <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] leading-[16.8px]">
+                <img src="/icons/check.png" alt="check icon" />
+                <p>{errors.price.message}</p>
+              </div>
             </span>
           )}
         </div>

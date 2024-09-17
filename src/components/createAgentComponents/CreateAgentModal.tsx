@@ -26,6 +26,7 @@ const CreateAgentModal = ({
     register,
     handleSubmit,
     trigger,
+    getValues,
     formState: { errors },
   } = useForm<FormData>({ mode: "onChange" });
 
@@ -55,6 +56,8 @@ const CreateAgentModal = ({
       },
     });
   };
+
+  console.log(getValues());
 
   return (
     <div
@@ -90,9 +93,26 @@ const CreateAgentModal = ({
                 className="w-full rounded-[6px] border-[1px] border-[#808a93] p-[10px]"
                 onBlur={() => trigger("name")}
               />
-              <div className="text-red-500">
-                {errors.name && <span>{errors.name.message}</span>}
-              </div>
+              {!errors.name && getValues("name")?.length < 2 && (
+                <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-[#021526] leading-[16.8px]">
+                  <img src="/icons/check.png" alt="check icon" />
+                  <p>მინიმუმ 2 სიმბოლო</p>
+                </div>
+              )}
+              {!errors.name && getValues("name")?.length >= 2 && (
+                <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-green-500 leading-[16.8px]">
+                  <img src="/icons/check.png" alt="check icon" />
+                  <p>მინიმუმ 2 სიმბოლო</p>
+                </div>
+              )}
+              {errors.name && (
+                <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
+                  <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] leading-[16.8px]">
+                    <img src="/icons/check.png" alt="check icon" />
+                    <p>{errors.name.message}</p>
+                  </div>
+                </span>
+              )}
             </div>
 
             <div className="w-full flex flex-col justify-center items-start gap-2">
@@ -110,9 +130,26 @@ const CreateAgentModal = ({
                 className="w-full rounded-[6px] border-[1px] border-[#808a93] p-[10px]"
                 onBlur={() => trigger("surname")}
               />
-              <div className="text-red-500">
-                {errors.surname && <span>{errors.surname.message}</span>}
-              </div>
+              {!errors.surname && getValues("surname")?.length < 2 && (
+                <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-[#021526] leading-[16.8px]">
+                  <img src="/icons/check.png" alt="check icon" />
+                  <p>მინიმუმ 2 სიმბოლო</p>
+                </div>
+              )}
+              {!errors.surname && getValues("surname")?.length >= 2 && (
+                <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-green-500 leading-[16.8px]">
+                  <img src="/icons/check.png" alt="check icon" />
+                  <p>მინიმუმ 2 სიმბოლო</p>
+                </div>
+              )}
+              {errors.surname && (
+                <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
+                  <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] leading-[16.8px]">
+                    <img src="/icons/check.png" alt="check icon" />
+                    <p>{errors.surname.message}</p>
+                  </div>
+                </span>
+              )}
             </div>
           </div>
 
@@ -134,9 +171,26 @@ const CreateAgentModal = ({
                 className="w-full rounded-[6px] border-[1px] border-[#808a93] p-[10px]"
                 onBlur={() => trigger("email")}
               />
-              <div className="text-red-500">
-                {errors.email && <span>{errors.email.message}</span>}
-              </div>
+              {!errors.email && getValues("email")?.length < 2 && (
+                <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-[#021526] leading-[16.8px]">
+                  <img src="/icons/check.png" alt="check icon" />
+                  <p>გამოიყენეთ @redberry.ge ფოსტა</p>
+                </div>
+              )}
+              {!errors.email && getValues("email")?.length >= 2 && (
+                <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-green-500 leading-[16.8px]">
+                  <img src="/icons/check.png" alt="check icon" />
+                  <p>გამოიყენეთ @redberry.ge ფოსტა</p>
+                </div>
+              )}
+              {errors.email && (
+                <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
+                  <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] leading-[16.8px]">
+                    <img src="/icons/check.png" alt="check icon" />
+                    <p>{errors.email.message}</p>
+                  </div>
+                </span>
+              )}
             </div>
 
             <div className="w-full flex flex-col justify-center items-start gap-2">
@@ -151,13 +205,30 @@ const CreateAgentModal = ({
                     message: "ტელეფონის ნომერი უნდა იყოს ამ ფორმატის 5XXXXXXXX",
                   },
                 })}
-                type="number"
+                type="text"
                 className="w-full rounded-[6px] border-[1px] border-[#808a93] p-[10px]"
                 onBlur={() => trigger("phone")}
               />
-              <div className="text-red-500">
-                {errors.phone && <span>{errors.phone.message}</span>}
-              </div>
+              {!errors.phone && !getValues("phone") && (
+                <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-[#021526] leading-[16.8px]">
+                  <img src="/icons/check.png" alt="check icon" />
+                  <p>მხოლოდ რიცხვები</p>
+                </div>
+              )}
+              {!errors.phone && getValues("phone") && (
+                <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-green-500 leading-[16.8px]">
+                  <img src="/icons/check.png" alt="check icon" />
+                  <p>მხოლოდ რიცხვები</p>
+                </div>
+              )}
+              {errors.phone && (
+                <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
+                  <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] leading-[16.8px]">
+                    <img src="/icons/check.png" alt="check icon" />
+                    <p>{errors.phone.message}</p>
+                  </div>
+                </span>
+              )}
             </div>
           </div>
 
