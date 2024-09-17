@@ -38,7 +38,7 @@ const ShowRealEstate = () => {
         />
       </div>
       <div className="w-full mt-[29px] flex gap-[40px]">
-        <ImageSection image={data.image} />
+        <ImageSection image={data.image} is_rental={data.is_rental} />
         <div className="flex-1 p-[20px]">
           <DetailsSection data={data} />
           <DescriptionSection description={data.description} />

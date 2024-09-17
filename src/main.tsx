@@ -6,6 +6,7 @@ import "./index.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
+import { NextUIProvider } from "@nextui-org/system";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,9 +19,11 @@ const queryClient = new QueryClient({
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
-      <Toaster />
-      <App />
+      <NextUIProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+        <Toaster />
+        <App />
+      </NextUIProvider>
     </QueryClientProvider>
   </StrictMode>
 );

@@ -51,16 +51,17 @@ const LocationDetails = ({
               errors.address ? "border-[#F93B1D]" : "border-[#808a93]"
             } p-[10px]`}
           />
+
           {!errors.address && getValues("address")?.length < 2 && (
             <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-[#021526] leading-[16.8px]">
               <img src="/icons/check.png" alt="check icon" />
-              <p>მინიმუმ 2 სიმბოლო</p>
+              <p>გამოიყენეთ @redberry.ge ფოსტა</p>
             </div>
           )}
           {!errors.address && getValues("address")?.length >= 2 && (
             <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-green-500 leading-[16.8px]">
               <img src="/icons/check.png" alt="check icon" />
-              <p>მინიმუმ 2 სიმბოლო</p>
+              <p>გამოიყენეთ @redberry.ge ფოსტა</p>
             </div>
           )}
           {errors.address && (

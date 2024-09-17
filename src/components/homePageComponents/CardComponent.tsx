@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { RealEstate } from "../../types/types";
+import { Image } from "@nextui-org/image";
 
 const CardComponent = ({ realEstate }: { realEstate: RealEstate }) => {
   const navigate = useNavigate();
@@ -14,16 +15,21 @@ const CardComponent = ({ realEstate }: { realEstate: RealEstate }) => {
       onClick={() => handleNavigate(realEstate.id)}
     >
       <div className="max-w-[384px] w-full h-[307px] rounded-t-[14px] relative">
-        <p className="absolute top-[20px] left-[20px] p-[6px] bg-[#021526]/50 w-auto h-auto rounded-[15px] text-center">
+        <p className="absolute z-20 top-[20px] left-[20px] p-[6px] bg-[#021526]/50 w-auto h-auto rounded-[15px] text-center">
           <span className="text-[#ffffff] leading-[14.4px] font-[500]">
             {realEstate.is_rental === 0 ? "ქირავდება" : "იყიდება"}
           </span>
         </p>
 
-        <img
+        <Image
+          isZoomed
           src={realEstate.image}
+          fallbackSrc="https://via.placeholder.com"
           alt="Real Estate"
-          className="w-full h-full object-cover rounded-t-[14px] shadow-none transition-shadow duration-300 cursor-pointer hover:shadow-lg hover:shadow-gray-400"
+          loading="lazy"
+          isBlurred
+          radius="none"
+          className="w-[384px] h-[307px] object-fit: cover rounded-t-[14px] shadow-none transition-shadow duration-300 cursor-pointer hover:shadow-lg hover:shadow-gray-400 z-10"
         />
       </div>
       <div className="h-[148px] max-w-[384px] w-full bg-[#FFFFFF] border-[#DBDBDB] border-l-[1px] border-b-[1px] border-r-[1px] px-[22px] py-[25px] rounded-b-[14px]">

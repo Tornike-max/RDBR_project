@@ -1,13 +1,15 @@
 import { AgentInterface } from "../../types/types";
 import ContactInfo from "./ContactInfo";
+import { Avatar } from "@nextui-org/avatar";
 
 const AgentInfoSection = ({ agent }: { agent: AgentInterface }) => {
   return (
     <div className="w-[503px] border-[1px] border-[#DBDBDB] rounded-[8px] p-8 flex justify-center items-start flex-col mt-[40px] gap-[20px]">
       <div className="w-full flex justify-start items-center gap-4">
-        <img
+        <Avatar
           src={agent.avatar}
           alt={agent.name}
+          fallback
           className="w-[72px] h-[72px] object-cover rounded-full"
         />
         <div className="flex items-start justify-center flex-col gap-2">
