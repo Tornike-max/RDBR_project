@@ -2,14 +2,7 @@ import { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useStoreAgent } from "../../hooks/useStoreAgent";
 import { useNavigate } from "react-router-dom";
-
-type FormData = {
-  name: string;
-  surname: string;
-  phone: string;
-  email: string;
-  avatar: File;
-};
+import { CreateAgentInterface } from "../../types/types";
 
 const CreateAgentModal = ({
   setIsAgentModalOpen,
@@ -17,7 +10,7 @@ const CreateAgentModal = ({
   setIsAgentModalOpen: (value: React.SetStateAction<boolean>) => void;
 }) => {
   const backdropRef = useRef<HTMLDivElement>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const { storeAgent, isPending } = useStoreAgent();
   const navigate = useNavigate();
@@ -28,7 +21,7 @@ const CreateAgentModal = ({
     trigger,
     getValues,
     formState: { errors },
-  } = useForm<FormData>({ mode: "onChange" });
+  } = useForm<CreateAgentInterface>({ mode: "onChange" });
 
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === backdropRef.current) {
@@ -48,7 +41,7 @@ const CreateAgentModal = ({
 
   const { ref } = register("avatar");
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
+  const onSubmit: SubmitHandler<CreateAgentInterface> = (data) => {
     const validData = { ...data, avatar: selectedImage };
     storeAgent(validData, {
       onSuccess: () => {

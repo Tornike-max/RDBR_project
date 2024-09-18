@@ -50,8 +50,9 @@ export interface CreateRealEstateInterface {
   area: number;
   bedrooms: number;
   description: string;
-  image: File;
+  image?: File;
   agent_id: number;
+  deal_type?: string;
 }
 
 export interface AgentInterface {
@@ -66,7 +67,7 @@ export interface AgentInterface {
 export interface CreateAgentInterface {
   name: string;
   surname: string;
-  avatar: File;
+  avatar?: File | null;
   email: string;
   phone: number;
 }

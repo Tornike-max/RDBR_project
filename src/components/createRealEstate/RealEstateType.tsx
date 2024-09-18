@@ -1,16 +1,13 @@
+import { UseFormRegister, FieldErrors, UseFormTrigger } from "react-hook-form";
+import { CreateRealEstateInterface } from "../../types/types";
+
 type RealEstateTypes = {
-  isSale: boolean;
-  isRental: boolean;
-  setIsSale: (value: boolean) => void;
-  setIsRental: (value: boolean) => void;
+  register: UseFormRegister<CreateRealEstateInterface>;
+  errors: FieldErrors<CreateRealEstateInterface>;
+  trigger: UseFormTrigger<CreateRealEstateInterface>;
 };
 
-const RealEstateType = ({
-  isSale,
-  isRental,
-  setIsSale,
-  setIsRental,
-}: RealEstateTypes) => {
+const RealEstateType = ({ register, errors, trigger }: RealEstateTypes) => {
   return (
     <div className="w-[266px] flex justify-center items-start flex-col gap-5">
       <h3 className="font-[500] text-[16px] leading-[19.54px] text-[#1A1A1F]">
@@ -19,14 +16,13 @@ const RealEstateType = ({
       <div className="w-full flex justify-start items-center gap-[32px]">
         <div className="flex items-center gap-2">
           <input
-            type="checkbox"
+            type="radio"
             id="is_sale"
             className="rounded-checkbox"
-            checked={isSale}
-            onChange={() => {
-              const result = !isSale;
-              setIsSale(result);
-              setIsRental(!result);
+            value="sale"
+            {...register("deal_type", { required: "სავალდებულოა" })}
+            onChange={async () => {
+              await trigger("deal_type");
             }}
           />
           <label htmlFor="is_sale" className="text-sm">
@@ -36,14 +32,13 @@ const RealEstateType = ({
 
         <div className="flex items-center gap-2">
           <input
-            type="checkbox"
+            type="radio"
             id="is_rental"
             className="rounded-checkbox"
-            checked={isRental}
-            onChange={() => {
-              const result = !isRental;
-              setIsRental(result);
-              setIsSale(!result);
+            value="rental"
+            {...register("deal_type", { required: "სავალდებულოა" })}
+            onChange={async () => {
+              await trigger("deal_type");
             }}
           />
           <label htmlFor="is_rental" className="text-sm">
@@ -51,9 +46,9 @@ const RealEstateType = ({
           </label>
         </div>
       </div>
-      {isRental === false && isSale === false && (
+      {errors.deal_type && (
         <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
-          სავალდებულოა
+          {errors.deal_type.message}
         </span>
       )}
     </div>

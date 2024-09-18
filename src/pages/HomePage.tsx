@@ -66,12 +66,12 @@ const HomePage = () => {
   });
 
   return (
-    <div className="w-full flex justify-center items-center flex-col mt-[96px]">
+    <div className="w-full px-[162px] flex justify-center items-center flex-col mt-[96px]">
       <FilterSection />
       {filteredData?.length === 0 ? (
         <NotFound />
       ) : (
-        <div className="w-full mt-[29px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[20px]">
+        <div className="w-full  mt-[29px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[20px]">
           {filteredData?.map((realEstate: RealEstate) => (
             <CardComponent key={realEstate.id} realEstate={realEstate} />
           ))}

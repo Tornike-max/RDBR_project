@@ -26,8 +26,7 @@ const CreateRealEstate = () => {
   } = useForm<CreateRealEstateInterface>({ mode: "onChange" });
 
   const [region, setRegion] = useState<number | "">(0);
-  const [isRental, setIsRental] = useState(false);
-  const [isSale, setIsSale] = useState(false);
+
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const { data: regions, isPending: isRegionsPending } = useGerRegions();
   const { cities, isCitiesPending } = useGerCities();
@@ -38,14 +37,20 @@ const CreateRealEstate = () => {
 
   const onSubmit: SubmitHandler<CreateRealEstateInterface> = (data) => {
     const newData = {
-      ...data,
       ...(selectedImage ? { image: selectedImage } : {}),
-      is_rental: isRental ? 1 : 0,
+      is_rental: data.deal_type === "rental" ? 1 : 0,
       region_id: Number(data.region_id),
       city_id: Number(data.city_id),
       agent_id: Number(data.agent_id),
+      address: data.address,
+      description: data.description,
+      zip_code: data.zip_code,
+      price: data.price,
+      area: data.area,
+      bedrooms: data.bedrooms,
     };
 
+    console.log(newData);
     storeRealEstate(newData, {
       onSuccess: () => {
         navigate("/");
@@ -60,8 +65,6 @@ const CreateRealEstate = () => {
 
   const handleResetForm = () => {
     setSelectedImage(null);
-    setIsRental(false);
-    setIsSale(false);
     setRegion("");
     reset();
   };
@@ -69,7 +72,7 @@ const CreateRealEstate = () => {
   if (isRegionsPending || isCitiesPending || isAgentsPending) return <Loader />;
 
   return (
-    <div className="w-full flex justify-center items-center flex-col">
+    <div className="w-full px-[162px] flex justify-center items-center flex-col">
       <h1 className="text-center mt-[62px] font-[500] text-[32px] leading-[38.4px] text-[#021526]">
         ლისტინგის დამატება
       </h1>
@@ -77,12 +80,7 @@ const CreateRealEstate = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="max-w-[790px] mt-[99px] w-full m-auto flex justify-center items-start flex-col gap-[60px]"
       >
-        <RealEstateType
-          isSale={isSale}
-          isRental={isRental}
-          setIsSale={setIsSale}
-          setIsRental={setIsRental}
-        />
+        <RealEstateType register={register} errors={errors} trigger={trigger} />
 
         <LocationDetails
           register={register}
