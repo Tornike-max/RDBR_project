@@ -1,8 +1,8 @@
 import {
   UseFormRegister,
   FieldErrors,
-  UseFormGetValues,
   UseFormTrigger,
+  UseFormWatch,
 } from "react-hook-form";
 import { CreateRealEstateInterface } from "../../types/types";
 
@@ -13,8 +13,8 @@ type LocationTypes = {
   setRegion: (region: number) => void;
   regions: { id: number; name: string }[];
   cities: { id: number; name: string }[];
-  getValues: UseFormGetValues<CreateRealEstateInterface>;
   trigger: UseFormTrigger<CreateRealEstateInterface>;
+  watch: UseFormWatch<CreateRealEstateInterface>;
 };
 
 const LocationDetails = ({
@@ -24,8 +24,7 @@ const LocationDetails = ({
   setRegion,
   regions,
   cities,
-  getValues,
-  trigger,
+  watch,
 }: LocationTypes) => {
   return (
     <div className="w-full flex justify-center items-start flex-col gap-5">
@@ -46,24 +45,25 @@ const LocationDetails = ({
                 message: "მინიმუმ 2 სიმბოლო",
               },
             })}
-            onChange={() => trigger("address")}
             className={`w-full rounded-[6px] border-[1px] ${
               errors.address ? "border-[#F93B1D]" : "border-[#808a93]"
             } p-[10px]`}
           />
 
-          {!errors.address && getValues("address")?.length < 2 && (
+          {!watch("address") && !errors.address && (
             <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-[#021526] leading-[16.8px]">
               <img src="/icons/check.png" alt="check icon" />
-              <p>გამოიყენეთ @redberry.ge ფოსტა</p>
+              <p>მინიმუმ 2 სიმბოლო</p>
             </div>
           )}
-          {!errors.address && getValues("address")?.length >= 2 && (
+
+          {watch("address")?.length >= 2 && !errors.address && (
             <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-green-500 leading-[16.8px]">
               <img src="/icons/check.png" alt="check icon" />
-              <p>გამოიყენეთ @redberry.ge ფოსტა</p>
+              <p>მინიმუმ 2 სიმბოლო</p>
             </div>
           )}
+
           {errors.address && (
             <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
               <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] leading-[16.8px]">
@@ -79,7 +79,7 @@ const LocationDetails = ({
             საფოსტო ინდექსი *
           </label>
           <input
-            type="number"
+            type="text"
             {...register("zip_code", {
               required: "სავალდებულოა",
               pattern: {
@@ -87,24 +87,25 @@ const LocationDetails = ({
                 message: "მხოლოდ რიცხვები",
               },
             })}
-            onChange={() => trigger("zip_code")}
             className={`w-full rounded-[6px] border-[1px] ${
               errors.zip_code ? "border-[#F93B1D]" : "border-[#808a93]"
             } p-[10px]`}
           />
 
-          {!errors.zip_code && getValues("zip_code")?.length < 2 && (
+          {!watch("zip_code") && !errors.zip_code && (
             <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-[#021526] leading-[16.8px]">
               <img src="/icons/check.png" alt="check icon" />
-              <p>მინიმუმ 2 სიმბოლო</p>
+              <p>მხოლოდ რიცხვები</p>
             </div>
           )}
-          {!errors.zip_code && getValues("zip_code")?.length >= 2 && (
+
+          {watch("zip_code")?.length > 0 && !errors.zip_code && (
             <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-green-500 leading-[16.8px]">
               <img src="/icons/check.png" alt="check icon" />
               <p>მხოლოდ რიცხვები</p>
             </div>
           )}
+
           {errors.zip_code && (
             <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
               <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] leading-[16.8px]">
@@ -125,7 +126,6 @@ const LocationDetails = ({
             {...register("region_id", { required: "აირჩიეთ რეგიონი" })}
             onChange={(e) => {
               setRegion(parseInt(e.target.value));
-              trigger("region_id");
             }}
             className={`w-full rounded-[6px] border-[1px] ${
               errors.region_id ? "border-[#F93B1D]" : "border-[#808a93]"
@@ -156,7 +156,6 @@ const LocationDetails = ({
             </label>
             <select
               {...register("city_id", { required: "აირჩიეთ ქალაქი" })}
-              onChange={() => trigger("city_id")}
               className={`w-full rounded-[6px] border-[1px] ${
                 errors.city_id ? "border-[#F93B1D]" : "border-[#808a93]"
               } p-[10px]`}

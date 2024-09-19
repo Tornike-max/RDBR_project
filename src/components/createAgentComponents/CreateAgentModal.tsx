@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useStoreAgent } from "../../hooks/useStoreAgent";
-import { useNavigate } from "react-router-dom";
 import { CreateAgentInterface } from "../../types/types";
 
 const CreateAgentModal = ({
@@ -13,7 +12,6 @@ const CreateAgentModal = ({
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const { storeAgent, isPending } = useStoreAgent();
-  const navigate = useNavigate();
 
   const {
     register,
@@ -45,7 +43,7 @@ const CreateAgentModal = ({
     const validData = { ...data, avatar: selectedImage };
     storeAgent(validData, {
       onSuccess: () => {
-        navigate("/");
+        setIsAgentModalOpen(false);
       },
     });
   };

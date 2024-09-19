@@ -21,8 +21,8 @@ const CreateRealEstate = () => {
     handleSubmit,
     formState: { errors },
     reset,
-    getValues,
     trigger,
+    watch,
   } = useForm<CreateRealEstateInterface>({ mode: "onChange" });
 
   const [region, setRegion] = useState<number | "">(0);
@@ -89,18 +89,23 @@ const CreateRealEstate = () => {
           setRegion={setRegion}
           regions={regions}
           cities={filteredCities}
-          getValues={getValues}
           trigger={trigger}
+          watch={watch}
         />
 
         <Details
           register={register}
           errors={errors}
           trigger={trigger}
-          getValues={getValues}
+          watch={watch}
         />
 
-        <Description register={register} errors={errors} trigger={trigger} />
+        <Description
+          register={register}
+          errors={errors}
+          trigger={trigger}
+          watch={watch}
+        />
 
         <FileUpload
           selectedImage={selectedImage}

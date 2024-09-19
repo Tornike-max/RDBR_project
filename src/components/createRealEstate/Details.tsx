@@ -2,7 +2,7 @@ import {
   UseFormRegister,
   FieldErrors,
   UseFormTrigger,
-  UseFormGetValues,
+  UseFormWatch,
 } from "react-hook-form";
 import { CreateRealEstateInterface } from "../../types/types";
 
@@ -10,10 +10,10 @@ type DetailTypes = {
   register: UseFormRegister<CreateRealEstateInterface>;
   errors: FieldErrors<CreateRealEstateInterface>;
   trigger: UseFormTrigger<CreateRealEstateInterface>;
-  getValues: UseFormGetValues<CreateRealEstateInterface>;
+  watch: UseFormWatch<CreateRealEstateInterface>;
 };
 
-const Details = ({ register, errors, trigger, getValues }: DetailTypes) => {
+const Details = ({ register, errors, trigger, watch }: DetailTypes) => {
   return (
     <div className="w-full flex justify-center items-start flex-col gap-5">
       <h3 className="font-[500] text-[16px] leading-[19.54px] text-[#1A1A1F]">
@@ -25,28 +25,27 @@ const Details = ({ register, errors, trigger, getValues }: DetailTypes) => {
             ფასი *
           </label>
           <input
-            type="number"
+            type="text"
             {...register("price", {
-              valueAsNumber: true,
               required: "ფასი სავალდებულოა",
-              validate: {
-                isNumber: (value) => !isNaN(value) || "მხოლოდ რიცხვები",
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "მხოლოდ რიცხვები",
               },
             })}
-            onChange={() => trigger("price")}
             className={`w-full rounded-[6px] border-[1px] ${
               errors.price ? "border-[#F93B1D]" : "border-[#808a93]"
             } p-[10px]`}
           />
 
-          {!errors.price && !getValues("price") && (
+          {!watch("price") && !errors.price && (
             <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-[#021526] leading-[16.8px]">
               <img src="/icons/check.png" alt="check icon" />
               <p>მხოლოდ რიცხვები</p>
             </div>
           )}
 
-          {!errors.price && getValues("price") && (
+          {watch("price") && !errors.price && (
             <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-green-500 leading-[16.8px]">
               <img src="/icons/check.png" alt="check icon" />
               <p>მხოლოდ რიცხვები</p>
@@ -68,12 +67,12 @@ const Details = ({ register, errors, trigger, getValues }: DetailTypes) => {
             ფართობი *
           </label>
           <input
-            type="number"
+            type="text"
             {...register("area", {
-              valueAsNumber: true,
               required: "ფართობი სავალდებულოა",
-              validate: {
-                isNumber: (value) => !isNaN(value) || "მხოლოდ რიცხვები",
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "მხოლოდ რიცხვები",
               },
             })}
             onBlur={() => trigger("area")}
@@ -81,13 +80,26 @@ const Details = ({ register, errors, trigger, getValues }: DetailTypes) => {
               errors.area ? "border-[#F93B1D]" : "border-[#808a93]"
             } p-[10px]`}
           />
-          <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-[#021526] leading-[16.8px]">
-            <img src="/icons/check.png" />
-            <p>მხოლოდ რიცხვები</p>
-          </div>
+          {!watch("area") && !errors.area && (
+            <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-[#021526] leading-[16.8px]">
+              <img src="/icons/check.png" alt="check icon" />
+              <p>მხოლოდ რიცხვები</p>
+            </div>
+          )}
+
+          {watch("area") && !errors.area && (
+            <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-green-500 leading-[16.8px]">
+              <img src="/icons/check.png" alt="check icon" />
+              <p>მხოლოდ რიცხვები</p>
+            </div>
+          )}
+
           {errors.area && (
-            <span className=" text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
-              {errors.area.message}
+            <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
+              <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] leading-[16.8px]">
+                <img src="/icons/check.png" alt="check icon" />
+                <p>{errors.area.message}</p>
+              </div>
             </span>
           )}
         </div>
@@ -101,12 +113,10 @@ const Details = ({ register, errors, trigger, getValues }: DetailTypes) => {
           <input
             type="number"
             {...register("bedrooms", {
-              valueAsNumber: true,
               required: "საძინებლების რაოდენობა სავალდებულოა",
-              validate: {
-                isNumber: (value) => !isNaN(value) || "მხოლოდ რიცხვები",
-                isInteger: (value) =>
-                  Number.isInteger(value) || "მხოლოდ მთელი რიცხვები",
+              pattern: {
+                value: /^[0-9]+$/,
+                message: "მხოლოდ რიცხვები",
               },
             })}
             onBlur={() => trigger("bedrooms")}
@@ -114,13 +124,26 @@ const Details = ({ register, errors, trigger, getValues }: DetailTypes) => {
               errors.bedrooms ? "border-[#F93B1D]" : "border-[#808a93]"
             } p-[10px]`}
           />
-          <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-[#021526] leading-[16.8px]">
-            <img src="/icons/check.png" />
-            <p>მხოლოდ რიცხვები</p>
-          </div>
+          {!watch("bedrooms") && !errors.bedrooms && (
+            <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-[#021526] leading-[16.8px]">
+              <img src="/icons/check.png" alt="check icon" />
+              <p>მხოლოდ რიცხვები</p>
+            </div>
+          )}
+
+          {watch("bedrooms") && !errors.bedrooms && (
+            <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-green-500 leading-[16.8px]">
+              <img src="/icons/check.png" alt="check icon" />
+              <p>მხოლოდ რიცხვები</p>
+            </div>
+          )}
+
           {errors.bedrooms && (
-            <span className=" text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
-              {errors.bedrooms.message}
+            <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
+              <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] leading-[16.8px]">
+                <img src="/icons/check.png" alt="check icon" />
+                <p>{errors.bedrooms.message}</p>
+              </div>
             </span>
           )}
         </div>
