@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler } from "react-hook-form";
 import { useStoreRealEstate } from "../hooks/useStoreRealEstate";
 
 import { useGetAgents } from "../hooks/useGetAgents";
@@ -14,6 +14,8 @@ import Description from "../components/createRealEstate/Description";
 import FileUpload from "../components/createRealEstate/FileUpload";
 import SelectAgent from "../components/createRealEstate/SelectAgent";
 import Loader from "../ui/Loader";
+import CreateAgentModal from "../components/createAgentComponents/CreateAgentModal";
+import { useRealEstateContext } from "../context/useRealEstateContext";
 
 const CreateRealEstate = () => {
   const {
@@ -23,7 +25,7 @@ const CreateRealEstate = () => {
     reset,
     trigger,
     watch,
-  } = useForm<CreateRealEstateInterface>({ mode: "onChange" });
+  } = useRealEstateContext();
 
   const [region, setRegion] = useState<number | "">(0);
 
@@ -32,6 +34,7 @@ const CreateRealEstate = () => {
   const { cities, isCitiesPending } = useGerCities();
   const { agents, isAgentsPending } = useGetAgents();
   const { storeRealEstate, isCreating } = useStoreRealEstate();
+  const [isModalOpen, setIsAgentModalOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -50,10 +53,10 @@ const CreateRealEstate = () => {
       bedrooms: data.bedrooms,
     };
 
-    console.log(newData);
     storeRealEstate(newData, {
       onSuccess: () => {
         navigate("/");
+        localStorage.removeItem("realEstateData");
       },
     });
   };
@@ -112,9 +115,15 @@ const CreateRealEstate = () => {
           setSelectedImage={setSelectedImage}
           register={register}
           errors={errors}
+          trigger={trigger}
         />
 
-        <SelectAgent register={register} errors={errors} agents={agents} />
+        <SelectAgent
+          register={register}
+          errors={errors}
+          agents={agents}
+          setIsAgentModalOpen={setIsAgentModalOpen}
+        />
 
         <div className="w-full flex justify-end items-center mt-[20px] gap-[15px]">
           <button
@@ -132,6 +141,9 @@ const CreateRealEstate = () => {
           </button>
         </div>
       </form>
+      {isModalOpen && (
+        <CreateAgentModal setIsAgentModalOpen={setIsAgentModalOpen} />
+      )}
     </div>
   );
 };

@@ -112,13 +112,13 @@ const FilterSection = () => {
         <div className="flex items-center gap-[16px]">
           <button
             onClick={() => navigate("/realEstate/create")}
-            className="w-[230px] h-[47px] rounded-[10px] bg-[#F93B1D] hover:bg-[#ff5339] duration-200 transition-all text-white px-[16px] py-[10px] gap-[2px] flex items-center justify-center"
+            className="w-[230px] h-[47px] rounded-[10px] bg-[#F93B1D] hover:bg-[#ff5339] duration-200 transition-all text-[#FFFFFF] px-[16px] py-[10px] gap-[2px] flex items-center justify-center"
           >
             + ლისტინგის დამატება
           </button>
           <button
             onClick={() => handleOpenAgentModal()}
-            className="h-[47px] rounded-[10px] text-[#F93B1D] border-[1px] border-[#F93B1D] px-[16px] py-[10px] gap-[2px] flex items-center justify-center w-[203px]"
+            className="h-[47px] rounded-[10px] text-[#F93B1D] hover:bg-[#F93B1D] hover:text-[#FFFFFF] border-[1px] border-[#F93B1D] px-[16px] py-[10px] gap-[2px] flex items-center justify-center w-[203px]"
           >
             + აგენტის დამატება
           </button>
@@ -133,7 +133,7 @@ const FilterSection = () => {
         <div className="max-w-[553px] w-full h-[29px] flex items-center justify-start gap-[8px]">
           {activeFilters.map((filterKey, index) => (
             <button
-              key={`${filterKey}-${index}`} // Ensure the key is unique
+              key={`${filterKey}-${index}`}
               className="rounded-[43px] py-[6px] px-[10px] border-[1px] border-[#DBDBDB] text-center text-[#354451]"
               onClick={() => resetFilter(filterKey as keyof FilterInterface)}
             >

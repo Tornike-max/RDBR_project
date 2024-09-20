@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useStoreAgent } from "../../hooks/useStoreAgent";
 import { CreateAgentInterface } from "../../types/types";
+import { HiOutlinePlusCircle } from "react-icons/hi2";
 
 const CreateAgentModal = ({
   setIsAgentModalOpen,
@@ -241,9 +242,9 @@ const CreateAgentModal = ({
               type="button"
               onClick={handleButtonClick}
               aria-label="Upload image"
-              className="file-input-icon w-[20px] h-[20px] rounded-full border-[1px] border-[#2D3648] flex justify-center items-center cursor-pointer"
+              className="file-input-icon w-[20px] h-[20px] flex justify-center items-center cursor-pointer"
             >
-              +
+              <HiOutlinePlusCircle className="w-[20px] h-[20px] text-[#2D3648] text-xl" />
             </button>
           </div>
           {errors?.avatar && (

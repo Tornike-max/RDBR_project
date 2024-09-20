@@ -27,7 +27,7 @@ const FileUpload = ({
     if (file && file.type.startsWith("image/")) {
       setSelectedImage(file);
     }
-    trigger("image"); // Manually trigger validation
+    trigger("image");
   };
 
   const handleButtonClick = () => {
@@ -49,7 +49,7 @@ const FileUpload = ({
             fileInputRef.current = e;
           }}
           className="hidden"
-          onChange={handleFileChange} // Trigger file change and validation
+          onChange={handleFileChange}
         />
         <button
           type="button"

@@ -1,7 +1,24 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Header from "../components/Header";
+import { useEffect } from "react";
+import { useRealEstateContext } from "../context/useRealEstateContext";
 
 const MainLayout = () => {
+  const { pathname } = useLocation();
+  const { reset } = useRealEstateContext();
+
+  useEffect(() => {
+    if (pathname !== "/realEstate/create") {
+      console.log(pathname);
+
+      localStorage.removeItem("realEstateData");
+    }
+
+    return () => {
+      reset();
+    };
+  }, [pathname]);
+
   return (
     <div className="max-w-[1920px] w-full m-auto bg-[#FFFFFF] min-h-screen flex justify-start items-center flex-col">
       <Header />

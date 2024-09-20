@@ -3,19 +3,23 @@ import { UseFormRegister, FieldErrors } from "react-hook-form";
 import { CreateRealEstateInterface } from "../../types/types";
 import { IoChevronDown } from "react-icons/io5";
 import { HiOutlinePlusCircle } from "react-icons/hi2";
-import CreateAgentModal from "../createAgentComponents/CreateAgentModal";
 
 type SelectAgentTypes = {
   register: UseFormRegister<CreateRealEstateInterface>;
   errors: FieldErrors<CreateRealEstateInterface>;
   agents: { id: number; name: string }[];
+  setIsAgentModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const SelectAgent = ({ register, errors, agents }: SelectAgentTypes) => {
+const SelectAgent = ({
+  register,
+  errors,
+  agents,
+  setIsAgentModalOpen,
+}: SelectAgentTypes) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedAgentName, setSelectedAgentName] =
     useState<string>("აირჩიეთ აგენტი");
-  const [isModalOpen, setIsAgentModalOpen] = useState(false);
 
   const handleSelectAgent = (id: number, name: string) => {
     setSelectedAgentName(name);
@@ -92,10 +96,6 @@ const SelectAgent = ({ register, errors, agents }: SelectAgentTypes) => {
           </div>
         )}
       </div>
-
-      {isModalOpen && (
-        <CreateAgentModal setIsAgentModalOpen={setIsAgentModalOpen} />
-      )}
     </div>
   );
 };
