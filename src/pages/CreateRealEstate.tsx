@@ -24,6 +24,7 @@ const CreateRealEstate = () => {
     formState: { errors },
     reset,
     trigger,
+    setValue,
     watch,
   } = useRealEstateContext();
 
@@ -119,10 +120,11 @@ const CreateRealEstate = () => {
         />
 
         <SelectAgent
-          register={register}
           errors={errors}
           agents={agents}
           setIsAgentModalOpen={setIsAgentModalOpen}
+          trigger={trigger}
+          setValue={setValue}
         />
 
         <div className="w-full flex justify-end items-center mt-[20px] gap-[15px]">

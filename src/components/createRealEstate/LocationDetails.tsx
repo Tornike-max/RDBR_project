@@ -25,6 +25,7 @@ const LocationDetails = ({
   regions,
   cities,
   watch,
+  trigger,
 }: LocationTypes) => {
   return (
     <div className="w-full flex justify-center items-start flex-col gap-5">
@@ -45,6 +46,7 @@ const LocationDetails = ({
                 message: "მინიმუმ 2 სიმბოლო",
               },
             })}
+            onBlur={() => trigger("address")}
             className={`w-full rounded-[6px] border-[1px] ${
               errors.address ? "border-[#F93B1D]" : "border-[#808a93]"
             } p-[10px]`}
@@ -87,6 +89,7 @@ const LocationDetails = ({
                 message: "მხოლოდ რიცხვები",
               },
             })}
+            onBlur={() => trigger("zip_code")}
             className={`w-full rounded-[6px] border-[1px] ${
               errors.zip_code ? "border-[#F93B1D]" : "border-[#808a93]"
             } p-[10px]`}
@@ -127,6 +130,7 @@ const LocationDetails = ({
             onChange={(e) => {
               setRegion(parseInt(e.target.value));
             }}
+            onBlur={() => trigger("region_id")}
             className={`w-full rounded-[6px] border-[1px] ${
               errors.region_id ? "border-[#F93B1D]" : "border-[#808a93]"
             } p-[10px]`}
@@ -159,6 +163,7 @@ const LocationDetails = ({
               className={`w-full rounded-[6px] border-[1px] ${
                 errors.city_id ? "border-[#F93B1D]" : "border-[#808a93]"
               } p-[10px]`}
+              onBlur={() => trigger("city_id")}
             >
               <option value="">აირჩიეთ ქალაქი</option>
               {cities.map((city: { id: number; name: string }) => (

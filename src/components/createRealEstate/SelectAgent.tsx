@@ -1,21 +1,23 @@
 import { useState } from "react";
-import { UseFormRegister, FieldErrors } from "react-hook-form";
+import { FieldErrors, UseFormTrigger, UseFormSetValue } from "react-hook-form";
 import { CreateRealEstateInterface } from "../../types/types";
 import { IoChevronDown } from "react-icons/io5";
 import { HiOutlinePlusCircle } from "react-icons/hi2";
 
 type SelectAgentTypes = {
-  register: UseFormRegister<CreateRealEstateInterface>;
   errors: FieldErrors<CreateRealEstateInterface>;
   agents: { id: number; name: string }[];
   setIsAgentModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  trigger: UseFormTrigger<CreateRealEstateInterface>;
+  setValue: UseFormSetValue<CreateRealEstateInterface>;
 };
 
 const SelectAgent = ({
-  register,
   errors,
   agents,
   setIsAgentModalOpen,
+  trigger,
+  setValue,
 }: SelectAgentTypes) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedAgentName, setSelectedAgentName] =
@@ -24,7 +26,8 @@ const SelectAgent = ({
   const handleSelectAgent = (id: number, name: string) => {
     setSelectedAgentName(name);
     setIsOpen(false);
-    register("agent_id").onChange({ target: { value: id } });
+    setValue("agent_id", id, { shouldValidate: true });
+    trigger("agent_id");
   };
 
   return (
@@ -74,11 +77,6 @@ const SelectAgent = ({
             ))}
           </ul>
         )}
-
-        <input
-          type="hidden"
-          {...register("agent_id", { required: "აირჩიეთ აგენტი" })}
-        />
 
         {errors.agent_id && (
           <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
