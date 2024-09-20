@@ -9,9 +9,8 @@ const MainLayout = () => {
 
   useEffect(() => {
     if (pathname !== "/realEstate/create") {
-      console.log(pathname);
-
       localStorage.removeItem("realEstateData");
+      localStorage.removeItem("uploadedImage");
     }
 
     return () => {

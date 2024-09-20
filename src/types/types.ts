@@ -50,7 +50,7 @@ export interface CreateRealEstateInterface {
   area: number;
   bedrooms: number;
   description: string;
-  image?: File;
+  image?: File | string;
   agent_id: number;
   deal_type?: string;
 }

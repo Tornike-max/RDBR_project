@@ -32,7 +32,9 @@ const CreateRealEstate = () => {
 
   const [region, setRegion] = useState<number | "">(0);
 
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [selectedImage, setSelectedImage] = useState<File | string | null>(
+    localStorage.getItem("uploadedImage") || ""
+  );
   const { data: regions, isPending: isRegionsPending } = useGerRegions();
   const { cities, isCitiesPending } = useGerCities();
   const { agents, isAgentsPending } = useGetAgents();
@@ -56,8 +58,6 @@ const CreateRealEstate = () => {
       bedrooms: data.bedrooms,
     };
 
-    console.log(data);
-
     storeRealEstate(newData, {
       onSuccess: () => {
         navigate("/");
@@ -78,6 +78,7 @@ const CreateRealEstate = () => {
   };
 
   if (isRegionsPending || isCitiesPending || isAgentsPending) return <Loader />;
+
   return (
     <div className="w-full px-[162px] flex justify-center items-center flex-col">
       <h1 className="text-center mt-[62px] font-[500] text-[32px] leading-[38.4px] text-[#021526]">

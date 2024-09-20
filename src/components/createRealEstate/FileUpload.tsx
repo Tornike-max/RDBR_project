@@ -10,8 +10,8 @@ import { CreateRealEstateInterface } from "../../types/types";
 import { HiOutlinePlusCircle } from "react-icons/hi2";
 
 type FileUploadTypes = {
-  selectedImage: File | null;
-  setSelectedImage: (file: File | null) => void;
+  selectedImage: File | string | null;
+  setSelectedImage: (file: File | string | null) => void;
   register: UseFormRegister<CreateRealEstateInterface>;
   errors: FieldErrors<CreateRealEstateInterface>;
   trigger: UseFormTrigger<CreateRealEstateInterface>;
@@ -45,7 +45,14 @@ const FileUpload = ({
         return;
       }
       clearErrors("image");
-      setSelectedImage(file);
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64Image = reader.result as string;
+        setSelectedImage(base64Image);
+        localStorage.setItem("uploadedImage", base64Image);
+      };
+      reader.readAsDataURL(file);
     }
     trigger("image");
   };
@@ -96,14 +103,21 @@ const FileUpload = ({
           <div className="w-full relative m-auto rounded-[8px] border-[1px] border-[#808A93] border-dashed h-[120px] p-4 flex justify-start items-center gap-4">
             <div className="relative w-[92px] h-[82px] m-auto">
               <img
-                src={URL.createObjectURL(selectedImage)}
+                src={
+                  typeof selectedImage === "string"
+                    ? selectedImage
+                    : URL.createObjectURL(selectedImage)
+                }
                 alt="Selected"
                 className="w-full h-full object-cover rounded-[4px]"
               />
               <img
                 src="/icons/trash.png"
                 alt="Trash Icon"
-                onClick={() => setSelectedImage(null)}
+                onClick={() => {
+                  setSelectedImage(null);
+                  localStorage.removeItem("uploadedImage");
+                }}
                 className="absolute bottom-[-7px] right-[-7px] cursor-pointer p-1 bg-[#FFFFFF] border-[1px] border-[#021526] rounded-full"
               />
             </div>
