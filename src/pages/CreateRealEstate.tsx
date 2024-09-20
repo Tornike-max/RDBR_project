@@ -25,6 +25,8 @@ const CreateRealEstate = () => {
     reset,
     trigger,
     setValue,
+    setError,
+    clearErrors,
     watch,
   } = useRealEstateContext();
 
@@ -54,6 +56,8 @@ const CreateRealEstate = () => {
       bedrooms: data.bedrooms,
     };
 
+    console.log(data);
+
     storeRealEstate(newData, {
       onSuccess: () => {
         navigate("/");
@@ -74,7 +78,6 @@ const CreateRealEstate = () => {
   };
 
   if (isRegionsPending || isCitiesPending || isAgentsPending) return <Loader />;
-
   return (
     <div className="w-full px-[162px] flex justify-center items-center flex-col">
       <h1 className="text-center mt-[62px] font-[500] text-[32px] leading-[38.4px] text-[#021526]">
@@ -91,6 +94,7 @@ const CreateRealEstate = () => {
           errors={errors}
           region={region}
           setRegion={setRegion}
+          setValue={setValue}
           regions={regions}
           cities={filteredCities}
           trigger={trigger}
@@ -117,6 +121,8 @@ const CreateRealEstate = () => {
           register={register}
           errors={errors}
           trigger={trigger}
+          setError={setError}
+          clearErrors={clearErrors}
         />
 
         <SelectAgent

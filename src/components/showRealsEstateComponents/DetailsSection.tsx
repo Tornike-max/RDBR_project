@@ -1,4 +1,4 @@
-import { formatCurrency } from "../../functions/functions";
+import { formatArea, formatCurrency } from "../../functions/functions";
 import { RealEstate } from "../../types/types";
 
 const DetailsSection = ({ data }: { data: RealEstate }) => (
@@ -11,7 +11,10 @@ const DetailsSection = ({ data }: { data: RealEstate }) => (
         icon="/icons/Icon.png"
         text={`${data.city.name} ${data.address}`}
       />
-      <DetailItem icon="/icons/Vector.png" text={`ფართი ${data.area} მ²`} />
+      <DetailItem
+        icon="/icons/Vector.png"
+        text={`ფართი ${formatArea(data.area)} `}
+      />
       <DetailItem icon="/icons/bed.png" text={`საძინებელი ${data.bedrooms}`} />
       <DetailItem
         icon="/icons/Vector1.png"

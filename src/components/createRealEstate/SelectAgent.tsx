@@ -72,6 +72,7 @@ const SelectAgent = ({
                 onClick={() => handleSelectAgent(agent.id, agent.name)}
                 className="p-[10px] hover:bg-gray-200 cursor-pointer flex items-center justify-start border-b-[1px] border-[#808a93] font-[400] text-[14px] leading-[16.8px] text-[#021526]"
               >
+                {agent.id}
                 {agent.name}
               </li>
             ))}

@@ -71,7 +71,7 @@ const Details = ({ register, errors, trigger, watch }: DetailTypes) => {
             {...register("area", {
               required: "ფართობი სავალდებულოა",
               pattern: {
-                value: /^[0-9]+$/,
+                value: /^\d+([,.]\d+)?$/,
                 message: "მხოლოდ რიცხვები",
               },
             })}

@@ -5,7 +5,7 @@ import { FilterInterface } from "../../types/types";
 import PriceDropDown from "./PriceDropDown";
 import AreaDropDown from "./AreaDropdown";
 import BedroomsDropDown from "./BedroomsDropDown";
-import { formatAreaFilter, formatPriceFilter } from "../../functions/functions";
+import { formatAreaString, formatPriceFilter } from "../../functions/functions";
 import CreateAgentModal from "../createAgentComponents/CreateAgentModal";
 
 const FilterSection = () => {
@@ -130,7 +130,7 @@ const FilterSection = () => {
       )}
 
       {activeFilters.length >= 1 && (
-        <div className="max-w-[553px] w-full h-[29px] flex items-center justify-start gap-[8px]">
+        <div className="max-w-[653px] w-full h-[29px] flex items-center justify-start gap-[8px]">
           {activeFilters.map((filterKey, index) => (
             <button
               key={`${filterKey}-${index}`}
@@ -138,7 +138,7 @@ const FilterSection = () => {
               onClick={() => resetFilter(filterKey as keyof FilterInterface)}
             >
               {filterKey === "area"
-                ? formatAreaFilter(filters[filterKey as keyof FilterInterface])
+                ? formatAreaString(filters[filterKey as keyof FilterInterface])
                 : filterKey === "price"
                 ? formatPriceFilter(filters[filterKey as keyof FilterInterface])
                 : filters[filterKey as keyof FilterInterface]}

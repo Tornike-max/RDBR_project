@@ -1,5 +1,11 @@
 import { useRef } from "react";
-import { UseFormRegister, FieldErrors, UseFormTrigger } from "react-hook-form";
+import {
+  UseFormRegister,
+  FieldErrors,
+  UseFormTrigger,
+  UseFormSetError,
+  UseFormClearErrors,
+} from "react-hook-form";
 import { CreateRealEstateInterface } from "../../types/types";
 import { HiOutlinePlusCircle } from "react-icons/hi2";
 
@@ -8,7 +14,9 @@ type FileUploadTypes = {
   setSelectedImage: (file: File | null) => void;
   register: UseFormRegister<CreateRealEstateInterface>;
   errors: FieldErrors<CreateRealEstateInterface>;
-  trigger: UseFormTrigger<CreateRealEstateInterface>; // Trigger for manual validation
+  trigger: UseFormTrigger<CreateRealEstateInterface>;
+  setError: UseFormSetError<CreateRealEstateInterface>;
+  clearErrors: UseFormClearErrors<CreateRealEstateInterface>;
 };
 
 const FileUpload = ({
@@ -16,7 +24,9 @@ const FileUpload = ({
   setSelectedImage,
   register,
   errors,
+  setError,
   trigger,
+  clearErrors,
 }: FileUploadTypes) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -24,7 +34,17 @@ const FileUpload = ({
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file && file.type.startsWith("image/")) {
+    const maxSizeInMB = 1 * 1024 * 1024;
+    if (file) {
+      if (file.size > maxSizeInMB) {
+        setError("image", {
+          type: "manual",
+          message: "ფაილის ზომა არ უნდა აღემატებოდეს 1MB-ს",
+        });
+        setSelectedImage(null);
+        return;
+      }
+      clearErrors("image");
       setSelectedImage(file);
     }
     trigger("image");
@@ -43,7 +63,9 @@ const FileUpload = ({
         <input
           type="file"
           accept="image/*"
-          {...register("image", { required: "სავალდებულოა" })}
+          {...register("image", {
+            required: "სავალდებულოა",
+          })}
           ref={(e) => {
             ref(e);
             fileInputRef.current = e;

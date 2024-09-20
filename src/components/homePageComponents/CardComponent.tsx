@@ -1,6 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { RealEstate } from "../../types/types";
 import { Image } from "@nextui-org/image";
+import {
+  formatArea,
+  formatCurrencyWithoutComa,
+} from "../../functions/functions";
 
 const CardComponent = ({ realEstate }: { realEstate: RealEstate }) => {
   const navigate = useNavigate();
@@ -35,7 +39,7 @@ const CardComponent = ({ realEstate }: { realEstate: RealEstate }) => {
       <div className="h-[148px] max-w-[384px] w-full bg-[#FFFFFF] border-[#DBDBDB] border-l-[1px] border-b-[1px] border-r-[1px] px-[22px] py-[25px] rounded-b-[14px]">
         <div className="w-full flex items-start justify-center flex-col gap-[6px]">
           <h3 className="font-[700] text-[28px] leading-[33.6px]">
-            {realEstate.price} ₾
+            {formatCurrencyWithoutComa(realEstate.price)}
           </h3>
           <div className="w-full flex items-center justify-start gap-2">
             <img
@@ -67,7 +71,7 @@ const CardComponent = ({ realEstate }: { realEstate: RealEstate }) => {
               alt="vector-icon"
             />
             <span className="text-[16px] font-[400] leading-[19.2px] text-[#021526B2]/70 text-start">
-              {realEstate.area}
+              {formatArea(realEstate.area)}
             </span>
           </div>
 

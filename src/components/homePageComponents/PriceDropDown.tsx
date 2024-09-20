@@ -26,8 +26,8 @@ const PriceDropDown = ({
 
   const { register, handleSubmit, setValue } = useForm<PriceForm>({
     defaultValues: {
-      minPrice: 50000,
-      maxPrice: 300000,
+      minPrice: Number(getPrice[0]),
+      maxPrice: Number(getPrice[1]),
     },
   });
 
@@ -67,6 +67,8 @@ const PriceDropDown = ({
     setShowPriceDropdown(false);
   };
 
+  console.log(getPrice);
+
   return (
     <div className="relative" ref={dropdownRef}>
       <button
@@ -85,7 +87,7 @@ const PriceDropDown = ({
           className="absolute top-[50px] left-0 bg-[#FFFFFF] shadow-[#02152614] rounded-[10px] border-[1px] border-[#DBDBDB] shadow-lg p-[24px] z-10 w-[382px]"
         >
           <div className="w-[334px] h-auto flex flex-col justify-center items-center">
-            <h3 className="text-[18px] font-semibold mb-[12px] w-full text-start">
+            <h3 className="text-[18px] font-semibold mb-[16px] w-full text-start">
               ფასის მიხედვით
             </h3>
 
@@ -95,7 +97,6 @@ const PriceDropDown = ({
                   type="number"
                   placeholder="დან"
                   {...register("minPrice")}
-                  defaultValue={getPrice[0]}
                   className="w-[155px] h-[42px] rounded-[6px] border border-[#808A93] p-[10px] text-[16px] placeholder-[#02152666] pr-[30px]"
                 />
                 <span className="absolute right-[10px] top-[50%] transform -translate-y-[50%] text-[#02152666]">
@@ -107,7 +108,6 @@ const PriceDropDown = ({
                   type="number"
                   placeholder="მდე"
                   {...register("maxPrice")}
-                  defaultValue={getPrice[1]}
                   className="w-[155px] h-[42px] rounded-[6px] border border-[#808A93] p-[10px] text-[16px] placeholder-[#02152666] pr-[30px]"
                 />
                 <span className="absolute right-[10px] top-[50%] transform -translate-y-[50%] text-[#02152666]">
@@ -166,7 +166,7 @@ const PriceDropDown = ({
               </div>
             </div>
 
-            <div className="w-full flex justify-end mt-[12px]">
+            <div className="w-full flex justify-end mt-[30px]">
               <button
                 type="submit"
                 className="px-[16px] py-[8px] bg-[#F93B1D] text-white rounded-md"

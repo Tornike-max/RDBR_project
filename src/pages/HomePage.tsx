@@ -16,6 +16,7 @@ const HomePage = () => {
 
   if (isPending) return <Loader />;
 
+  console.log(data);
   let filteredData = data;
 
   const filters = [
@@ -45,12 +46,25 @@ const HomePage = () => {
         }
         break;
       case "area":
-        if (filter.value !== "") {
-          const areaArr = filter.value.split("-");
-          filteredData = filteredData?.filter(
-            (item) =>
-              item.area > Number(areaArr[0]) && item.area < Number(areaArr[1])
-          );
+        if (filter.key === "area") {
+          if (filter.value !== "") {
+            const areaArr = filter.value.split("-");
+
+            if (Number(areaArr[1]) === 0) {
+              console.log("first");
+              filteredData = filteredData?.filter(
+                (item) => item.area > Number(areaArr[0])
+              );
+            }
+
+            if (areaArr[0] !== "0" && areaArr[1] !== "0") {
+              filteredData = filteredData?.filter(
+                (item) =>
+                  item.area >= parseFloat(areaArr[0]) &&
+                  item.area <= parseFloat(areaArr[1])
+              );
+            }
+          }
         }
         break;
       case "bedrooms":

@@ -3,6 +3,7 @@ import {
   FieldErrors,
   UseFormTrigger,
   UseFormWatch,
+  UseFormSetValue,
 } from "react-hook-form";
 import { CreateRealEstateInterface } from "../../types/types";
 
@@ -15,6 +16,7 @@ type LocationTypes = {
   cities: { id: number; name: string }[];
   trigger: UseFormTrigger<CreateRealEstateInterface>;
   watch: UseFormWatch<CreateRealEstateInterface>;
+  setValue: UseFormSetValue<CreateRealEstateInterface>;
 };
 
 const LocationDetails = ({
@@ -25,6 +27,7 @@ const LocationDetails = ({
   regions,
   cities,
   watch,
+  setValue,
   trigger,
 }: LocationTypes) => {
   return (
@@ -129,6 +132,7 @@ const LocationDetails = ({
             {...register("region_id", { required: "აირჩიეთ რეგიონი" })}
             onChange={(e) => {
               setRegion(parseInt(e.target.value));
+              setValue("region_id", parseInt(e.target.value));
             }}
             onBlur={() => trigger("region_id")}
             className={`w-full rounded-[6px] border-[1px] ${

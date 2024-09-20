@@ -73,29 +73,33 @@ const RegionDropDown = ({
         <>
           {showRegionDropdown && (
             <div className="absolute top-[50px] left-0 bg-[#FFFFFF] shadow-[#02152614] rounded-[10px] border-[1px] border-[#DBDBDB] p-[24px]  z-10 w-[731px] h-auto space-y-[24px]">
-              <h3 className="text-[18px] font-semibold mb-[12px]">
-                რეგიონების მიხედვით
-              </h3>
-              <div className="grid grid-cols-3 gap-[30px]">
-                {data?.map((region: { id: string | number; name: string }) => (
-                  <label
-                    key={region.name}
-                    className="custom-checkbox max-w-[191px] w-full"
-                  >
-                    <input
-                      type="checkbox"
-                      value={region.name}
-                      checked={selectedRegions.includes(region.name)}
-                      onChange={() => toggleRegion(region.name)}
-                    />
-                    <span></span>
-                    <span
-                      className={`text-[16px] leading-[16.8px] text-[#021526] font-[400]`}
-                    >
-                      {region.name}
-                    </span>
-                  </label>
-                ))}
+              <div className="w-[679px] flex flex-col justify-center items-start">
+                <h3 className="text-[18px] font-semibold mb-[12px] px-2 pb-4">
+                  რეგიონის მიხედვით
+                </h3>
+                <div className="grid grid-cols-3 gap-[30px]">
+                  {data?.map(
+                    (region: { id: string | number; name: string }) => (
+                      <label
+                        key={region.name}
+                        className="custom-checkbox max-w-[191px] w-full"
+                      >
+                        <input
+                          type="checkbox"
+                          value={region.name}
+                          checked={selectedRegions.includes(region.name)}
+                          onChange={() => toggleRegion(region.name)}
+                        />
+                        <span></span>
+                        <span
+                          className={`text-[16px] leading-[16.8px] text-[#021526] font-[400]`}
+                        >
+                          {region.name}
+                        </span>
+                      </label>
+                    )
+                  )}
+                </div>
               </div>
 
               <div className="flex justify-end mt-[12px]">
