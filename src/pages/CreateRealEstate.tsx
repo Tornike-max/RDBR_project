@@ -16,6 +16,8 @@ import SelectAgent from "../components/createRealEstate/SelectAgent";
 import Loader from "../ui/Loader";
 import CreateAgentModal from "../components/createAgentComponents/CreateAgentModal";
 import { useRealEstateContext } from "../context/useRealEstateContext";
+import SecondaryButton from "../ui/SecondaryButton";
+import Button from "../ui/Button";
 
 const CreateRealEstate = () => {
   const {
@@ -75,6 +77,7 @@ const CreateRealEstate = () => {
     setSelectedImage(null);
     setRegion("");
     reset();
+    navigate(-1);
   };
 
   if (isRegionsPending || isCitiesPending || isAgentsPending) return <Loader />;
@@ -135,19 +138,13 @@ const CreateRealEstate = () => {
         />
 
         <div className="w-full flex justify-end items-center mt-[20px] gap-[15px]">
-          <button
-            type="button"
-            onClick={() => handleResetForm()}
-            className="rounded-[10px] border-[1px] border-[#F93B1D] text-[#F93B1D] hover:bg-[#F93B1D] hover:text-[#FFFFFF] text-[16px] leading-[19.2px] font-[500] text-center py-[10px] px-[16px] duration-200 transition-all ease-in-out"
-          >
+          <SecondaryButton size="md" onClick={() => handleResetForm()}>
             გაუქმება
-          </button>
-          <button
-            type="submit"
-            className="h-[47px] rounded-[10px]  border-[1px] text-[#FFFFFF] bg-[#F93B1D] hover:bg-[#DF3014] border-[#F93B1D] px-[16px] py-[10px] gap-[2px] flex items-center justify-center w-[203px]"
-          >
+          </SecondaryButton>
+
+          <Button type="submit" isPending={isCreating}>
             {isCreating ? "დაელოდეთ..." : "გაგზავნა"}
-          </button>
+          </Button>
         </div>
       </form>
       {isModalOpen && (

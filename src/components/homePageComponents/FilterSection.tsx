@@ -7,6 +7,8 @@ import AreaDropDown from "./AreaDropdown";
 import BedroomsDropDown from "./BedroomsDropDown";
 import { formatAreaString, formatPriceFilter } from "../../functions/functions";
 import CreateAgentModal from "../createAgentComponents/CreateAgentModal";
+import Button from "../../ui/Button";
+import SecondaryButton from "../../ui/SecondaryButton";
 
 const FilterSection = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -110,18 +112,17 @@ const FilterSection = () => {
         </div>
 
         <div className="flex items-center gap-[16px]">
-          <button
+          <Button
+            size="md"
+            type="button"
             onClick={() => navigate("/realEstate/create")}
-            className="w-[230px] h-[47px] rounded-[10px] bg-[#F93B1D] hover:bg-[#ff5339] duration-200 transition-all text-[#FFFFFF] px-[16px] py-[10px] gap-[2px] flex items-center justify-center font-firago font-medium"
           >
             + ლისტინგის დამატება
-          </button>
-          <button
-            onClick={() => handleOpenAgentModal()}
-            className="h-[47px] rounded-[10px] text-[#F93B1D] hover:bg-[#F93B1D] hover:text-[#FFFFFF] border-[1px] border-[#F93B1D] px-[16px] py-[10px] gap-[2px] flex items-center justify-center w-[203px] font-firago font-medium"
-          >
+          </Button>
+
+          <SecondaryButton size="md" onClick={() => handleOpenAgentModal()}>
             + აგენტის დამატება
-          </button>
+          </SecondaryButton>
         </div>
       </div>
 

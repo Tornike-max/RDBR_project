@@ -5,6 +5,8 @@ import { CreateAgentInterface } from "../../types/types";
 import NameSurnameInputs from "./NameSurnameInputs";
 import EmailPhoneInputs from "./EmailPhoneInputs";
 import UploadImage from "./UploadImage";
+import Button from "../../ui/Button";
+import SecondaryButton from "../../ui/SecondaryButton";
 
 const CreateAgentModal = ({
   setIsAgentModalOpen,
@@ -76,22 +78,13 @@ const CreateAgentModal = ({
             selectedImage={selectedImage}
             setSelectedImage={setSelectedImage}
           />
-
           <div className="w-full flex justify-end items-center gap-[15px] mt-[60px]">
-            <button
-              type="button"
-              className="rounded-[10px] border-[1px] border-[#F93B1D] text-[#F93B1D] hover:bg-[#F93B1D] hover:text-[#FFFFFF] text-[16px] leading-[19.2px] font-firago font-medium text-center py-[10px] px-[16px] duration-200 transition-all ease-in-out"
-              onClick={() => setIsAgentModalOpen(false)}
-            >
+            <SecondaryButton onClick={() => setIsAgentModalOpen(false)}>
               გაუქმება
-            </button>
-            <button
-              type="submit"
-              className="h-[47px] rounded-[10px]  border-[1px] text-[#FFFFFF] bg-[#F93B1D] hover:bg-[#DF3014] border-[#F93B1D] px-[16px] py-[10px] gap-[2px] font-firago font-medium flex items-center justify-center w-[203px]"
-              disabled={isPending}
-            >
+            </SecondaryButton>
+            <Button type="submit" isPending={isPending}>
               {isPending ? "დაელოდეთ..." : "დამატება"}
-            </button>
+            </Button>
           </div>
         </form>
       </div>

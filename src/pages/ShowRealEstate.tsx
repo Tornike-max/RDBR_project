@@ -3,7 +3,7 @@ import ImageSection from "../components/showRealsEstateComponents/ImageSection";
 import DetailsSection from "../components/showRealsEstateComponents/DetailsSection";
 import DescriptionSection from "../components/showRealsEstateComponents/DescriptionSection";
 import AgentInfoSection from "../components/showRealsEstateComponents/AgentInfoSection";
-import DeleteButton from "../components/showRealsEstateComponents/DeleteButton";
+import DeleteButton from "../ui/DeleteButton";
 import CarouselComponent from "../components/showRealsEstateComponents/CarouselComponent";
 import { useState } from "react";
 import DeleteConfirmation from "../components/showRealsEstateComponents/DeleteConfirmation";

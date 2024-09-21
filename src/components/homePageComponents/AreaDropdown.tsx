@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { FilterInterface } from "../../types/types";
-import { formatArea } from "../../functions/functions"; // Ensure this can handle decimals
+import { formatArea } from "../../functions/functions";
 import { useSearchParams } from "react-router-dom";
 
 interface AreaForm {

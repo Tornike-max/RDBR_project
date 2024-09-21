@@ -16,7 +16,6 @@ const HomePage = () => {
 
   if (isPending) return <Loader />;
 
-  console.log(data);
   let filteredData = data;
 
   const filters = [
@@ -38,11 +37,18 @@ const HomePage = () => {
       case "price":
         if (filter.value !== "") {
           const priceArr = filter.value.split("-");
-          filteredData = filteredData?.filter(
-            (item) =>
-              item.price >= Number(priceArr[0]) &&
-              item.price <= Number(priceArr[1])
-          );
+          if (Number(priceArr[1]) === 0) {
+            filteredData = filteredData?.filter(
+              (item) => item.price > Number(priceArr[0])
+            );
+          }
+          if (priceArr[0] !== "0" && priceArr[1] !== "0") {
+            filteredData = filteredData?.filter(
+              (item) =>
+                item.price >= Number(priceArr[0]) &&
+                item.price <= Number(priceArr[1])
+            );
+          }
         }
         break;
       case "area":

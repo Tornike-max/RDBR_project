@@ -1,13 +1,3 @@
-export const formatAreaFilter = (value: string) => {
-  console.log(value);
-  const [min, max] = value.split("-").map(Number);
-
-  const minFormatted = (min / 1000).toFixed(0);
-  const maxFormatted = (max / 1000).toFixed(0);
-
-  return `${minFormatted} მ² to ${maxFormatted} მ²`;
-};
-
 export const formatAreaString = (input: string) => {
   const [min, max] = input.split("-").map(Number);
 
@@ -23,7 +13,7 @@ export const formatAreaString = (input: string) => {
 export const formatPriceFilter = (value: string) => {
   const [min, max] = value.split("-").map(Number);
   const minFormatted = min;
-  const maxFormatted = max;
+  const maxFormatted = max || "∞";
 
   return `${minFormatted}₾ - ${maxFormatted}₾`;
 };

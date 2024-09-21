@@ -4,8 +4,8 @@ import "slick-carousel/slick/slick-theme.css";
 import CardComponent from "../homePageComponents/CardComponent";
 import { RealEstate } from "../../types/types";
 import { useRef } from "react";
-import { NextArrow } from "./NextArrow"; // Your existing custom NextArrow
-import { PrevArrow } from "./PrevArrow"; // Your existing custom PrevArrow
+import { NextArrow } from "./NextArrow";
+import { PrevArrow } from "./PrevArrow";
 
 const CarouselComponent = ({ realEstates }: { realEstates: RealEstate[] }) => {
   const sliderRef = useRef<Slider | null>(null);

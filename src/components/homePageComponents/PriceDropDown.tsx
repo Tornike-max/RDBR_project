@@ -26,8 +26,8 @@ const PriceDropDown = ({
 
   const { register, handleSubmit, setValue } = useForm<PriceForm>({
     defaultValues: {
-      minPrice: Number(getPrice[0]),
-      maxPrice: Number(getPrice[1]),
+      minPrice: Number(getPrice[0]) || 0,
+      maxPrice: Number(getPrice[1]) || 0,
     },
   });
 
@@ -66,8 +66,6 @@ const PriceDropDown = ({
     handleFilterChange(`${data.minPrice}-${data.maxPrice}`, "price");
     setShowPriceDropdown(false);
   };
-
-  console.log(getPrice);
 
   return (
     <div className="relative" ref={dropdownRef}>
