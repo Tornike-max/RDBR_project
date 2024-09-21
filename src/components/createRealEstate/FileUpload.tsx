@@ -38,14 +38,12 @@ const FileUpload = ({
 
   useEffect(() => {
     if (selectImage !== null) {
-      console.log("hello");
       handleFileChange(selectImage);
     }
   }, []);
 
   const handleFileChange = (p0: File | undefined) => {
     const file = p0;
-    console.log(file);
     const maxSizeInMB = 1 * 1024 * 1024;
     if (file) {
       if (file.size > maxSizeInMB) {
