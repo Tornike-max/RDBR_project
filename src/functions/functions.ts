@@ -39,6 +39,27 @@ export const formatCurrencyWithoutComa = (amount: number): string => {
 };
 
 export const formatArea = (value: number): string => {
-  // Ensure the value is a number and format it
   return `${value.toFixed(1).replace(/\.0$/, "")} მ²`;
 };
+
+export function base64ToFile(base64String: string): File {
+  const [header, base64Data] = base64String.split(",");
+
+  const mimeType = header.match(/:(.*?);/)?.[1] || "application/octet-stream";
+
+  const byteCharacters = atob(base64Data);
+  const byteNumbers = new Uint8Array(byteCharacters.length);
+
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+
+  const blob = new Blob([byteNumbers], { type: mimeType });
+
+  const extension = mimeType.split("/")[1];
+  const filename = `file.${extension}`;
+
+  const file = new File([blob], filename, { type: mimeType });
+
+  return file;
+}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import { useStoreRealEstate } from "../hooks/useStoreRealEstate";
 
@@ -18,6 +18,7 @@ import CreateAgentModal from "../components/createAgentComponents/CreateAgentMod
 import { useRealEstateContext } from "../context/useRealEstateContext";
 import SecondaryButton from "../ui/SecondaryButton";
 import Button from "../ui/Button";
+import { base64ToFile } from "../functions/functions";
 
 const CreateRealEstate = () => {
   const {
@@ -46,6 +47,21 @@ const CreateRealEstate = () => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (selectedImage !== "" && typeof selectedImage === "string") {
+      const image = base64ToFile(selectedImage);
+      setSelectImage(image);
+      setValue("image", image);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (selectImage) {
+      setValue("image", selectImage);
+      trigger("image");
+    }
+  }, []);
+
   const onSubmit: SubmitHandler<CreateRealEstateInterface> = (data) => {
     const newData = {
       ...(selectImage ? { image: selectImage } : {}),
@@ -61,7 +77,6 @@ const CreateRealEstate = () => {
       bedrooms: data.bedrooms,
     };
 
-    console.log(newData);
     storeRealEstate(newData, {
       onSuccess: () => {
         navigate("/");
@@ -130,6 +145,7 @@ const CreateRealEstate = () => {
           setError={setError}
           clearErrors={clearErrors}
           setSelectImage={setSelectImage}
+          selectImage={selectImage}
         />
 
         <SelectAgent

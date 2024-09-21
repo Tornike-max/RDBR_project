@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import {
   UseFormRegister,
   FieldErrors,
@@ -18,6 +18,7 @@ type FileUploadTypes = {
   setError: UseFormSetError<CreateRealEstateInterface>;
   clearErrors: UseFormClearErrors<CreateRealEstateInterface>;
   setSelectImage: React.Dispatch<React.SetStateAction<File | null>>;
+  selectImage?: File | null;
 };
 
 const FileUpload = ({
@@ -29,13 +30,22 @@ const FileUpload = ({
   trigger,
   clearErrors,
   setSelectImage,
+  selectImage,
 }: FileUploadTypes) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const { ref } = register("image", { required: "სავალდებულოა" });
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  useEffect(() => {
+    if (selectImage !== null) {
+      console.log("hello");
+      handleFileChange(selectImage);
+    }
+  }, []);
+
+  const handleFileChange = (p0: File | undefined) => {
+    const file = p0;
+    console.log(file);
     const maxSizeInMB = 1 * 1024 * 1024;
     if (file) {
       if (file.size > maxSizeInMB) {
@@ -45,10 +55,12 @@ const FileUpload = ({
         });
         setSelectedImage(null);
         setSelectImage(null);
+
         return;
       }
       clearErrors("image");
       setSelectImage(file);
+
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64Image = reader.result as string;
@@ -85,7 +97,7 @@ const FileUpload = ({
             fileInputRef.current = e;
           }}
           className="hidden"
-          onChange={handleFileChange}
+          onChange={(e) => handleFileChange(e.target.files?.[0])}
         />
         <button
           type="button"
