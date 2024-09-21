@@ -57,7 +57,6 @@ const HomePage = () => {
             const areaArr = filter.value.split("-");
 
             if (Number(areaArr[1]) === 0) {
-              console.log("first");
               filteredData = filteredData?.filter(
                 (item) => item.area > Number(areaArr[0])
               );

@@ -11,6 +11,7 @@ const MainLayout = () => {
     if (pathname !== "/realEstate/create") {
       localStorage.removeItem("realEstateData");
       localStorage.removeItem("uploadedImage");
+      reset();
     }
 
     return () => {

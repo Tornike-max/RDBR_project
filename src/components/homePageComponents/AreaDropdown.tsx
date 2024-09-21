@@ -23,7 +23,12 @@ const AreaDropDown = ({
   const [searchParams] = useSearchParams();
   const getArea = searchParams.get("area")?.split("-") || [];
 
-  const { register, handleSubmit, setValue } = useForm<AreaForm>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<AreaForm>({
     defaultValues: {
       minArea: Number(getArea[0]) || 0,
       maxArea: Number(getArea[1]) || 0,
@@ -65,6 +70,7 @@ const AreaDropDown = ({
   };
 
   const onSubmit = (data: AreaForm) => {
+    if (data.minArea === 0) return;
     handleFilterChange(`${data.minArea}-${data.maxArea}`, "area");
     setShowAreaDropdown(false);
   };
@@ -99,8 +105,13 @@ const AreaDropDown = ({
                   type="number"
                   placeholder="დან"
                   step="0.1"
-                  {...register("minArea")}
-                  className="w-[155px] h-[42px] rounded-[6px] border border-[#808A93] p-[10px] text-[16px] placeholder-[#02152666]"
+                  {...register("minArea", {
+                    required: "სავალდებულოა",
+                    validate: (val) => val === 0 || "სავალდებულოა",
+                  })}
+                  className={`w-[155px] h-[42px] rounded-[6px] border ${
+                    errors.minArea ? "border-[#F93B1D]]" : "border-[#808A93]"
+                  }  p-[10px] text-[16px] placeholder-[#02152666]`}
                 />
                 <span className="absolute right-[10px] top-[50%] transform -translate-y-[50%] text-[#02152666]">
                   მ²
@@ -119,6 +130,13 @@ const AreaDropDown = ({
                 </span>
               </div>
             </div>
+            {errors.minArea && (
+              <div className="w-full flex justify-start items-center">
+                <span className="text-[#F93B1D] font-firago font-normal">
+                  {errors.minArea.message}
+                </span>
+              </div>
+            )}
 
             <div className="w-full grid grid-cols-2 mt-[24px] gap-[24px]">
               <div className="w-full flex flex-col justify-center items-start">

@@ -24,7 +24,12 @@ const PriceDropDown = ({
   const [searchParams] = useSearchParams();
   const getPrice = searchParams.get("price")?.split("-") || [];
 
-  const { register, handleSubmit, setValue } = useForm<PriceForm>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<PriceForm>({
     defaultValues: {
       minPrice: Number(getPrice[0]) || 0,
       maxPrice: Number(getPrice[1]) || 0,
@@ -63,6 +68,7 @@ const PriceDropDown = ({
   };
 
   const onSubmit = (data: PriceForm) => {
+    if (data.minPrice === 0) return;
     handleFilterChange(`${data.minPrice}-${data.maxPrice}`, "price");
     setShowPriceDropdown(false);
   };
@@ -96,8 +102,13 @@ const PriceDropDown = ({
                 <input
                   type="number"
                   placeholder="დან"
-                  {...register("minPrice")}
-                  className="w-[155px] h-[42px] rounded-[6px] border border-[#808A93] p-[10px] text-[16px] placeholder-[#02152666] pr-[30px]"
+                  {...register("minPrice", {
+                    required: "სავალდებულოა",
+                    validate: (val) => val === 0 || "სავალდებულოა",
+                  })}
+                  className={`w-[155px] h-[42px] rounded-[6px] border ${
+                    errors.minPrice ? "border-[#F93B1D]]" : "border-[#808A93]"
+                  } p-[10px] text-[16px] placeholder-[#02152666] pr-[30px]`}
                 />
                 <span className="absolute right-[10px] top-[50%] transform -translate-y-[50%] text-[#02152666]">
                   ₾
@@ -115,6 +126,13 @@ const PriceDropDown = ({
                 </span>
               </div>
             </div>
+            {errors.minPrice && (
+              <div className="w-full flex justify-start items-center">
+                <span className="text-[#F93B1D] font-firago font-normal">
+                  {errors.minPrice.message}
+                </span>
+              </div>
+            )}
 
             <div className="w-full grid grid-cols-2 mt-[24px] gap-[24px]">
               <div className="w-full flex flex-col justify-center items-start">
