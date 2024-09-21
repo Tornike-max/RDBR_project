@@ -12,7 +12,12 @@ export default {
     "./node_modules/@nextui-org/theme/dist/components/(button|snippet|code|input).js",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        firago: ["firago", "sans-serif"],
+        helvatica: ["helvatica", "italic"],
+      },
+    },
   },
   plugins: [nextui()],
 };

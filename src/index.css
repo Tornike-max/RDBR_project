@@ -123,3 +123,36 @@
 .slick-next:before {
     font-size: 24px;
 }
+
+/* fonts */
+@font-face {
+    font-family: "firago";
+    src: local("FiraGo-MediumItalic"),
+        url("./fonts/Roman/FiraGO-Medium.otf") format("truetype");
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "firago";
+    src: local("FiraGo-RegularItalic"),
+        url("./fonts/Roman/FiraGO-Regular.otf") format("truetype");
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "helvatica";
+    src: local("FiraGo-MediumItalic"),
+        url("./fonts/Helfatica/HelveticaNeueMedium.otf") format("truetype");
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "firago";
+    src: local("FiraGo-BoldItalic"),
+        url("./fonts/Roman/FiraGO-Bold.otf") format("truetype");
+    font-weight: 700;
+    font-style: italic;
+}

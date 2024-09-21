@@ -7,7 +7,7 @@ import {
   UseFormClearErrors,
 } from "react-hook-form";
 import { CreateRealEstateInterface } from "../../types/types";
-import { HiOutlinePlusCircle } from "react-icons/hi2";
+import { HiMiniCheck, HiOutlinePlusCircle } from "react-icons/hi2";
 
 type FileUploadTypes = {
   selectedImage: File | string | null;
@@ -63,7 +63,7 @@ const FileUpload = ({
 
   return (
     <div className="w-full flex flex-col justify-center items-start gap-2">
-      <label className="font-[500] text-[14px] leading-[16.8px] text-[#021526]">
+      <label className="font-firago font-medium text-[14px] leading-[16.8px] text-[#021526]">
         ატვირთეთ ფოტო *
       </label>
       <div className="w-full relative m-auto rounded-[8px] border-[1px] border-[#808A93] border-dashed h-[120px] flex justify-center items-center">
@@ -90,12 +90,10 @@ const FileUpload = ({
       </div>
 
       {errors.image && (
-        <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
-          <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] leading-[16.8px]">
-            <img src="/icons/check.png" alt="check icon" />
-            <p>{errors.image.message}</p>
-          </div>
-        </span>
+        <div className="w-full flex justify-start items-center gap-1 font-firago font-normal text-[14px] leading-[16.8px] text-[#F93B1D]">
+          <HiMiniCheck className="text-xl" />
+          <p>{errors.image.message}</p>
+        </div>
       )}
 
       {selectedImage && (

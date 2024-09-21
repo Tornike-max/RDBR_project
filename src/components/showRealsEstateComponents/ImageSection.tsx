@@ -8,11 +8,11 @@ const ImageSection = ({
   is_rental: number;
 }) => (
   <div className="flex-1 relative">
-    <p className="absolute z-20 top-[20px] left-[20px] p-[6px] opacity-70 bg-[#021526]/50 w-auto h-auto rounded-[15px] text-center">
-      <span className="text-[#ffffff] leading-[14.4px] font-[500] ">
+    <div className="absolute z-20 top-[23px] left-[30px] p-[6px] bg-[#021526]/50 w-auto h-auto rounded-[15px] text-center">
+      <span className="text-[#ffffff] leading-[14.4px] font-firago font-medium">
         {is_rental === 0 ? "ქირავდება" : "იყიდება"}
       </span>
-    </p>
+    </div>
     <Image
       src={image}
       loading="lazy"

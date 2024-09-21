@@ -5,6 +5,7 @@ import {
   UseFormWatch,
 } from "react-hook-form";
 import { CreateAgentInterface } from "../../types/types";
+import { HiMiniCheck } from "react-icons/hi2";
 
 type FormTypes = {
   register: UseFormRegister<CreateAgentInterface>;
@@ -17,7 +18,7 @@ const NameSurnameInputs = ({ register, trigger, watch, errors }: FormTypes) => {
   return (
     <div className="w-full flex justify-between items-center gap-[20px]">
       <div className="w-full flex flex-col justify-center items-start gap-2">
-        <label className="font-[500] text-[14px] leading-[16.8px]">
+        <label className="font-firago font-[500] text-[14px] leading-[16.8px]">
           სახელი *
         </label>
         <input
@@ -31,26 +32,24 @@ const NameSurnameInputs = ({ register, trigger, watch, errors }: FormTypes) => {
           onBlur={() => trigger("name")}
         />
         {!watch("name") && !errors.name && (
-          <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-[#021526] leading-[16.8px]">
-            <img src="/icons/check.png" alt="check icon" />
+          <div className="w-full flex justify-start items-center gap-1 font-firago font-normal text-[14px] text-[#021526] leading-[16.8px]">
+            <HiMiniCheck className="text-xl" />
             <p>მინიმუმ 2 სიმბოლო</p>
           </div>
         )}
 
         {watch("name")?.length >= 2 && !errors.name && (
-          <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-green-500 leading-[16.8px]">
-            <img src="/icons/check.png" alt="check icon" />
+          <div className="w-full flex justify-start items-center gap-1 font-firago font-normal text-[14px] text-green-500 leading-[16.8px]">
+            <HiMiniCheck className="text-xl" />
             <p>მინიმუმ 2 სიმბოლო</p>
           </div>
         )}
 
         {errors.name && (
-          <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
-            <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] leading-[16.8px]">
-              <img src="/icons/check.png" alt="check icon" />
-              <p>{errors.name.message}</p>
-            </div>
-          </span>
+          <div className="w-full flex justify-start items-center gap-1 font-firago font-normal text-[14px] leading-[16.8px] text-[#F93B1D]">
+            <HiMiniCheck className="text-xl" />
+            <p>{errors.name.message}</p>
+          </div>
         )}
       </div>
 
@@ -67,26 +66,24 @@ const NameSurnameInputs = ({ register, trigger, watch, errors }: FormTypes) => {
           onBlur={() => trigger("surname")}
         />
         {!watch("surname") && !errors.surname && (
-          <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-[#021526] leading-[16.8px]">
-            <img src="/icons/check.png" alt="check icon" />
+          <div className="w-full flex justify-start items-center gap-1 font-firago font-normal text-[14px] text-[#021526] leading-[16.8px]">
+            <HiMiniCheck className="text-xl" />
             <p>მინიმუმ 2 სიმბოლო</p>
           </div>
         )}
 
         {watch("surname")?.length >= 2 && !errors.surname && (
-          <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-green-500 leading-[16.8px]">
-            <img src="/icons/check.png" alt="check icon" />
+          <div className="w-full flex justify-start items-center gap-1 font-firago font-normal text-[14px] text-green-500 leading-[16.8px]">
+            <HiMiniCheck className="text-xl" />
             <p>მინიმუმ 2 სიმბოლო</p>
           </div>
         )}
 
         {errors.surname && (
-          <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
-            <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] leading-[16.8px]">
-              <img src="/icons/check.png" alt="check icon" />
-              <p>{errors.surname.message}</p>
-            </div>
-          </span>
+          <div className="w-full flex justify-start items-center gap-1 font-firago font-normal text-[14px] leading-[16.8px] text-[#F93B1D]">
+            <HiMiniCheck className="text-xl" />
+            <p>{errors.surname.message}</p>
+          </div>
         )}
       </div>
     </div>

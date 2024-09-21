@@ -77,7 +77,9 @@ const AreaDropDown = ({
           showAreaDropdown ? "bg-[#F3F3F3]" : ""
         }`}
       >
-        <span>ფართობი</span>
+        <span className="font-firago font-medium leading-[19.2px] text-[16px]">
+          ფართობი
+        </span>
         <span>{showAreaDropdown ? <IoIosArrowUp /> : <IoIosArrowDown />}</span>
       </button>
 
@@ -87,7 +89,7 @@ const AreaDropDown = ({
           className="absolute top-[50px] left-0 bg-[#FFFFFF] shadow-[#02152614] rounded-[10px] border-[1px] border-[#DBDBDB] shadow-lg p-[24px] z-10 w-[382px]"
         >
           <div className="w-[334px] h-auto flex flex-col justify-center items-center">
-            <h3 className="text-[18px] font-semibold mb-[16px] w-full text-start">
+            <h3 className="text-[18px] font-firago font-medium mb-[16px] w-full text-start">
               ფართობის მიხედვით
             </h3>
 
@@ -120,7 +122,7 @@ const AreaDropDown = ({
 
             <div className="w-full grid grid-cols-2 mt-[24px] gap-[24px]">
               <div className="w-full flex flex-col justify-center items-start">
-                <h2 className="font-[500] leading-[16.8px] text-[14px] text-[#021526]">
+                <h2 className="font-firago font-medium leading-[16.8px] text-[14px] text-[#021526]">
                   მინ. ფართობი
                 </h2>
                 <div className="w-full flex flex-col justify-center items-start gap-2 mt-[24px]">
@@ -129,7 +131,7 @@ const AreaDropDown = ({
                       key={area}
                       onClick={() => handleMinAreaClick(area)}
                       type="button"
-                      className={`font-[400] text-[14px] leading-[16.8px] ${
+                      className={`font-firago font-normal text-[14px] leading-[16.8px] ${
                         selectedMinArea === area
                           ? "text-[#F93B1D]"
                           : "text-[#021526]"
@@ -142,7 +144,7 @@ const AreaDropDown = ({
               </div>
 
               <div className="w-full flex flex-col justify-center items-start">
-                <h2 className="font-[500] leading-[16.8px] text-[14px] text-[#021526]">
+                <h2 className="font-firago font-medium leading-[16.8px] text-[14px] text-[#021526]">
                   მაქს. ფართობი
                 </h2>
                 <div className="w-full flex flex-col justify-center items-start gap-2 mt-[24px]">
@@ -151,7 +153,7 @@ const AreaDropDown = ({
                       key={area}
                       onClick={() => handleMaxAreaClick(area)}
                       type="button"
-                      className={`font-[400] text-[14px] leading-[16.8px] ${
+                      className={`font-firago font-normal text-[14px] leading-[16.8px] ${
                         selectedMaxArea === area
                           ? "text-[#F93B1D]"
                           : "text-[#021526]"

@@ -5,6 +5,7 @@ import {
   FieldErrors,
 } from "react-hook-form";
 import { CreateAgentInterface } from "../../types/types";
+import { HiMiniCheck } from "react-icons/hi2";
 
 type FormTypes = {
   register: UseFormRegister<CreateAgentInterface>;
@@ -16,7 +17,7 @@ const EmailPhoneInputs = ({ register, trigger, watch, errors }: FormTypes) => {
   return (
     <div className="w-full flex justify-between items-center gap-[20px]">
       <div className="w-full flex flex-col justify-center items-start gap-2">
-        <label className="font-[500] text-[14px] leading-[16.8px]">
+        <label className="font-firago font-medium text-[14px] leading-[16.8px]">
           ელ-ფოსტა *
         </label>
         <input
@@ -34,31 +35,29 @@ const EmailPhoneInputs = ({ register, trigger, watch, errors }: FormTypes) => {
         />
 
         {!watch("email") && !errors.email && (
-          <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-[#021526] leading-[16.8px]">
-            <img src="/icons/check.png" alt="check icon" />
+          <div className="w-full flex justify-start items-center gap-1 font-firago font-normal text-[14px] text-[#021526] leading-[16.8px]">
+            <HiMiniCheck className="text-xl" />
             <p>გამოიყენეთ @redberry.ge ფოსტა</p>
           </div>
         )}
 
         {watch("email")?.length >= 2 && !errors.email && (
-          <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-green-500 leading-[16.8px]">
-            <img src="/icons/check.png" alt="check icon" />
+          <div className="w-full flex justify-start items-center gap-1 font-firago font-normal text-[14px] text-green-500 leading-[16.8px]">
+            <HiMiniCheck className="text-xl" />
             <p>გამოიყენეთ @redberry.ge ფოსტა</p>
           </div>
         )}
 
         {errors.email && (
-          <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
-            <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] leading-[16.8px]">
-              <img src="/icons/check.png" alt="check icon" />
-              <p>{errors.email.message}</p>
-            </div>
-          </span>
+          <div className="w-full flex justify-start items-center gap-1 font-firago font-normal text-[14px] leading-[16.8px] text-[#F93B1D]">
+            <HiMiniCheck className="text-xl" />
+            <p>{errors.email.message}</p>
+          </div>
         )}
       </div>
 
       <div className="w-full flex flex-col justify-center items-start gap-2">
-        <label className="font-[500] text-[14px] leading-[16.8px]">
+        <label className="font-firago font-medium text-[14px] leading-[16.8px]">
           ტელეფონის ნომერი
         </label>
         <input
@@ -74,26 +73,24 @@ const EmailPhoneInputs = ({ register, trigger, watch, errors }: FormTypes) => {
           onBlur={() => trigger("phone")}
         />
         {!watch("phone") && !errors.phone && (
-          <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-[#021526] leading-[16.8px]">
-            <img src="/icons/check.png" alt="check icon" />
+          <div className="w-full flex justify-start items-center gap-1 font-firago font-normal text-[14px] text-[#021526] leading-[16.8px]">
+            <HiMiniCheck className="text-xl" />
             <p>მხოლოდ რიცხვები</p>
           </div>
         )}
 
         {watch("phone") && !errors.phone && (
-          <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-green-500 leading-[16.8px]">
-            <img src="/icons/check.png" alt="check icon" />
+          <div className="w-full flex justify-start items-center gap-1 font-firago font-normal text-[14px] text-green-500 leading-[16.8px]">
+            <HiMiniCheck className="text-xl" />
             <p>მხოლოდ რიცხვები</p>
           </div>
         )}
 
         {errors.phone && (
-          <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
-            <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] leading-[16.8px]">
-              <img src="/icons/check.png" alt="check icon" />
-              <p>{errors.phone.message}</p>
-            </div>
-          </span>
+          <div className="w-full flex justify-start items-center gap-1 font-firago font-normal text-[14px] leading-[16.8px] text-[#F93B1D]">
+            <HiMiniCheck className="text-xl" />
+            <p>{errors.phone.message}</p>
+          </div>
         )}
       </div>
     </div>

@@ -1,7 +1,7 @@
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { CreateAgentInterface } from "../../types/types";
 import { useRef } from "react";
-import { HiOutlinePlusCircle } from "react-icons/hi2";
+import { HiMiniCheck, HiOutlinePlusCircle } from "react-icons/hi2";
 
 type FormTypes = {
   register: UseFormRegister<CreateAgentInterface>;
@@ -55,12 +55,10 @@ const UploadImage = ({
           </button>
         </div>
         {errors.avatar && (
-          <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D] mt-2">
-            <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] leading-[16.8px]">
-              <img src="/icons/check.png" alt="check icon" />
-              <p>{errors.avatar.message}</p>
-            </div>
-          </span>
+          <div className="w-full flex justify-start items-center gap-1 font-firago font-normal text-[14px] leading-[16.8px] text-[#F93B1D]">
+            <HiMiniCheck className="text-xl" />
+            <p>{errors.avatar.message}</p>
+          </div>
         )}
       </div>
 

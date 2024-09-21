@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FieldErrors, UseFormTrigger, UseFormSetValue } from "react-hook-form";
 import { CreateRealEstateInterface } from "../../types/types";
 import { IoChevronDown } from "react-icons/io5";
-import { HiOutlinePlusCircle } from "react-icons/hi2";
+import { HiMiniCheck, HiOutlinePlusCircle } from "react-icons/hi2";
 
 type SelectAgentTypes = {
   errors: FieldErrors<CreateRealEstateInterface>;
@@ -33,10 +33,10 @@ const SelectAgent = ({
   return (
     <div className="w-full flex justify-between items-center gap-[20px] relative">
       <div className="max-w-[384px] w-full flex justify-center items-start flex-col gap-2">
-        <h3 className="font-[500] text-[16px] leading-[19.54px] text-[#1A1A1F]">
+        <h3 className="font-helvatica font-medium text-[16px] leading-[19.54px] text-[#1A1A1F]">
           აგენტი
         </h3>
-        <label className="font-[500] text-[14px] leading-[16.8px] text-[#021526]">
+        <label className="font-firago font-medium text-[14px] leading-[16.8px] text-[#021526]">
           აირჩიე
         </label>
 
@@ -72,7 +72,6 @@ const SelectAgent = ({
                 onClick={() => handleSelectAgent(agent.id, agent.name)}
                 className="p-[10px] hover:bg-gray-200 cursor-pointer flex items-center justify-start border-b-[1px] border-[#808a93] font-[400] text-[14px] leading-[16.8px] text-[#021526]"
               >
-                {agent.id}
                 {agent.name}
               </li>
             ))}
@@ -82,7 +81,7 @@ const SelectAgent = ({
         {errors.agent_id && (
           <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
             <div className="w-full flex justify-start items-center gap-1">
-              <img src="/icons/check.png" alt="check icon" />
+              <HiMiniCheck className="text-xl" />
               <p>{errors.agent_id.message}</p>
             </div>
           </span>
@@ -90,7 +89,7 @@ const SelectAgent = ({
 
         {!errors.agent_id && selectedAgentName !== "აირჩიეთ აგენტი" && (
           <div className="w-full flex justify-start items-center gap-1 font-[400] text-[14px] text-green-500 leading-[16.8px]">
-            <img src="/icons/check.png" alt="check icon" />
+            <HiMiniCheck className="text-xl" />
             <p>აგენტი დამატებულია</p>
           </div>
         )}

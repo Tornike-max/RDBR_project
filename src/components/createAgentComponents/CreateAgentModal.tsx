@@ -53,7 +53,7 @@ const CreateAgentModal = ({
           onSubmit={handleSubmit(onSubmit)}
           className="w-[799px]  m-auto flex justify-center items-center flex-col gap-[20px]"
         >
-          <h3 className="font-[500] text-[32px] leading-[38.4px] text-[#021526] text-center mb-[40px]">
+          <h3 className="font-firago font-medium text-[32px] leading-[38.4px] text-[#021526] text-center mb-[40px]">
             აგენტის დამატება
           </h3>
           <NameSurnameInputs
@@ -80,14 +80,14 @@ const CreateAgentModal = ({
           <div className="w-full flex justify-end items-center gap-[15px] mt-[60px]">
             <button
               type="button"
-              className="rounded-[10px] border-[1px] border-[#F93B1D] text-[#F93B1D] hover:bg-[#F93B1D] hover:text-[#FFFFFF] text-[16px] leading-[19.2px] font-[500] text-center py-[10px] px-[16px] duration-200 transition-all ease-in-out"
+              className="rounded-[10px] border-[1px] border-[#F93B1D] text-[#F93B1D] hover:bg-[#F93B1D] hover:text-[#FFFFFF] text-[16px] leading-[19.2px] font-firago font-medium text-center py-[10px] px-[16px] duration-200 transition-all ease-in-out"
               onClick={() => setIsAgentModalOpen(false)}
             >
               გაუქმება
             </button>
             <button
               type="submit"
-              className="h-[47px] rounded-[10px]  border-[1px] text-[#FFFFFF] bg-[#F93B1D] hover:bg-[#DF3014] border-[#F93B1D] px-[16px] py-[10px] gap-[2px] flex items-center justify-center w-[203px]"
+              className="h-[47px] rounded-[10px]  border-[1px] text-[#FFFFFF] bg-[#F93B1D] hover:bg-[#DF3014] border-[#F93B1D] px-[16px] py-[10px] gap-[2px] font-firago font-medium flex items-center justify-center w-[203px]"
               disabled={isPending}
             >
               {isPending ? "დაელოდეთ..." : "დამატება"}

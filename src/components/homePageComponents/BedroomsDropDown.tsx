@@ -53,7 +53,9 @@ const BedroomsDropDown = ({
           showBedroomsDropdown ? "bg-[#F3F3F3]" : ""
         }`}
       >
-        <span>საძინებლების რაოდენობა</span>
+        <span className="font-firago font-medium leading-[19.2px] text-[16px]">
+          საძინებლების რაოდენობა
+        </span>
         <span>
           {showBedroomsDropdown ? <IoIosArrowUp /> : <IoIosArrowDown />}
         </span>
@@ -61,7 +63,7 @@ const BedroomsDropDown = ({
 
       {showBedroomsDropdown && (
         <div className="absolute top-[50px] left-0 bg-[#FFFFFF] shadow-[#02152614] rounded-[10px] border-[1px] border-[#DBDBDB] shadow-lg p-[24px] z-10 w-[282px]">
-          <h3 className="text-[16px] leading-[19.2px] font-[500] mb-[12px]">
+          <h3 className="text-[16px] leading-[19.2px] font-firago font-medium mb-[12px]">
             საძინებლების რაოდენობა
           </h3>
           <div className="w-[216px] flex flex-col gap-4">

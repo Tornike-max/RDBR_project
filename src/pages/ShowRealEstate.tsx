@@ -38,7 +38,7 @@ const ShowRealEstate = () => {
         </div>
         <div className="w-full mt-[29px] flex gap-[40px]">
           <ImageSection image={data.image} is_rental={data.is_rental} />
-          <div className="flex-1 p-[20px]">
+          <div className="flex-1 p-[20px] ">
             <DetailsSection data={data} />
             <DescriptionSection description={data.description} />
             <AgentInfoSection agent={data.agent} />
@@ -49,7 +49,7 @@ const ShowRealEstate = () => {
 
       <div className="w-full flex justify-center items-start flex-col gap-[40px] mt-[40px]">
         <div className="w-full px-[162px] ">
-          <h1 className="text-[32px] text-[#021526] leading-[38.4px] font-[500]">
+          <h1 className="text-[32px] text-[#021526] leading-[38.4px] font-firago font-medium">
             ბინები მსგავს ლოკაციებზე
           </h1>
         </div>

@@ -13,16 +13,18 @@ const AgentInfoSection = ({ agent }: { agent: AgentInterface }) => {
           className="w-[72px] h-[72px] object-cover rounded-full"
         />
         <div className="flex items-start justify-center flex-col gap-2">
-          <p className="leading-[19.2px] font-[400] text-[16px] text-[#021526]">
+          <p className="leading-[19.2px] font-firago font-normal text-[16px] text-[#021526]">
             {agent.name}
           </p>
-          <p className="leading-[16.8px] font-[400] text-[14px] text-[#676E76]">
+          <p className="leading-[16.8px] font-firago font-normal text-[14px] text-[#676E76]">
             აგენტი
           </p>
         </div>
       </div>
-      <ContactInfo icon="/icons/Shape.png" contact={agent.email} />
-      <ContactInfo icon="/icons/Vector2.png" contact={agent.phone} />
+      <div className="w-full flex flex-col justify-center items-start gap-2">
+        <ContactInfo icon="/icons/Shape.png" contact={agent.email} />
+        <ContactInfo icon="/icons/Vector2.png" contact={agent.phone} />
+      </div>
     </div>
   );
 };

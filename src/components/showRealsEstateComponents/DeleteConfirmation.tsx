@@ -41,25 +41,25 @@ const DeleteConfirmation = ({
         onClick={(e) => e.stopPropagation()}
       >
         <button
-          className="absolute top-[17px] right-[17px] w-[11.08px] h-[11.08px] font-bold text-[#2D3648] hover:text-[#F93B1D] transition-colors duration-200"
+          className="absolute top-[17px] right-[17px] w-[11.08px] h-[11.08px] font-firago font-bold text-[#2D3648] hover:text-[#F93B1D] transition-colors duration-200"
           onClick={handleClose}
         >
           X
         </button>
 
-        <h1 className="text-[#2D3648] leading-[24px] font-[400] text-[20px]">
+        <h1 className="text-[#2D3648] leading-[24px] font-firago font-normal text-[20px]">
           გსურთ წაშალოთ ლისტინგი?
         </h1>
         <div className="w-full flex justify-center items-center mt-[30px] gap-[20px]">
           <button
             onClick={handleClose}
-            className="rounded-[10px] px-[16px] py-[10px] border-[1px] font-[500] leading-[19.2px] text-[16px] flex items-center justify-center border-[#F93B1D] text-[#F93B1D] hover:bg-[#F93B1D] hover:text-[#FFFFFF] duration-200 transition-all ease-in-out max-w-[103px] w-full"
+            className="rounded-[10px] px-[16px] py-[10px] border-[1px] font-firago font-medium leading-[19.2px] text-[16px] flex items-center justify-center border-[#F93B1D] text-[#F93B1D] hover:bg-[#F93B1D] hover:text-[#FFFFFF] duration-200 transition-all ease-in-out max-w-[103px] w-full"
           >
             გაუქმება
           </button>
           <button
             onClick={handleDelete}
-            className="rounded-[10px] px-[16px] py-[10px] border-[1px] font-[500] leading-[19.2px] text-[16px] flex items-center justify-center bg-[#F93B1D] hover:bg-[#DF3014] duration-200 transition-all ease-in-out text-[#FFFFFF] max-w-[145px] w-full"
+            className="rounded-[10px] px-[16px] py-[10px] border-[1px] font-firago font-medium leading-[19.2px] text-[16px] flex items-center justify-center bg-[#F93B1D] hover:bg-[#DF3014] duration-200 transition-all ease-in-out text-[#FFFFFF] max-w-[145px] w-full"
           >
             {isDeleting ? "დაელოდეთ" : "დადასტურება"}
           </button>

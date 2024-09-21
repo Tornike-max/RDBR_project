@@ -81,7 +81,7 @@ const CreateRealEstate = () => {
 
   return (
     <div className="w-full px-[162px] flex justify-center items-center flex-col">
-      <h1 className="text-center mt-[62px] font-[500] text-[32px] leading-[38.4px] text-[#021526]">
+      <h1 className="text-center mt-[62px] font-firago font-medium text-[32px] leading-[38.4px] text-[#021526]">
         ლისტინგის დამატება
       </h1>
       <form

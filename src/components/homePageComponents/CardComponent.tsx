@@ -19,11 +19,11 @@ const CardComponent = ({ realEstate }: { realEstate: RealEstate }) => {
       onClick={() => handleNavigate(realEstate.id)}
     >
       <div className="max-w-[384px] w-full h-[307px] rounded-t-[14px] relative">
-        <p className="absolute z-20 top-[20px] left-[20px] p-[6px] bg-[#021526]/50 w-auto h-auto rounded-[15px] text-center">
-          <span className="text-[#ffffff] leading-[14.4px] font-[500]">
+        <div className="absolute z-20 top-[20px] left-[20px] p-[6px] bg-[#021526]/50 w-auto h-auto rounded-[15px] text-center">
+          <span className="text-[#ffffff] leading-[14.4px] font-firago font-medium">
             {realEstate.is_rental === 0 ? "ქირავდება" : "იყიდება"}
           </span>
-        </p>
+        </div>
 
         <Image
           isZoomed
@@ -38,7 +38,7 @@ const CardComponent = ({ realEstate }: { realEstate: RealEstate }) => {
       </div>
       <div className="h-[148px] max-w-[384px] w-full bg-[#FFFFFF] border-[#DBDBDB] border-l-[1px] border-b-[1px] border-r-[1px] px-[22px] py-[25px] rounded-b-[14px]">
         <div className="w-full flex items-start justify-center flex-col gap-[6px]">
-          <h3 className="font-[700] text-[28px] leading-[33.6px]">
+          <h3 className="font-firago font-bold text-[28px] leading-[33.6px]">
             {formatCurrencyWithoutComa(realEstate.price)}
           </h3>
           <div className="w-full flex items-center justify-start gap-2">
@@ -47,8 +47,8 @@ const CardComponent = ({ realEstate }: { realEstate: RealEstate }) => {
               src="/icons/Icon.png"
               alt="location-icon"
             />
-            <span className="text-[16px] font-[400] leading-[19.2px] text-[#021526B2]/70">
-              {realEstate.address}
+            <span className="text-[16px] font-firago font-normal leading-[19.2px] text-[#021526B2]/70">
+              {realEstate.city.name},{realEstate.address}
             </span>
           </div>
         </div>
@@ -59,7 +59,7 @@ const CardComponent = ({ realEstate }: { realEstate: RealEstate }) => {
               src="/icons/bed.png"
               alt="bed-icon"
             />
-            <span className="text-[16px] font-[400] leading-[19.2px] text-[#021526B2]/70 text-start">
+            <span className="text-[16px] font-firago font-normal leading-[19.2px] text-[#021526B2]/70 text-start">
               {realEstate.bedrooms}
             </span>
           </div>
@@ -70,7 +70,7 @@ const CardComponent = ({ realEstate }: { realEstate: RealEstate }) => {
               src="/icons/Vector.png"
               alt="vector-icon"
             />
-            <span className="text-[16px] font-[400] leading-[19.2px] text-[#021526B2]/70 text-start">
+            <span className="text-[16px] font-firago font-normal leading-[19.2px] text-[#021526B2]/70 text-start">
               {formatArea(realEstate.area)}
             </span>
           </div>
@@ -81,7 +81,7 @@ const CardComponent = ({ realEstate }: { realEstate: RealEstate }) => {
               src="/icons/Vector1.png"
               alt="vector-icon"
             />
-            <span className="text-[16px] font-[400] leading-[19.2px] text-[#021526B2]/70 text-start">
+            <span className="text-[16px] font-firago font-normal leading-[19.2px] text-[#021526B2]/70 text-start">
               {realEstate.zip_code}
             </span>
           </div>

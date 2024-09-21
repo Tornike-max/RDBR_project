@@ -58,11 +58,13 @@ const RegionDropDown = ({
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setShowRegionDropdown(!showRegionDropdown)}
-        className={`px-[16px] py-[8px] text-[16px] hover:bg-[#F3F3F3]  rounded-[6px] flex items-center gap-2 ${
+        className={`px-[16px] py-[8px] text-[16px] hover:bg-[#F3F3F3] rounded-[6px] flex items-center gap-2 ${
           showRegionDropdown && "bg-[#F3F3F3]"
         }`}
       >
-        <span>რეგიონი</span>
+        <span className="font-firago font-medium leading-[19.2px] text-[16px]">
+          რეგიონი
+        </span>
         <span>
           {showRegionDropdown ? <IoIosArrowUp /> : <IoIosArrowDown />}
         </span>
@@ -74,7 +76,7 @@ const RegionDropDown = ({
           {showRegionDropdown && (
             <div className="absolute top-[50px] left-0 bg-[#FFFFFF] shadow-[#02152614] rounded-[10px] border-[1px] border-[#DBDBDB] p-[24px]  z-10 w-[731px] h-auto space-y-[24px]">
               <div className="w-[679px] flex flex-col justify-center items-start">
-                <h3 className="text-[18px] font-semibold mb-[12px] px-2 pb-4">
+                <h3 className="text-[18px] font-firago font-medium mb-[12px] px-2 pb-4">
                   რეგიონის მიხედვით
                 </h3>
                 <div className="grid grid-cols-3 gap-[30px]">
@@ -92,7 +94,7 @@ const RegionDropDown = ({
                         />
                         <span></span>
                         <span
-                          className={`text-[16px] leading-[16.8px] text-[#021526] font-[400]`}
+                          className={`text-[16px] leading-[16.8px] text-[#021526] font-firago font-normal`}
                         >
                           {region.name}
                         </span>
