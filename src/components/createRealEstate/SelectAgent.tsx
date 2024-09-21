@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { FieldErrors, UseFormTrigger, UseFormSetValue } from "react-hook-form";
+import {
+  FieldErrors,
+  UseFormTrigger,
+  UseFormSetValue,
+  UseFormRegister,
+} from "react-hook-form";
 import { CreateRealEstateInterface } from "../../types/types";
 import { IoChevronDown } from "react-icons/io5";
 import { HiMiniCheck, HiOutlinePlusCircle } from "react-icons/hi2";
@@ -10,6 +15,7 @@ type SelectAgentTypes = {
   setIsAgentModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   trigger: UseFormTrigger<CreateRealEstateInterface>;
   setValue: UseFormSetValue<CreateRealEstateInterface>;
+  register: UseFormRegister<CreateRealEstateInterface>;
 };
 
 const SelectAgent = ({
@@ -18,6 +24,7 @@ const SelectAgent = ({
   setIsAgentModalOpen,
   trigger,
   setValue,
+  register,
 }: SelectAgentTypes) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedAgentName, setSelectedAgentName] =
@@ -39,12 +46,16 @@ const SelectAgent = ({
         <label className="font-firago font-medium text-[14px] leading-[16.8px] text-[#021526]">
           აირჩიე
         </label>
+        <input
+          type="hidden"
+          {...register("agent_id", { required: "გთხოვთ აირჩიოთ აგენტი" })}
+        />
 
         <div
           className={`relative w-full rounded-t-[6px] ${
             isOpen ? "rounded-b-none" : "rounded-b-[6px]"
           } border-[1px] ${
-            errors.agent_id ? "border-[#F93B1D]" : "border-[#808a93]"
+            errors.agent_id ? "border-[#F93B1D] " : "border-[#808a93]"
           } p-[10px] cursor-pointer flex justify-between items-center`}
           onClick={() => setIsOpen(!isOpen)}
         >
@@ -79,12 +90,10 @@ const SelectAgent = ({
         )}
 
         {errors.agent_id && (
-          <span className="text-[12px] leading-[14.4px] font-[400] text-[#F93B1D]">
-            <div className="w-full flex justify-start items-center gap-1">
-              <HiMiniCheck className="text-xl" />
-              <p>{errors.agent_id.message}</p>
-            </div>
-          </span>
+          <div className="w-full flex justify-start items-center gap-1 font-firago font-normal text-[14px] leading-[16.8px] text-[#F93B1D]">
+            <HiMiniCheck className="text-xl" />
+            <p>{errors.agent_id.message}</p>
+          </div>
         )}
 
         {!errors.agent_id && selectedAgentName !== "აირჩიეთ აგენტი" && (

@@ -17,6 +17,7 @@ type FileUploadTypes = {
   trigger: UseFormTrigger<CreateRealEstateInterface>;
   setError: UseFormSetError<CreateRealEstateInterface>;
   clearErrors: UseFormClearErrors<CreateRealEstateInterface>;
+  setSelectImage: React.Dispatch<React.SetStateAction<File | null>>;
 };
 
 const FileUpload = ({
@@ -27,6 +28,7 @@ const FileUpload = ({
   setError,
   trigger,
   clearErrors,
+  setSelectImage,
 }: FileUploadTypes) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -42,10 +44,11 @@ const FileUpload = ({
           message: "ფაილის ზომა არ უნდა აღემატებოდეს 1MB-ს",
         });
         setSelectedImage(null);
+        setSelectImage(null);
         return;
       }
       clearErrors("image");
-
+      setSelectImage(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64Image = reader.result as string;
@@ -66,7 +69,11 @@ const FileUpload = ({
       <label className="font-firago font-medium text-[14px] leading-[16.8px] text-[#021526]">
         ატვირთეთ ფოტო *
       </label>
-      <div className="w-full relative m-auto rounded-[8px] border-[1px] border-[#808A93] border-dashed h-[120px] flex justify-center items-center">
+      <div
+        className={`w-full relative m-auto rounded-[8px] border-[1px] ${
+          errors.image ? "border-[#F93B1D]" : "border-[#808A93]"
+        }  border-dashed h-[120px] flex justify-center items-center`}
+      >
         <input
           type="file"
           accept="image/*"

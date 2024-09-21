@@ -31,7 +31,11 @@ const UploadImage = ({
   return (
     <>
       <div className="w-full flex flex-col justify-center items-start">
-        <div className="w-full relative m-auto rounded-[8px] border-[1px] border-[#2D3648] border-dashed h-[120px] flex justify-center items-center">
+        <div
+          className={`w-full relative m-auto rounded-[8px] border-[1px] ${
+            errors.avatar ? "border-[#F93B1D]" : "border-[#2D3648]"
+          }  border-dashed h-[120px] flex justify-center items-center`}
+        >
           <input
             type="file"
             accept="image/*"

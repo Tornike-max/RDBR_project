@@ -37,6 +37,7 @@ const CreateRealEstate = () => {
   const [selectedImage, setSelectedImage] = useState<File | string | null>(
     localStorage.getItem("uploadedImage") || ""
   );
+  const [selectImage, setSelectImage] = useState<File | null>(null);
   const { data: regions, isPending: isRegionsPending } = useGerRegions();
   const { cities, isCitiesPending } = useGerCities();
   const { agents, isAgentsPending } = useGetAgents();
@@ -47,7 +48,7 @@ const CreateRealEstate = () => {
 
   const onSubmit: SubmitHandler<CreateRealEstateInterface> = (data) => {
     const newData = {
-      ...(selectedImage ? { image: selectedImage } : {}),
+      ...(selectImage ? { image: selectImage } : {}),
       is_rental: data.deal_type === "rental" ? 1 : 0,
       region_id: Number(data.region_id),
       city_id: Number(data.city_id),
@@ -60,6 +61,7 @@ const CreateRealEstate = () => {
       bedrooms: data.bedrooms,
     };
 
+    console.log(newData);
     storeRealEstate(newData, {
       onSuccess: () => {
         navigate("/");
@@ -127,6 +129,7 @@ const CreateRealEstate = () => {
           trigger={trigger}
           setError={setError}
           clearErrors={clearErrors}
+          setSelectImage={setSelectImage}
         />
 
         <SelectAgent
@@ -135,6 +138,7 @@ const CreateRealEstate = () => {
           setIsAgentModalOpen={setIsAgentModalOpen}
           trigger={trigger}
           setValue={setValue}
+          register={register}
         />
 
         <div className="w-full flex justify-end items-center mt-[20px] gap-[15px]">

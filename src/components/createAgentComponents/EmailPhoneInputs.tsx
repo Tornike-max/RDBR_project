@@ -30,7 +30,9 @@ const EmailPhoneInputs = ({ register, trigger, watch, errors }: FormTypes) => {
                 'ელ-ფოსტა უნდა მთავრდებოდეს @redberry.ge-თ"',
             },
           })}
-          className="w-full rounded-[6px] border-[1px] border-[#808a93] p-[10px]"
+          className={`w-full rounded-[6px] border-[1px] ${
+            errors.email ? "border-[#F93B1D]" : "border-[#808a93]"
+          }  p-[10px]`}
           onBlur={() => trigger("email")}
         />
 
@@ -69,7 +71,9 @@ const EmailPhoneInputs = ({ register, trigger, watch, errors }: FormTypes) => {
             },
           })}
           type="text"
-          className="w-full rounded-[6px] border-[1px] border-[#808a93] p-[10px]"
+          className={`w-full rounded-[6px] border-[1px] ${
+            errors.phone ? "border-[#F93B1D]" : "border-[#808a93]"
+          }  p-[10px]`}
           onBlur={() => trigger("phone")}
         />
         {!watch("phone") && !errors.phone && (

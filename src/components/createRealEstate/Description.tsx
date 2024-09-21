@@ -22,7 +22,7 @@ const Description = ({
   return (
     <div className="w-full flex justify-between items-center gap-[20px]">
       <div className="w-full flex justify-center items-start flex-col gap-2">
-        <label className="font-firago font-medium text-[14px] leading-[16.8px] text-[#021526] ">
+        <label className="font-helvatica font-medium text-[14px] leading-[16.8px] text-[#021526] ">
           აღწერა *
         </label>
         <textarea
@@ -36,7 +36,9 @@ const Description = ({
             },
           })}
           onBlur={() => trigger("description")}
-          className="w-full relative m-auto rounded-[8px] border-[1px] border-[#808A93] h-[120px] flex justify-center items-center p-[10px]"
+          className={`w-full relative m-auto rounded-[8px] border-[1px] ${
+            errors.description ? "border-[#F93B1D]" : "border-[#808A93]"
+          }  h-[120px] flex justify-center items-center p-[10px]`}
         ></textarea>
         {!watch("description") && !errors.description && (
           <div className="w-full flex justify-start items-center gap-1 font-firago font-normal text-[14px] text-[#021526] leading-[16.8px]">

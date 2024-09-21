@@ -28,7 +28,9 @@ const NameSurnameInputs = ({ register, trigger, watch, errors }: FormTypes) => {
             validate: (val) =>
               val.length >= 2 || "სახელი უნდა შეიცავდეს მინიმუმ 2 სიმბოლოს",
           })}
-          className="w-full rounded-[6px] border-[1px] border-[#808a93] p-[10px]"
+          className={`w-full rounded-[6px] border-[1px] ${
+            errors.name ? "border-[#F93B1D]" : "border-[#808a93]"
+          }  p-[10px]`}
           onBlur={() => trigger("name")}
         />
         {!watch("name") && !errors.name && (
@@ -62,7 +64,9 @@ const NameSurnameInputs = ({ register, trigger, watch, errors }: FormTypes) => {
             validate: (val) =>
               val.length >= 2 || "გვარი უნდა შეიცავდეს მინიმუმ 2 სიმბოლოს",
           })}
-          className="w-full rounded-[6px] border-[1px] border-[#808a93] p-[10px]"
+          className={`w-full rounded-[6px] border-[1px] ${
+            errors.surname ? "border-[#F93B1D]" : "border-[#808a93]"
+          }  p-[10px]`}
           onBlur={() => trigger("surname")}
         />
         {!watch("surname") && !errors.surname && (
